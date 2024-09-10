@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
+import { Ubuntu, Gloria_Hallelujah } from "next/font/google";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const ubuntu = Ubuntu ({
+  weight: ['300', '400', '500', '700'],
+  subsets: ['latin'],
+  variable: '--font-ubuntu'
+})
+
+const gloriaHallelujah = Gloria_Hallelujah ({
+  weight: ['400'],
+  subsets: ['latin'],
+  variable: '--font-gloria'
+})
 
 export const metadata: Metadata = {
   title: "Aquarela",
-  description: "Página de cadastro",
+  description: "Site Aquarela",
 };
 
 export default function RootLayout({
@@ -24,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-br">
-      <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen`}>
+    <html lang="pt-br" className={`${ubuntu.variable} ${gloriaHallelujah.variable}`}>
+      <body className={`min-h-screen font-ubuntu`}>
         {children}
       </body>
     </html>
