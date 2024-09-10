@@ -20,8 +20,12 @@ const config: Config = {
         'blue-5': "var(--blue-5)",
         'blue-6': "var(--blue-6)",
         'blue-7': "var(--blue-7)",
-        'blue-8': "var(--blue-8)"
+        'blue-8': "var(--blue-8)",
+        'blue-9': "var(--blue-9)"
       },
+      backgroundImage: {
+        'venice-bridge': 'var(--venice-bridge)'
+      }
     },
   },
   plugins: [],
