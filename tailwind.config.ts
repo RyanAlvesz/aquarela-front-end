@@ -8,6 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        ubuntu: 'var(--font-ubuntu)',
+        gloria: 'var(--font-gloria)'
+      },
       colors: {
         'blue-1': "var(--blue-1)",
         'blue-2': "var(--blue-2)",
