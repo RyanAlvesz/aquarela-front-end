@@ -13,21 +13,50 @@ const config: Config = {
         gloria: 'var(--font-gloria)'
       },
       colors: {
-        'blue-1': "var(--blue-1)",
-        'blue-2': "var(--blue-2)",
-        'blue-3': "var(--blue-3)",
-        'blue-4': "var(--blue-4)",
-        'blue-5': "var(--blue-5)",
-        'blue-6': "var(--blue-6)",
-        'blue-7': "var(--blue-7)",
-        'blue-8': "var(--blue-8)",
-        'blue-9': "var(--blue-9)"
+        'blue-1': "rgb(var(--blue-1))",
+        'blue-2': "rgb(var(--blue-2))",
+        'blue-3': "rgb(var(--blue-3))",
+        'blue-4': "rgb(var(--blue-4))",
+        'blue-5': "rgb(var(--blue-5))",
+        'blue-6': "rgb(var(--blue-6))",
+        'blue-7': "rgb(var(--blue-7))",
+        'blue-8': "rgb(var(--blue-8))"
       },
       backgroundImage: {
-        'venice-bridge': 'var(--venice-bridge)'
-      }
+        'venice-bridge': 'var(--venice-bridge)',
+        'starry-night': 'var(--starry-night)'
+      },
+      fontSize: {
+        'title-mobile': ['calc(2rem + 1vw)', {
+          lineHeight: '1'
+        }],
+        'subtitle-mobile': '1.5rem',
+        'body-mobile': '1rem',
+        'secondary-mobile': '0.75rem',
+        'title-desktop': ['calc(3rem + 2vw)', {
+          lineHeight: '1'
+        }],
+        'subtitle-desktop': '1.5rem',
+        'body-desktop': '1.25rem',
+        'secondary-desktop': '1rem',
+        'title-desktop-large': ['calc(3.25rem + 3.5vw)', {
+          lineHeight: '1'
+        }],
+        'subtitle-desktop-large': 'calc(2.25rem + 1vw)',
+        'body-desktop-large': 'calc(1.25rem + 1vw)',
+        'secondary-desktop-large': 'calc(1.25rem + 1vw)',
+      },
+    },
+    screens: {
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '5120px',
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-animated'), require('@tailwindcss/typography')
+  ],
 };
 export default config;
