@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+*:focus{
+  outline: none;
+}
+
+input::-webkit-calendar-picker-indicator{
+  display: none;
+}
+
+input[type="date"]::-webkit-input-placeholder{ 
+  visibility: hidden !important;
+}
+
+*::-webkit-scrollbar {
+  width: 4px;               
+}
+
+*::-webkit-scrollbar-track {
+  background: rgb(var(--blue-8));        
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(var(--blue-3));    
+  border-radius: 20px;       
+}
+
+:root {
+  --blue-1: 32 65 73;
+  --blue-2: 62 125 141;
+  --blue-3: 93 165 183;
+  --blue-4: 144 193 206;
+  --blue-5: 184 206 212;
+  --blue-6: 214 219 221;
+  --blue-7: 226 232 235;
+  --blue-8: 246 246 246;
+  --white: 255 255 255;
+  --venice-bridge: url('../../public/images/paintings/venice-bridge.jpg');
+  --starry-night: url('../../public/images/paintings/starry-night.jpg')
+}
