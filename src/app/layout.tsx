@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
+import "../styles/animation.css";
 import { ubuntu, gloriaHallelujah } from "@/fonts/fonts";
 
 export const metadata: Metadata = {
