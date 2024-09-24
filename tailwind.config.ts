@@ -39,12 +39,6 @@ const config: Config = {
         'subtitle-desktop': '1.5rem',
         'body-desktop': '1.25rem',
         'secondary-desktop': '1rem',
-        'title-desktop-large': ['calc(3.25rem + 3.5vw)', {
-          lineHeight: '1'
-        }],
-        'subtitle-desktop-large': 'calc(2.25rem + 1vw)',
-        'body-desktop-large': 'calc(1.25rem + 1vw)',
-        'secondary-desktop-large': 'calc(1.25rem + 1vw)',
       },
     },
     screens: {
@@ -52,7 +46,7 @@ const config: Config = {
       'md': '768px',
       'lg': '1024px',
       'xl': '1280px',
-      '2xl': '5120px',
+      '2xl': '1920px',
     },
   },
   plugins: [

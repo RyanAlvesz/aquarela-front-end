@@ -79,7 +79,7 @@ const AuthenticationInput: React.FC<authenticationInputProps> = ({ placeholder, 
     return (
         <>
             <label
-                className="flex items-center w-full text-body-mobile p-2 2xl:p-6 gap-2 2xl:gap-8 rounded-md 2xl:rounded-3xl h-12 md:h-[6.5vh] md:text-body-desktop 2xl:text-7xl text-blue-2 bg-blue-5/90"
+                className="flex items-center w-full text-body-mobile p-2 2xl:p-6 gap-2 2xl:gap-8 rounded-md 2xl:rounded-3xl h-12 md:h-[6.5vh] 2xl:h-[2vh] 2xl:bg-black md:text-body-desktop 2xl:text-7xl text-blue-2 bg-blue-5/90"
             >
                 <Image
                     src={iconSrc}
