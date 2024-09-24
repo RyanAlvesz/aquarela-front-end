@@ -1,7 +1,11 @@
 'use client'
 
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Image from "next/image";
+
+import { IInputState, setInputValue } from "@/store/inputSlice";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+
 import birthdayCake from '/public/images/svg/birthday-cake.svg'
 import cpf from '/public/images/svg/cpf.svg'
 import mail from '/public/images/svg/mail.svg'
@@ -22,43 +26,74 @@ const icons = {
     nickname
 }
 
-interface dinamicLabelInputProps {
+interface authenticationInputProps {
     placeholder: string
     inputType: 'text' | 'password' | 'email' | 'phone' | 'date'
     required: boolean
-    name: string
+    name: keyof IInputState
     image: keyof typeof icons
+    maxChar: number
     passwordVisibility?: boolean
 }
 
-const DinamicLabelInput: React.FC<dinamicLabelInputProps> = ({placeholder, inputType, required, name, image, passwordVisibility}) => {
-    
+const AuthenticationInput: React.FC<authenticationInputProps> = ({ placeholder, inputType, required, name, image, maxChar, passwordVisibility }) => {
+
     const [currentInputType, setCurrentInputType] = useState(inputType)
     const [isPasswordVisible, setIsPasswordVisible] = useState(passwordVisibility)
-  
     const iconSrc = icons[image];
-  
+
     const passwordVisibilityToggle = () => {
-      setCurrentInputType((prevType) => (prevType === 'password' ? 'text' : 'password'));
-      setIsPasswordVisible((prevVisibility) => !prevVisibility);
+        setCurrentInputType((prevType) => (prevType === 'password' ? 'text' : 'password'));
+        setIsPasswordVisible((prevVisibility) => !prevVisibility);
     }
-    
+
+    const formatPhoneNumber = (value: string) => {
+        const cleanedInput = value.replace(/\D/g, '')
+        const match = cleanedInput.match(/^(\d{2})(\d{5})(\d{0,4})?$/)
+        if (match) {
+            return `(${match[1]}) ${match[2]}${match[3] ? '-' + match[3] : ''}`
+        }
+        return value
+    }
+
+    const formatCPF = (input: string): string => {
+        const cleanedInput = input.replace(/\D/g, '')
+        const match = cleanedInput.match(/^(\d{3})(\d{3})(\d{3})(\d{0,2})?$/)
+        if (match) {
+            return `${match[1]}.${match[2]}.${match[3]}${match[4] ? '-' + match[4] : ''}`
+        }
+        return input
+    }
+
+    const dispatch = useAppDispatch()
+
+    const handleEvent = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if(name == "telephone")
+            dispatch(setInputValue({ field: name, value: formatPhoneNumber(event.target.value) }))
+        else if (name == 'cpf')
+            dispatch(setInputValue({ field: name, value: formatCPF(event.target.value) }))
+        else
+            dispatch(setInputValue({ field: name, value: event.target.value }))
+    }
 
     return (
-        <>        
-            <label 
+        <>
+            <label
                 className="flex items-center w-full text-body-mobile p-2 2xl:p-6 gap-2 2xl:gap-8 rounded-md 2xl:rounded-3xl h-12 md:h-[6.5vh] md:text-body-desktop 2xl:text-7xl text-blue-2 bg-blue-5/90"
             >
-                <Image 
+                <Image
                     src={iconSrc}
                     alt={name}
                     className="h-4/5 w-auto"
                 />
-                <input 
+                <input
                     type={currentInputType}
                     placeholder={placeholder}
                     name={name}
                     required={required}
+                    onChange={handleEvent}
+                    maxLength={maxChar}
+                    value={useAppSelector((state) => state.input[name])}
                     className="w-full bg-transparent placeholder:text-blue-2 placeholder:text-body-mobile md:placeholder:text-body-desktop 2xl:placeholder:text-7xl"
                 />
                 {
@@ -76,10 +111,10 @@ const DinamicLabelInput: React.FC<dinamicLabelInputProps> = ({placeholder, input
                         </button>
                     )
                 }
-                
+
             </label>
         </>
     )
 }
 
-export default DinamicLabelInput
+export default AuthenticationInput
