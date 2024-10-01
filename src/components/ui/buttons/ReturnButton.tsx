@@ -30,7 +30,7 @@ const ReturnButton: React.FC<returnButtonProps> = ({width, color}) => {
     }
 
     return(
-        <button onClick={handleBackClick} className={`h-full w-auto`}>
+        <button onClick={handleBackClick} className={`h-full w-auto z-50`}>
             <Image
                 alt = "Botão para retornar"
                 src = {buttonColor()}

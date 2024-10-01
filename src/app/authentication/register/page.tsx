@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import Register from '@/components/ui/Register';
+import Register from '@/components/pages/Register';
 
 export const metadata: Metadata = {
   title: 'Cadastro',

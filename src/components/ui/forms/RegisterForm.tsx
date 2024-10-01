@@ -8,6 +8,7 @@ import AuthenticationChoice from '../AuthenticationChoice'
 import { useAppSelector } from "@/store/store";
 import { User } from '@/types';
 import alert, { loader } from '@/types/alert';
+import { fetchWrapper } from '@/lib/api/fetch';
 
 const RegisterForm = () => {
     
@@ -30,8 +31,38 @@ const RegisterForm = () => {
             return true
     }
 
-    const registerUser = (e: React.FormEvent<HTMLFormElement>) => {
+    const registerUser = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        
+        const url: string = 'v1/aquarela/inserirUsuarios'
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                nome: user.nome,
+                nome_usuario: user.nome_usuario,
+                foto_usuario: "",
+                descricao: "",
+                email: user.email,
+                senha: user.senha,
+                cpf: user.cpf,
+                data_nascimento: user.data_nascimento,
+                telefone: user.telefone,
+                disponibilidade: false
+            }),
+        };
+
+        interface getResp {
+            usuario: User,
+            status_code: number
+        }
+        
+        const resp = await fetchWrapper(url, options)
+        console.log(resp);
+
         if(passwordVerification()){
             loader()
         }

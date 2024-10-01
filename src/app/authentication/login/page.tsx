@@ -1,6 +1,15 @@
-export default function Login() {
+import { Metadata } from 'next'
+import Login from "@/components/pages/Login"
+
+export const metadata: Metadata = {
+  title: 'Login',
+  description: "Página de login",
+}
+
+const LoginPage = () => {
     return (
-      <main>
-      </main>
+      <Login />
     );
 }
+
+export default LoginPage
