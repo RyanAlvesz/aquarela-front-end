@@ -32,44 +32,48 @@ const RegisterForm = () => {
     }
 
     const registerUser = async (e: React.FormEvent<HTMLFormElement>) => {
+
         e.preventDefault()
-        
-        const url: string = 'v1/aquarela/inserirUsuarios'
-
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                nome: user.nome,
-                nome_usuario: user.nome_usuario,
-                foto_usuario: "",
-                descricao: "",
-                email: user.email,
-                senha: user.senha,
-                cpf: user.cpf,
-                data_nascimento: user.data_nascimento,
-                telefone: user.telefone,
-                disponibilidade: false
-            }),
-        };
-
-        interface getResp {
-            usuario: User,
-            status_code: number
-        }
-        
-        const resp = await fetchWrapper(url, options)
-        console.log(resp);
 
         if(passwordVerification()){
+
             loader()
-        }
+
+            const url: string = 'v1/aquarela/user'
+
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nome: user.nome,
+                    nome_usuario: user.nome_usuario,
+                    foto_usuario: "",
+                    descricao: "",
+                    email: user.email,
+                    senha: user.senha,
+                    cpf: user.cpf,
+                    data_nascimento: user.data_nascimento,
+                    telefone: user.telefone,
+                    disponibilidade: 0
+                }),
+            };
+
+            interface getResp {
+                usuario: User,
+                status_code: number
+                status: string
+            }
+            
+            const resp = await fetchWrapper<getResp>(url, options)
+            
+            }
+        
     }
 
     return (
-        <form onSubmit={registerUser} className='w-full flex flex-col gap-4 md:gap-y-5 2xl:gap-y-16 md:gap-x-4 2xl:gap-x-12 md:grid md:grid-cols-2'>
+        <form onSubmit={registerUser} className='w-full flex flex-col gap-4 md:gap-y-5 md:gap-x-4 md:grid md:grid-cols-2'>
             <AuthenticationInput 
                 image='user'
                 inputType='text'
