@@ -11,7 +11,7 @@ const LoginForm = () => {
     
     return (
 
-        <form onSubmit={login} className='w-full flex flex-col gap-6 md:gap-y-5 2xl:gap-y-16 md:gap-x-4 2xl:gap-x-12'>
+        <form onSubmit={login} className='w-full flex flex-col gap-6 md:gap-y-5 md:gap-x-4'>
             <AuthenticationInput
                 image="user"
                 inputType="text"
