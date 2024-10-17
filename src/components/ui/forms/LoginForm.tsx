@@ -29,7 +29,7 @@ const LoginForm = () => {
                 required
                 passwordVisibility
             />
-            <GradientButton label='Login' primaryColor='blue-2' secundaryColor='blue-3' direction='right'/>
+            <GradientButton className="w-full py-3 md:col-span-2" label='Login' primaryColor='blue-2' secundaryColor='blue-3' direction='right'/>
             <AuthenticationChoice/>
             <GoogleButton text='Entre com o Google'/>
         </form>

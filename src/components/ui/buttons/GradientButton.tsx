@@ -10,10 +10,12 @@ interface gradientButtonProps {
     primaryColor: Colors
     secundaryColor: Colors
     direction: gradientDirection
-    label: string
+    label: string,
+    className?: string
+    onClick?: () => void
 }
 
-const GradientButton: React.FC<gradientButtonProps> = ({primaryColor, secundaryColor, direction, label}) => {
+const GradientButton: React.FC<gradientButtonProps> = ({primaryColor, secundaryColor, direction, label, className, onClick}) => {
     
     const getColor = (colorValue: Colors) => { return  colors[colorValue] } 
 
@@ -23,8 +25,9 @@ const GradientButton: React.FC<gradientButtonProps> = ({primaryColor, secundaryC
         
     return(
         <button
+        onClick={onClick}
         style= {gradientStyle}
-        className={`flex items-center justify-center rounded-lg w-full py-3 md:col-span-2`}>
+        className={`flex items-center justify-center rounded-lg ` + className}>
             <p className={`text-white font-medium text-subtitle-mobile md:text-subtitle-desktop`}>{label}</p>
         </button>
     )
