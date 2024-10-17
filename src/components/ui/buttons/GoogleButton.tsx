@@ -1,6 +1,6 @@
 import Image from "next/image"
 import React from "react"
-import googleSVG from "/public/images/svg/google.svg"
+import googleSVG from "$/public/images/svg/google.svg"
 
 interface googleButtonProps {
     text: string

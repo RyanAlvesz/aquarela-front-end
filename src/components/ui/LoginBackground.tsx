@@ -1,5 +1,5 @@
 import Image from "next/image"
-import vector from "@/../public/images/svg/login-vector.svg"
+import vector from "$/public/images/svg/login-vector.svg"
 
 const LoginBackground = () => {
     return (

@@ -1,9 +1,9 @@
 'use client'
 
 import Image from "next/image";
-import whiteArrowLeft from "/public/images/svg/white-arrow-left.svg";
-import blueArrowLeft from "/public/images/svg/blue-arrow-left.svg";
-import darkBlueArrowLeft from "/public/images/svg/dark-blue-arrow-left.svg";
+import whiteArrowLeft from "$/public/images/svg/white-arrow-left.svg";
+import blueArrowLeft from "$/public/images/svg/blue-arrow-left.svg";
+import darkBlueArrowLeft from "$/public/images/svg/dark-blue-arrow-left.svg";
 import { useRouter } from "next/navigation";
 import React from "react";
 

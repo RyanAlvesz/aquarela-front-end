@@ -6,15 +6,15 @@ import Image from "next/image";
 import { IInputState, setInputValue } from "@/store/inputSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 
-import birthdayCake from '/public/images/svg/birthday-cake.svg'
-import cpf from '/public/images/svg/cpf.svg'
-import mail from '/public/images/svg/mail.svg'
-import passwordLock from '/public/images/svg/password-lock.svg'
-import telephone from '/public/images/svg/telephone.svg'
-import user from '/public/images/svg/user.svg'
-import nickname from '/public/images/svg/nickname.svg'
-import eyeOpen from '/public/images/svg/eye-open.svg'
-import eyeClosed from '/public/images/svg/eye-closed.svg'
+import birthdayCake from '$/public/images/svg/birthday-cake.svg'
+import cpf from '$/public/images/svg/cpf.svg'
+import mail from '$/public/images/svg/mail.svg'
+import passwordLock from '$/public/images/svg/password-lock.svg'
+import telephone from '$/public/images/svg/telephone.svg'
+import user from '$/public/images/svg/user.svg'
+import nickname from '$/public/images/svg/nickname.svg'
+import eyeOpen from '$/public/images/svg/eye-open.svg'
+import eyeClosed from '$/public/images/svg/eye-closed.svg'
 
 const icons = {
     birthdayCake,
