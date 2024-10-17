@@ -23,16 +23,22 @@ const alert = ({title, icon}: alertProps): void => {
 const loader = (): void => {
     Swal.fire({
         position: 'center',
+        title: `<h1 class="text-blue-2 text-2xl md:text-4xl">Carregando...</h1>`,
         html: `<div class="flex items-center justify-center w-full h-12 mb-[0.9rem]"> <div class="loader"> </div> </div>`,
-        imageUrl: `https://firebasestorage.googleapis.com/v0/b/tcc-aquarela.appspot.com/o/aquarela-6.png?alt=media&token=4877d9b2-5da3-40b7-9cea-e367c7e09be8`,
         padding: '0.5rem 1.5rem 1.5rem',
         showConfirmButton: false,
-        width: '25rem',
+        width: '20rem',
         background: '#E2E8EB',
         heightAuto: false,
+        customClass: {
+            popup: 'alert-rounded'
+        }
     })
 } 
 
+const stopLoader = (): void => {
+    Swal.close()
+}
 
 export default alert
-export {loader}
+export {loader,stopLoader}
