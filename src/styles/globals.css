@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .fade-animation{
+    @apply animate-fade animate-once animate-duration-1000 animate-delay-200 animate-ease-in-out;
+  }
+}
+
 *{
   padding: 0;
   margin: 0;
@@ -20,17 +26,25 @@ input[type="date"]::-webkit-input-placeholder{
   visibility: hidden !important;
 }
 
-*::-webkit-scrollbar {
+section::-webkit-scrollbar {
   width: 4px;               
 }
 
-*::-webkit-scrollbar-track {
+section::-webkit-scrollbar-track {
   background: rgb(var(--blue-8));        
 }
 
-*::-webkit-scrollbar-thumb {
+section::-webkit-scrollbar-thumb {
   background-color: rgb(var(--blue-3));    
   border-radius: 20px;       
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+.alert-rounded{
+  border-radius: 16px;
 }
 
 :root {
