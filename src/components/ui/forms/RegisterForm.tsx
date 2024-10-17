@@ -19,10 +19,10 @@ const RegisterForm: React.FC = () => {
 
     const user: User & {validacao_senha: string} = {
         nome: useAppSelector((state) => state.input.name),
-        nome_usuario: useAppSelector((state) => state.input.nickname),
+        nome_usuario: useAppSelector((state) => state.input.registerNickname),
         email: useAppSelector((state) => state.input.email),
         cpf: useAppSelector((state) => state.input.cpf).replace(/\D/g, ''),
-        senha: useAppSelector((state) => state.input.password),
+        senha: useAppSelector((state) => state.input.registerPassword),
         validacao_senha: useAppSelector((state) => state.input.confirmPassword),
         data_nascimento: useAppSelector((state) => state.input.birthday),
         telefone: useAppSelector((state) => state.input.telephone).replace(/\D/g, ''),
@@ -96,7 +96,7 @@ const RegisterForm: React.FC = () => {
             <AuthenticationInput 
                 image='nickname'
                 inputType='text'
-                name='nickname'
+                name='registerNickname'
                 placeholder='Apelido'
                 required = {true}
                 maxChar={150}
@@ -120,7 +120,7 @@ const RegisterForm: React.FC = () => {
             <AuthenticationInput 
                 image='passwordLock'
                 inputType='password'
-                name='password'
+                name='registerPassword'
                 placeholder='Senha'
                 required = {true}
                 passwordVisibility
