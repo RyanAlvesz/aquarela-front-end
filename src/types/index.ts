@@ -1,4 +1,5 @@
 export interface User {
+    id?: number
     nome: string;
     nome_usuario: string;
     foto_usuario?: string;
@@ -23,6 +24,10 @@ export interface Address {
     status: boolean;
 };
 
+export interface Category {
+    id: number
+    nome: string
+}
 
 
 
