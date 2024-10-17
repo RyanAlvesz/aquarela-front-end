@@ -5,13 +5,18 @@ import GradientButton from '@/components/ui/buttons/GradientButton';
 import AuthenticationInput from '../inputs/AuthenticationInput';
 import GoogleButton from '../buttons/GoogleButton';
 import AuthenticationChoice from '../AuthenticationChoice'
-import { useAppSelector } from "@/store/store";
+import { RootState, useAppDispatch, useAppSelector } from "@/store/store";
 import { User } from '@/types';
-import alert, { loader } from '@/types/alert';
+import alert, { loader, stopLoader } from '@/types/alert';
 import { fetchWrapper } from '@/lib/api/fetch';
+import { setUser } from '@/store/userSlice';
+import { useRouter } from 'next/navigation';
 
-const RegisterForm = () => {
-    
+const RegisterForm: React.FC = () => {
+
+    const dispatch = useAppDispatch();
+    const router = useRouter()
+
     const user: User & {validacao_senha: string} = {
         nome: useAppSelector((state) => state.input.name),
         nome_usuario: useAppSelector((state) => state.input.nickname),
@@ -68,7 +73,13 @@ const RegisterForm = () => {
             
             const resp = await fetchWrapper<getResp>(url, options)
             
+            if (resp && resp.usuario) {
+                dispatch(setUser(resp.usuario));
+                stopLoader()
+                router.push('/preferences')
             }
+
+        }
         
     }
 
@@ -140,7 +151,7 @@ const RegisterForm = () => {
                 required = {true}
                 maxChar={15}
             />
-            <GradientButton label='Cadastrar' primaryColor='blue-1' secundaryColor='blue-3' direction='left'/>
+            <GradientButton className="w-full py-3 md:col-span-2" label='Cadastrar' primaryColor='blue-1' secundaryColor='blue-3' direction='left'/>
             <AuthenticationChoice />
             <GoogleButton text='Cadastre com o Google'/>
         </form>
