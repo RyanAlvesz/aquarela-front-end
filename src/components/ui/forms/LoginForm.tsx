@@ -4,10 +4,89 @@ import AuthenticationChoice from "../AuthenticationChoice"
 import AuthenticationInput from "../inputs/AuthenticationInput"
 import GradientButton from "../buttons/GradientButton";
 import GoogleButton from "../buttons/GoogleButton";
+import { fetchWrapper } from "@/lib/api/fetch";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { User } from "@/types";
+import alert, { loader, stopLoader } from "@/types/alert";
+import { setUser } from "@/store/userSlice";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
+
+    const dispatch = useAppDispatch()
+    const router = useRouter()
+
+    interface LoginUser {
+        login: string
+        senha: string
+    }
+
+    const user: LoginUser = {
+        login: useAppSelector((state) => state.input.loginNickname),
+        senha: useAppSelector((state) => state.input.loginPassword)
+    }
+
     
-    const login = () => {}
+    interface respProps{
+        status: boolean
+        status_code: number
+        message: string
+        usuario: User[]
+    }
+
+    const emailValidation = async() => {
+        const url = 'v1/aquarela/authentication/user/email'
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: user.login,
+                senha: user.senha
+            }),
+        };
+        const resp = await fetchWrapper<respProps>(url, options)
+        return resp
+    }
+
+    const nicknameValidation = async() => {
+        const url = 'v1/aquarela/authentication/user/name'
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                nome: user.login,
+                senha: user.senha
+            }),
+        };
+        const resp = await fetchWrapper<respProps>(url, options)
+        return resp
+    }
+
+    const login = async(e: React.FormEvent<HTMLFormElement>) => {
+
+        loader()
+        e.preventDefault()
+
+        const emailResp = await emailValidation()
+        const nicknameResp = await nicknameValidation()
+
+        if(emailResp.status){
+            dispatch(setUser(emailResp.usuario[0]))  
+            stopLoader()
+            router.push('/home/feed')          
+        }else if(nicknameResp.status){
+            dispatch(setUser(nicknameResp.usuario[0]))
+            stopLoader()
+            router.push('/home/feed')
+        }else{
+            alert({icon:"error", title:"Usuário não encontrado!"})
+        }
+
+    }
     
     return (
 
@@ -16,7 +95,7 @@ const LoginForm = () => {
                 image="user"
                 inputType="text"
                 maxChar={150}
-                name="nickname"
+                name="loginNickname"
                 placeholder="Usuário ou email"
                 required
             />
@@ -24,7 +103,7 @@ const LoginForm = () => {
                 image="passwordLock"
                 inputType="password"
                 maxChar={150}
-                name="password"
+                name="loginPassword"
                 placeholder="Senha"
                 required
                 passwordVisibility
