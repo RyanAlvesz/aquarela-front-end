@@ -1,6 +1,8 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 import { inputReducer } from "@/store/inputSlice";
+import { userReducer } from "./userSlice";
+import { selectedCategoriesReducer } from "@/store/categoriesSlice";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -19,8 +21,27 @@ const inputPersistConfig = {
     ],
 }
 
+const userPersistConfig = {
+    key: "user",
+    storage: storage,
+    whitelist: [
+        'nome',
+        'nome_usuario',
+        'email',
+        'senha',
+        'cpf',
+        'data_nascimento',
+        'telefone',
+        'foto_usuario',
+        'descricao',
+        'disponibilidade',
+    ],
+};
+
 const rootReducer = combineReducers({
     input: persistReducer(inputPersistConfig, inputReducer),
+    selectedCategories: selectedCategoriesReducer,
+    user: persistReducer(userPersistConfig, userReducer),
 });   
 
 export const store = configureStore({
