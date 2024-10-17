@@ -5,6 +5,7 @@ import { userReducer } from "./userSlice";
 import { selectedCategoriesReducer } from "@/store/categoriesSlice";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { scrollReducer } from "./scrollSlice";
 
 const inputPersistConfig = {
     key: "inputs",
@@ -42,6 +43,7 @@ const rootReducer = combineReducers({
     input: persistReducer(inputPersistConfig, inputReducer),
     selectedCategories: selectedCategoriesReducer,
     user: persistReducer(userPersistConfig, userReducer),
+    scroll: scrollReducer
 });   
 
 export const store = configureStore({

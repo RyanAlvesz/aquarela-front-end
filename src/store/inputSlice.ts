@@ -3,10 +3,12 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface IInputState {
     name: string;
-    nickname: string;
+    registerNickname: string;
+    loginNickname: string;
     email: string;
     cpf: string;
-    password: string;
+    registerPassword: string;
+    loginPassword: string;
     confirmPassword: string;
     birthday: string;
     telephone: string;
@@ -14,10 +16,12 @@ export interface IInputState {
 
 const inputInitialState: IInputState = {
     name: "",
-    nickname: "",
+    registerNickname: "",
+    loginNickname: "",
     email: "",
     cpf: "",
-    password: "",
+    registerPassword: "",
+    loginPassword: "",
     confirmPassword: "",
     birthday: "",
     telephone: "",
@@ -36,10 +40,12 @@ export const inputSlice = createSlice({
         },
         resetInputs: (state) => {
             state.name = "";
-            state.nickname = "";
+            state.registerNickname = "";
+            state.loginNickname = "";
             state.email = "";
             state.cpf = "";
-            state.password = "";
+            state.registerPassword = "";
+            state.loginPassword = "";
             state.confirmPassword = "";
             state.birthday = "";
             state.telephone = "";
