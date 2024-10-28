@@ -1,24 +1,27 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
-import { inputReducer } from "@/store/inputSlice";
-import { userReducer } from "./userSlice";
-import { selectedCategoriesReducer } from "@/store/categoriesSlice";
-import { persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import { scrollReducer } from "./scrollSlice";
+import { combineReducers, configureStore } from "@reduxjs/toolkit"
+import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux"
+import { inputReducer } from "@/store/inputSlice"
+import { userReducer } from "./userSlice"
+import { selectedCategoriesReducer } from "@/store/categoriesSlice"
+import { persistReducer } from "redux-persist"
+import storage from "redux-persist/lib/storage"
+import { scrollReducer } from "./scrollSlice"
+import { searchReducer } from "@/store/searchSlice"
 
 const inputPersistConfig = {
     key: "inputs",
     storage: storage,
     whitelist: [
         'name',
-        'nickname',
+        'registerNickname',
+        'loginNickname',
         'email',
         'cpf',
-        'password',
+        'registerPassword',
+        'loginPassword',
         'confirmPassword',
         'birthday',
-        'telephone'
+        'telephone',
     ],
 }
 
@@ -26,10 +29,10 @@ const userPersistConfig = {
     key: "user",
     storage: storage,
     whitelist: [
+        'id',
         'nome',
         'nome_usuario',
         'email',
-        'senha',
         'cpf',
         'data_nascimento',
         'telefone',
@@ -43,7 +46,8 @@ const rootReducer = combineReducers({
     input: persistReducer(inputPersistConfig, inputReducer),
     selectedCategories: selectedCategoriesReducer,
     user: persistReducer(userPersistConfig, userReducer),
-    scroll: scrollReducer
+    scroll: scrollReducer,
+    search: searchReducer,
 });   
 
 export const store = configureStore({
