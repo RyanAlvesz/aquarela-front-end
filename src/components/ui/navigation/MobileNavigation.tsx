@@ -1,48 +1,43 @@
-import Image from "next/image"
-import Link from "next/link"
+'use client'
 
 import homeSVG from "$/public/images/svg/home.svg";
 import historySVG from "$/public/images/svg/history.svg";
 import chatSVG from "$/public/images/svg/chat.svg";
+
 import React from "react";
-import { User } from "@/types";
+import { RootState, useAppSelector } from "@/store/store";
+import CreatePublicationButton from "../buttons/CreatePublicationButton";
+import MobileNavBarButton from "../buttons/MobileNavBarButton";
+import ProfileButton from "../buttons/ProfileButton";
 
-interface mobileNavigationProps {
-    user: User
-}
+const MobileNavigation: React.FC = () => {
 
-const MobileNavigation: React.FC<mobileNavigationProps> = ({user}) => {
+    const user = useAppSelector((state: RootState) => state.user)
+    
     return (
-        <div className="flex items-center justify-between h-[8vh] fixed bottom-0 right-0 left-0 bg-white">
-            <Link href={'/home/feed'}>
-                <Image 
-                    alt="Página principal" 
-                    src={homeSVG} 
-                    className="h-8"
-                />
-            </Link>
-            <Link href={'/home/history'}>
-                <Image 
-                    alt="Histórico" 
-                    src={historySVG} 
-                    className="h-8"
-                />
-            </Link>
-            <Link href={'/home/chat'}>
-                <Image 
-                    alt="Conversa" 
-                    src={chatSVG} 
-                    className="h-8"
-                />
-            </Link>
-            <Link href={'/home/profile'}>
-                <Image 
-                    alt={user.nome} 
-                    src={user.foto_usuario? user.foto_usuario : chatSVG} 
-                    className="h-8"
-                />
-            </Link>
-        </div>
+        <nav className="flex items-center justify-between h-[8vh] py-2 px-6 fixed bottom-0 right-0 left-0 bg-white md:hidden">
+            <MobileNavBarButton
+                alt="Página inicial"
+                image={homeSVG}
+                link={'/home/feed'}
+            />
+            <MobileNavBarButton
+                alt="Histórico"
+                image={historySVG}
+                link={'/home/history'}
+            />
+            <CreatePublicationButton />
+            <MobileNavBarButton
+                alt="Conversa"
+                image={chatSVG}
+                link={'/home/chat'}
+            />
+            <ProfileButton
+                id={user.id as number}
+                user={user}
+                className="h-[calc(7vh-0.5rem)] w-[calc(7vh-0.5rem)]"
+            />
+        </nav>
     )
 }
 

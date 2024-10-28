@@ -1,26 +1,15 @@
 'use client'
 
-import MobileNavigation from "@/components/ui/navigation/MobileNavigation"
+import DesktopNavBar from "@/components/ui/navigation/DesktopNavBar"
 import ReduxProvider from "@/store/redux-provider"
-import { User } from "@/types";
-
-let user: User
 
 const HomeLayout = ({children}: {children: React.ReactNode}) => {
-    user = {
-        cpf: '',
-        data_nascimento: '',
-        email: '', 
-        nome: '',
-        nome_usuario: '',
-        senha: '',
-        telefone:''
-    }
     
     return(
         <ReduxProvider>
-            <div className="bg-blue-7 h-screen">
-                <MobileNavigation user={user}/>
+            <div className="bg-blue-7 md:bg-white h-screen md:pt-[calc(10.5vh+1rem)]">
+                <DesktopNavBar />
+                {children}
             </div>
         </ReduxProvider>
     )
