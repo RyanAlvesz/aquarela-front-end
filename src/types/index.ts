@@ -7,9 +7,10 @@ export interface User {
     email: string;
     senha: string;
     cpf: string;
-    data_nascimento: string; 
+    data_nascimento: string;
     telefone: string;
     disponibilidade?: boolean;
+    avaliacao?: number
 }
 
 export interface Address {
@@ -27,6 +28,43 @@ export interface Address {
 export interface Category {
     id: number
     nome: string
+}
+
+export interface Image {
+    id_imagem: number,
+    url: string
+}
+
+export interface Product {
+    tipo: 'produto',
+    id_publicacao: number,
+    nome: string,
+    descricao: string,
+    item_digital: boolean,
+    marca_dagua: boolean,
+    preco: number,
+    quantidade: number,
+    id_dono_publicacao: number,
+    curtida: boolean,
+    preferencia: boolean,
+    dono_publicacao: User
+    imagens: Image[]
+}
+
+export interface Publication {
+    tipo: 'postagem',
+    id_publicacao: number,
+    nome: string,
+    descricao: string,
+    item_digital: null,
+    marca_dagua: null,
+    preco: null,
+    quantidade: null,
+    id_dono_publicacao: number,
+    curtida: boolean,
+    preferencia: boolean,
+    dono_publicacao: User
+    imagens: Image[]
 }
 
 
