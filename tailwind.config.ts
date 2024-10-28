@@ -40,6 +40,9 @@ const config: Config = {
         'body-desktop': '1.25rem',
         'secondary-desktop': '1rem',
       },
+      boxShadow: {
+        'feed-item': 'inset 0 4px 4px rgba(0, 0, 0, 0.25)',
+      },
     },
     screens: {
       'sm': '640px',
