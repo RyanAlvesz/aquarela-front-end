@@ -6,6 +6,9 @@
   .fade-animation{
     @apply animate-fade animate-once animate-duration-1000 animate-delay-200 animate-ease-in-out;
   }
+  .fade-up-animation{
+    @apply animate-fade-up animate-once animate-duration-1000 animate-delay-200 animate-ease-in-out;
+  }
 }
 
 *{
