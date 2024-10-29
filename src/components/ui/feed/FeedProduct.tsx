@@ -55,7 +55,7 @@ const FeedProduct: React.FC<feedProductProps> = ({ product }) => {
                 height = Math.max(baseHeight, ((imgHeight * divWidth) / imgWidth) + baseHeight)
             }
         }
-        return Math.ceil(height / 22)
+        return Math.ceil(height / 10)
     }
 
     const handleClick = () => {
@@ -64,7 +64,7 @@ const FeedProduct: React.FC<feedProductProps> = ({ product }) => {
 
     return (
         <div
-            className={`my-2 flex flex-col gap-2`}
+            className={`flex flex-col gap-2 p-2`}
             style={{
                 gridRowEnd: `span ${calculateGridRowEnd()}`,
                 minHeight: '2.5rem',

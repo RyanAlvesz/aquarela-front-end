@@ -12,7 +12,7 @@ const DinamicFeed: React.FC<dinamicFeedProps> = ({ feed }) => {
 
   return (
 
-    <div className="h-fit grid gap-4 bg-blue-7 md:bg-white px-6 pb-[12vh] grid-cols-[repeat(auto-fill,minmax(calc((100vw-4rem)/2),1fr))] md:grid-cols-[repeat(auto-fill,minmax(188px,1fr))] auto-rows-[10px] justify-center">
+    <div className="h-fit grid bg-blue-7 md:bg-white px-4 pb-[12vh] grid-cols-[repeat(auto-fill,minmax(calc((100vw-4rem)/2),1fr))] md:grid-cols-[repeat(auto-fill,minmax(188px,1fr))] auto-rows-[10px] justify-center">
       {feed.map((item) => {
         if (item.tipo === 'produto') {
           return (
