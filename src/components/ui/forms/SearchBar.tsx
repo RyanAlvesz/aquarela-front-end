@@ -35,7 +35,7 @@ const SearchBar = () => {
                 placeholder="Pesquisar..."
                 value={query}
                 onChange={(e) => {dispatch(setQuery(e.target.value))}}
-                className="grow h-full bg-transparent text-blue-2 placeholder:text-blue-2 md:placeholder:text-body-desktop md:text-body-desktop"
+                className="grow h-full bg-transparent text-blue-2 placeholder:text-blue-2 md:placeholder:text-lg md:text-lg"
             />
             <button className="h-full" onClick={handleSearch}>
                 <Image
