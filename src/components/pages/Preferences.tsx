@@ -24,10 +24,9 @@ const Preferences: React.FC = () => {
 
     useEffect(() => {
         const fetchCategories = async () => {
-        const resp = await fetchWrapper<GetResp>(url, options)
-        setCategories(resp.categorias || [])
+            const resp = await fetchWrapper<GetResp>(url, options)
+            setCategories(resp.categorias || [])
         }
-
         fetchCategories()
     }, [])
 
