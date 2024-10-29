@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import GradientButton from '@/components/ui/buttons/GradientButton';
 import AuthenticationInput from '../inputs/AuthenticationInput';
 import GoogleButton from '../buttons/GoogleButton';
@@ -12,10 +12,16 @@ import { fetchWrapper } from '@/lib/api/fetch';
 import { setUser } from '@/store/userSlice';
 import { useRouter } from 'next/navigation';
 
+interface usersResp {
+    usuarios: User[]
+}
+
 const RegisterForm: React.FC = () => {
 
     const dispatch = useAppDispatch();
     const router = useRouter()
+
+    const [users, setUsers] = useState<User[]>([])
 
     const user: User & {validacao_senha: string} = {
         nome: useAppSelector((state) => state.input.name),
@@ -28,19 +34,57 @@ const RegisterForm: React.FC = () => {
         telefone: useAppSelector((state) => state.input.telephone).replace(/\D/g, ''),
     }
 
+    useEffect(() => {        
+        const fetchUsers = async () => {
+            const resp = await fetchWrapper<usersResp>('v1/aquarela/users')
+            setUsers(resp.usuarios)
+        }
+        fetchUsers()
+    }, [])
+
+    const alreadyRegisteredInfoValidation = (): boolean => {
+        
+        let response = true
+        
+        users.forEach((registeredUser) => {
+            if(
+                user.cpf === registeredUser.cpf
+            ){                
+                alert({icon:'warning', title:'CPF já cadastrado'})
+                response = false
+            } else if (
+                user.nome_usuario === registeredUser.nome_usuario
+            ) {
+                alert({icon:'warning', title:'Apelido já cadastrado'})
+                response = false
+            } else if (
+                user.email === registeredUser.email
+            ) {
+                alert({icon:'warning', title:'E-mail já cadastrado'})
+                response = false
+            }
+        })
+
+        return response
+    }
+
     const passwordVerification = (): boolean => {
         if (user.senha != user.validacao_senha){
             alert({icon:'warning', title:'Senhas diferentes'})
             return false
-        }else
+        } else {
             return true
+        } 
     }
 
     const registerUser = async (e: React.FormEvent<HTMLFormElement>) => {
 
-        e.preventDefault()
+        e.preventDefault()        
 
-        if(passwordVerification()){
+        console.log(alreadyRegisteredInfoValidation());
+        if(passwordVerification() && alreadyRegisteredInfoValidation()){
+
+            
 
             loader()
 
