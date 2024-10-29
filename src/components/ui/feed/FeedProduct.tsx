@@ -38,7 +38,7 @@ const FeedProduct: React.FC<feedProductProps> = ({ product }) => {
 
     const calculateGridRowEnd = () => {
 
-        const baseHeight = 40
+        const baseHeight = 50
         let height = baseHeight
 
         if (imageDimensions) {
@@ -55,11 +55,11 @@ const FeedProduct: React.FC<feedProductProps> = ({ product }) => {
                 height = Math.max(baseHeight, ((imgHeight * divWidth) / imgWidth) + baseHeight)
             }
         }
-        return Math.ceil(height / 10)
+        return Math.ceil(height)
     }
 
     const handleClick = () => {
-        router.push('/create/product')
+        router.push('/home/product/' + product.id_publicacao)
     }
 
     return (
@@ -86,7 +86,7 @@ const FeedProduct: React.FC<feedProductProps> = ({ product }) => {
                     user={product.dono_publicacao}
                     className="w-8 h-8"
                 />
-                <h2 className="font-medium text-secondary-mobile text-blue-1">{`R$: ${product.preco}`}</h2>
+                <h2 className="font-medium text-secondary-mobile md:text-[14px] text-blue-1">{`R$: ${product.preco}`}</h2>
                 <button className="h-8 w-8" onClick={handleLike}>
                     <Image
                         alt='Curtida'

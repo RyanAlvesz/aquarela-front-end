@@ -38,7 +38,7 @@ const FeedPublication: React.FC<feedPublicationProps> = ({ publication }) => {
 
     const calculateGridRowEnd = () => {
 
-        const baseHeight = 40
+        const baseHeight = 50
         let height = baseHeight
 
         if (imageDimensions) {
@@ -48,18 +48,18 @@ const FeedPublication: React.FC<feedPublicationProps> = ({ publication }) => {
                 if (imgWidth === 188) {
                     height = Math.max(baseHeight, imgHeight)
                 } else {
-                    height = Math.max(baseHeight, ((imgHeight * 200) / imgWidth) + baseHeight);
+                    height = Math.max(baseHeight, ((imgHeight * 188) / imgWidth) + baseHeight);
                 }
             } else {
                 const divWidth = ((windowWidth as number - 4 * 16) / 2)
                 height = Math.max(baseHeight, ((imgHeight * divWidth) / imgWidth) + baseHeight)
             }
         }
-        return Math.ceil(height / 10)
+        return Math.ceil(height)
     }
 
     const handleClick = () => {
-        router.push('/create/publication')
+        router.push('/home/publication/' + publication.id_publicacao)
     }
 
     return (
@@ -87,7 +87,7 @@ const FeedPublication: React.FC<feedPublicationProps> = ({ publication }) => {
                         user={publication.dono_publicacao}
                         className="w-8 h-8"
                     />
-                    <h2 className="font-medium text-secondary-mobile text-blue-1">{`@${publication.dono_publicacao.nome_usuario}`}</h2>
+                    <h2 className="font-medium text-secondary-mobile md:text-[14px] text-blue-1">{`@${publication.dono_publicacao.nome_usuario}`}</h2>
                 </div>
                 <button className="h-8 w-8" onClick={handleLike}>
                     <Image

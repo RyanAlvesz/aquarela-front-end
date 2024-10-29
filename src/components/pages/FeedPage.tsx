@@ -35,7 +35,7 @@ const FeedPage = () => {
 
   return (
     <>
-      <main className="h-full flex flex-col bg-blue-7 md:bg-white pt-5 gap-6 md:gap-5">
+      <main className="h-full flex flex-col bg-blue-7 md:bg-white pt-5 md:pt-0 gap-3 md:gap-2">
         <MobileSearchArea />
         <DinamicFeed feed={feedItems} />
       </main>
