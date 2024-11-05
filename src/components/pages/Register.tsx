@@ -1,7 +1,7 @@
 'use client'
 
 import ReduxProvider from "@/store/redux-provider"
-import AuthenticationTitle from '@/components/ui/AuthenticationTitle';
+import AuthenticationTitle from '@/components/ui/text/AuthenticationTitle';
 import AuthenticationForm from '@/components/ui/forms/RegisterForm';
 
 const Register = () => {

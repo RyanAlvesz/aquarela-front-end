@@ -1,8 +1,8 @@
 'use client'
 
 import ReduxProvider from "@/store/redux-provider"
-import AuthenticationTitle from '@/components/ui/AuthenticationTitle';
-import LoginBackground from "../ui/LoginBackground";
+import AuthenticationTitle from '@/components/ui/text/AuthenticationTitle';
+import LoginBackground from "../ui/background/LoginBackground";
 import LoginForm from "../ui/forms/LoginForm";
 
 const Login = () => {

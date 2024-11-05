@@ -2,11 +2,11 @@ import Image from "next/image"
 import React from "react"
 import googleSVG from "$/public/images/svg/google.svg"
 
-interface googleButtonProps {
+interface GoogleButtonProps {
     text: string
 }
 
-const GoogleButton: React.FC<googleButtonProps> = ({text}) => {
+const GoogleButton: React.FC<GoogleButtonProps> = ({text}) => {
     return (
         <button
             className="w-full h-fit bg-blue-2 rounded-full grid grid-cols-[auto_1fr] items-center justify-center p-2 px-3 md:col-span-2"

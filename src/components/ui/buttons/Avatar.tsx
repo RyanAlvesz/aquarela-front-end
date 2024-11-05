@@ -5,16 +5,16 @@ import React from "react"
 import standardProfile from "$/public/images/paintings/standard-profile-picture.jpg";
 import { User } from "@/types";
 
-interface profileButtonProps {
+interface AvatarProps {
     user: User
     className?: string,
-    id: number
+    nickname: string
 }
 
-const ProfileButton: React.FC<profileButtonProps> = ({user, className, id}) => {    
+const Avatar: React.FC<AvatarProps> = ({user, className, nickname}) => {    
     return (
         <Link 
-            href={'/home/profile/' + id}
+            href={'/home/profile/' + nickname}
             className= {`shrink-0 rounded-full flex items-center justify-center aspect-square overflow-hidden ${className}`}
         >
                 <Image 
@@ -25,4 +25,4 @@ const ProfileButton: React.FC<profileButtonProps> = ({user, className, id}) => {
     )
 }
 
-export default ProfileButton
+export default Avatar

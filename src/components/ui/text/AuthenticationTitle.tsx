@@ -1,11 +1,11 @@
 import React from "react";
 
-interface authenticationTitleProps {
+interface AuthenticationTitleProps {
     title: string
     subtitle: string
 }
 
-const AuthenticationTitle: React.FC<authenticationTitleProps> = ({title, subtitle}) => {
+const AuthenticationTitle: React.FC<AuthenticationTitleProps> = ({title, subtitle}) => {
     return (
         <div className="flex flex-col gap-2 items-center justify-center">
           <h1 className="text-blue-2 font-medium text-title-mobile">{title}</h1>

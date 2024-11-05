@@ -4,14 +4,14 @@ import Image from "next/image"
 import Link from "next/link"
 import React from "react"
 
-interface createPublicationChoiceButtonProps {
+interface CreatePublicationChoiceButtonProps {
     link: Url,
     alt: string, 
     image: string | StaticImport,
     text: string
 }
 
-const CreatePublicationChoiceButton: React.FC<createPublicationChoiceButtonProps> = ({link, alt, image, text}) => {
+const CreatePublicationChoiceButton: React.FC<CreatePublicationChoiceButtonProps> = ({link, alt, image, text}) => {
     return(
         <Link href={link} className="bg-blue-1 h-[18vh] w-[18vh] shrink-0 rounded-lg text-center flex flex-col items-center justify-center gap-1 text-white text-[0.8rem] p-3 font-medium">
         <Image

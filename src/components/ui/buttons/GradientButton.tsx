@@ -6,7 +6,7 @@ import React from "react";
 type Colors = keyof typeof colors
 type gradientDirection = 'top' | 'right' | 'bottom' | 'left'
 
-interface gradientButtonProps {
+interface GradientButtonProps {
     primaryColor: Colors
     secundaryColor: Colors
     direction: gradientDirection
@@ -15,7 +15,7 @@ interface gradientButtonProps {
     onClick?: () => void
 }
 
-const GradientButton: React.FC<gradientButtonProps> = ({primaryColor, secundaryColor, direction, label, className, onClick}) => {
+const GradientButton: React.FC<GradientButtonProps> = ({primaryColor, secundaryColor, direction, label, className, onClick}) => {
     
     const getColor = (colorValue: Colors) => { return  colors[colorValue] } 
 

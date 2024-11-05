@@ -5,12 +5,12 @@ import Link from "next/link"
 import React from "react"
 import { usePathname } from 'next/navigation'
 
-interface desktopNavBarLinkProps {
+interface DesktopNavBarLinkProps {
     link: Url
     text: string
 }
 
-const DesktopNavBarLink: React.FC<desktopNavBarLinkProps> = ({link, text}) => {
+const DesktopNavBarLink: React.FC<DesktopNavBarLinkProps> = ({link, text}) => {
 
     const pathname = usePathname()  
     

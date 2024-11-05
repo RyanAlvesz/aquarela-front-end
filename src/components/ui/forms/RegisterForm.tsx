@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import GradientButton from '@/components/ui/buttons/GradientButton';
 import AuthenticationInput from '../inputs/AuthenticationInput';
 import GoogleButton from '../buttons/GoogleButton';
-import AuthenticationChoice from '../AuthenticationChoice'
-import { RootState, useAppDispatch, useAppSelector } from "@/store/store";
+import AuthenticationChoice from '../text/AuthenticationChoice'
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import { User } from '@/types';
 import alert, { loader, stopLoader } from '@/types/alert';
 import { fetchWrapper } from '@/lib/api/fetch';
@@ -83,8 +83,6 @@ const RegisterForm: React.FC = () => {
 
         console.log(alreadyRegisteredInfoValidation());
         if(passwordVerification() && alreadyRegisteredInfoValidation()){
-
-            
 
             loader()
 

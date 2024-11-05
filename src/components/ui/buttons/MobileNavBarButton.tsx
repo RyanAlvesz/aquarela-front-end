@@ -4,13 +4,13 @@ import Image from "next/image"
 import Link from "next/link"
 import React from "react"
 
-interface mobileNavBarButtonProps {
+interface MobileNavBarButtonProps {
     image: string | StaticImport,
     alt: string,
     link: Url
 }
 
-const MobileNavBarButton: React.FC<mobileNavBarButtonProps> = ({image, alt, link}) => {
+const MobileNavBarButton: React.FC<MobileNavBarButtonProps> = ({image, alt, link}) => {
     return(
         <Link href={link} className="flex items-center justify-center w-[calc(7vh-0.5rem)]">
             <Image 

@@ -2,14 +2,14 @@
 
 import { Category } from "@/types";
 import React from "react";
-import PreferencesButton from "./buttons/PreferencesButton";
+import PreferencesButton from "../buttons/PreferencesButton";
 import { RootState, useAppSelector } from "@/store/store";
 
-interface preferencesButtonGridProps {
+interface PreferencesButtonGridProps {
     categories: Category[]
 }
 
-const PreferencesButtonGrid: React.FC<preferencesButtonGridProps> = ({categories}) => {    
+const PreferencesButtonGrid: React.FC<PreferencesButtonGridProps> = ({categories}) => {    
     
     const selectedCategoryIds = useAppSelector((state: RootState) => state.selectedCategories.ids)  
 

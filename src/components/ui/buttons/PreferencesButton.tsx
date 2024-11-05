@@ -5,13 +5,13 @@ import { useAppDispatch } from "@/store/store";
 import { Category } from "@/types";
 import React from "react";
 
-interface preferencesButtonProps{
+interface PreferencesButtonProps{
     category: Category
     isSelected: boolean
     selectedCategories: number[]
 }
 
-const PreferencesButton: React.FC<preferencesButtonProps> = ({category, selectedCategories, isSelected}) => {
+const PreferencesButton: React.FC<PreferencesButtonProps> = ({category, selectedCategories, isSelected}) => {
 
     const dispatch = useAppDispatch()
     

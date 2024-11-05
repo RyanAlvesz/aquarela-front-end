@@ -1,6 +1,6 @@
 'use client'
 
-import AuthenticationChoice from "../AuthenticationChoice"
+import AuthenticationChoice from "../text/AuthenticationChoice"
 import AuthenticationInput from "../inputs/AuthenticationInput"
 import GradientButton from "../buttons/GradientButton";
 import GoogleButton from "../buttons/GoogleButton";
@@ -26,7 +26,6 @@ const LoginForm = () => {
         senha: useAppSelector((state) => state.input.loginPassword)
     }
 
-    
     interface respProps{
         status: boolean
         status_code: number
@@ -89,7 +88,6 @@ const LoginForm = () => {
     }
     
     return (
-
         <form onSubmit={login} className='w-full flex flex-col gap-6 md:gap-y-5 md:gap-x-4'>
             <AuthenticationInput
                 image="user"

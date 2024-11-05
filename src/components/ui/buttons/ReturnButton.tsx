@@ -7,12 +7,12 @@ import darkBlueArrowLeft from "$/public/images/svg/dark-blue-arrow-left.svg";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-interface returnButtonProps {
+interface ReturnButtonProps {
     width: number;
     color: 'blue' | 'white' | 'darkBlue'
 }
 
-const ReturnButton: React.FC<returnButtonProps> = ({width, color}) => {
+const ReturnButton: React.FC<ReturnButtonProps> = ({width, color}) => {
     
     const router = useRouter()
 

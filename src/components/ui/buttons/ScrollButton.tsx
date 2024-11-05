@@ -2,12 +2,12 @@ import React from "react";
 import arrowImg from "$/public/images/svg/blue-arrow-left.svg"
 import Image from "next/image";
 
-interface scrollButtonProps {
+interface ScrollButtonProps {
     className: string
     onClick: () => void
 }
 
-const ScrollButton: React.FC<scrollButtonProps> = ({onClick, className}) => {
+const ScrollButton: React.FC<ScrollButtonProps> = ({onClick, className}) => {
 
     return(
         <button onClick={onClick} type="button" className={className}>

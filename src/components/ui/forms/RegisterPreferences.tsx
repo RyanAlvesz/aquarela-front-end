@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import GradientButton from "../buttons/GradientButton";
-import PreferencesButtonGrid from "../PreferencesButtonGrid";
-import PreferencesLogoText from "../PreferencesLogoText";
+import PreferencesButtonGrid from "../layout/PreferencesButtonGrid";
+import PreferencesLogoText from "../text/PreferencesLogoText";
 import { Category } from "@/types";
 import { RootState, useAppDispatch, useAppSelector } from "@/store/store";
 import { fetchWrapper } from "@/lib/api/fetch";
@@ -10,11 +10,11 @@ import ScrollButton from "../buttons/ScrollButton";
 import { setScrollPosition } from "@/store/scrollSlice";
 import { useRouter } from "next/navigation";
 
-interface preferencesProps {
+interface PreferencesProps {
     categories: Category[]
 }
 
-const RegisterPreferences: React.FC<preferencesProps> = ({categories}) => {
+const RegisterPreferences: React.FC<PreferencesProps> = ({categories}) => {
 
     const selectedCategoryIds = useAppSelector((state: RootState) => state.selectedCategories.ids)   
     const userResp = useAppSelector((state: RootState) => state.user)        

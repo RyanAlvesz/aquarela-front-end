@@ -26,7 +26,7 @@ const icons = {
     nickname
 }
 
-interface authenticationInputProps {
+interface AuthenticationInputProps {
     placeholder: string
     inputType: 'text' | 'password' | 'email' | 'phone' | 'date'
     required: boolean
@@ -36,7 +36,7 @@ interface authenticationInputProps {
     passwordVisibility?: boolean
 }
 
-const AuthenticationInput: React.FC<authenticationInputProps> = ({ placeholder, inputType, required, name, image, maxChar, passwordVisibility }) => {
+const AuthenticationInput: React.FC<AuthenticationInputProps> = ({ placeholder, inputType, required, name, image, maxChar, passwordVisibility }) => {
 
     const [currentInputType, setCurrentInputType] = useState(inputType)
     const [isPasswordVisible, setIsPasswordVisible] = useState(passwordVisibility)
