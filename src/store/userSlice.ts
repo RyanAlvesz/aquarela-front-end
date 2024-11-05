@@ -1,21 +1,8 @@
+import { User } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-export interface IUser {
-    id?: number;
-    nome: string;
-    nome_usuario: string;
-    foto_usuario?: string;
-    descricao?: string;
-    email: string;
-    senha: string;
-    cpf: string;
-    data_nascimento: string; 
-    telefone: string;
-    disponibilidade?: boolean;
-}
-
-const initialUserState: IUser = {
+const initialUserState: User = {
     id: undefined,
     nome: "",
     nome_usuario: "",
@@ -33,12 +20,12 @@ export const userSlice = createSlice({
     name: "user",
     initialState: initialUserState,
     reducers: {
-        setUser: (state, action: PayloadAction<IUser>) => {
+        setUser: (state, action: PayloadAction<User>) => {
             return { ...state, ...action.payload };
         },
         setUserValue: (
             state,
-            action: PayloadAction<{ field: keyof IUser; value: string | boolean | number | undefined }>
+            action: PayloadAction<{ field: keyof User; value: string | boolean | number | undefined }>
         ) => {
             const { field, value } = action.payload;
             if (field in state) {
