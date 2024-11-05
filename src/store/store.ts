@@ -1,12 +1,13 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux"
 import { inputReducer } from "@/store/inputSlice"
-import { userReducer } from "./userSlice"
 import { selectedCategoriesReducer } from "@/store/categoriesSlice"
+import { searchReducer } from "@/store/searchSlice"
+import { scrollReducer } from "./scrollSlice"
+import { profileReducer } from "./profileSlice"
+import { userReducer } from "./userSlice"
 import { persistReducer } from "redux-persist"
 import storage from "redux-persist/lib/storage"
-import { scrollReducer } from "./scrollSlice"
-import { searchReducer } from "@/store/searchSlice"
 
 const inputPersistConfig = {
     key: "inputs",
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
     user: persistReducer(userPersistConfig, userReducer),
     scroll: scrollReducer,
     search: searchReducer,
+    profile: profileReducer
 });   
 
 export const store = configureStore({
