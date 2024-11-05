@@ -5,12 +5,18 @@ export interface User {
     foto_usuario?: string;
     descricao?: string;
     email: string;
-    senha: string;
+    senha?: string;
     cpf: string;
     data_nascimento: string;
     telefone: string;
     disponibilidade?: boolean;
-    avaliacao?: number
+    avaliacao?: number | null
+    seguidores?: number,
+    seguindo?: number,
+    qnt_publicacoes?: number,
+    publicacoes?: (Product | Publication)[],
+    pastas?: Folder[]
+    esta_seguindo?: boolean
 }
 
 export interface Address {
@@ -44,10 +50,10 @@ export interface Product {
     marca_dagua: boolean,
     preco: number,
     quantidade: number,
-    id_dono_publicacao: number,
+    id_dono_publicacao?: number,
     curtida: boolean,
     preferencia: boolean,
-    dono_publicacao: User
+    dono_publicacao?: User
     imagens: Image[]
 }
 
@@ -60,13 +66,19 @@ export interface Publication {
     marca_dagua: null,
     preco: null,
     quantidade: null,
-    id_dono_publicacao: number,
+    id_dono_publicacao?: number,
     curtida: boolean,
     preferencia: boolean,
-    dono_publicacao: User
+    dono_publicacao?: User
     imagens: Image[]
 }
 
+export interface Folder {
+    id: number
+    nome: string
+    id_usuario?: number
+    itens?: (Product | Publication)[] 
+}
 
 
 
