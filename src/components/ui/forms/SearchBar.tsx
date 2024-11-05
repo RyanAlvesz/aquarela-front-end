@@ -22,7 +22,7 @@ const SearchBar = () => {
     }
 
     return(
-        <form onSubmit={handleSearch} className="flex items-center gap-2 md:gap-4 bg-blue-5/50 rounded-md md:rounded-lg justify-center h-[6vh] md:h-full w-full py-1 px-2 md:py-2">
+        <form onSubmit={handleSearch} className="flex items-center gap-2 md:gap-4 bg-blue-5/50 rounded-md md:rounded-lg justify-center h-[6vh] md:h-full w-full py-1 px-2 md:py-2 hover:bg-blue-5/80 ease-linear duration-100">
             <button className="h-full">
                 <Image
                     alt="Filtro"
