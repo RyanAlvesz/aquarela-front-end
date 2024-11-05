@@ -7,9 +7,10 @@ import pallet from "$/public/images/logo/icon.png";
 import bagSVG from "$/public/images/svg/bag.svg";
 import arrowSVG from "$/public/images/svg/arrow.svg";
 import SearchBar from "../forms/SearchBar";
-import ProfileButton from "../buttons/ProfileButton";
+import Avatar from "../buttons/Avatar";
 import { RootState, useAppSelector } from "@/store/store";
 import DesktopNavBarLink from "./DesktopNavBarLink";
+import ToolTip from "../utils/ToolTip";
 
 
 const DesktopNavBar: React.FC = () => {
@@ -49,32 +50,33 @@ const DesktopNavBar: React.FC = () => {
             <SearchBar />
             <Link
                 href={'/'}
-                className="h-full"
+                className="h-full w-fit shrink-0"
             >
                 <Image
                     alt="Sacola"
                     src={bagSVG}
-                    className="h-full"
-                    width={100}
+                    className="h-full w-fit"
                     height={100}
                 />
             </Link>
             <div className="flex items-center justify-center gap-1 h-full">
-                <ProfileButton
-                    id={user.id as number}
+                <Avatar
+                    nickname={user.nome_usuario}
                     user={user}
                     className="h-full"
                 />
-                <button
-                    className="-rotate-90"
-                >
-                    <Image
-                        alt="Seta de opções"
-                        width={100}
-                        height={100}
-                        src={arrowSVG}
-                    />
-                </button>
+                <ToolTip message="Mais opções">
+                    <button
+                        className="-rotate-90 shrink-0 h-full w-fit"
+                    >
+                        <Image
+                            alt="Seta de opções"
+                            width={100}
+                            height={100}
+                            src={arrowSVG}
+                        />
+                    </button>
+                </ToolTip>
             </div>
         </nav>
     )
