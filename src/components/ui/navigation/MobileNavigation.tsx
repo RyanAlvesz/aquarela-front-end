@@ -8,7 +8,7 @@ import React from "react";
 import { RootState, useAppSelector } from "@/store/store";
 import CreatePublicationButton from "../buttons/CreatePublicationButton";
 import MobileNavBarButton from "../buttons/MobileNavBarButton";
-import ProfileButton from "../buttons/ProfileButton";
+import Avatar from "../buttons/Avatar";
 
 const MobileNavigation: React.FC = () => {
 
@@ -32,8 +32,8 @@ const MobileNavigation: React.FC = () => {
                 image={chatSVG}
                 link={'/home/chat'}
             />
-            <ProfileButton
-                id={user.id as number}
+            <Avatar
+                nickname={user.nome_usuario}
                 user={user}
                 className="h-[calc(7vh-0.5rem)] w-[calc(7vh-0.5rem)]"
             />
