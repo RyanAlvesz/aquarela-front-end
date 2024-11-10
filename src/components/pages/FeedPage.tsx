@@ -40,7 +40,7 @@ const FeedPage = () => {
 
   return (
     <>
-      <main className="h-full relative flex flex-col bg-blue-7 md:bg-white pt-5 md:pt-0 gap-3 md:gap-2">
+      <main className="h-full relative flex flex-col grow bg-blue-7 md:bg-white pt-5 md:pt-0 gap-3 md:gap-2">
         <MobileSearchArea />
         {isLoading ? (
                     <LoadingMessage message="Estamos preparando tudo para você!" />
