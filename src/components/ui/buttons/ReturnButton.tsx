@@ -10,9 +10,10 @@ import React from "react";
 interface ReturnButtonProps {
     width: number;
     color: 'blue' | 'white' | 'darkBlue'
+    className?: string
 }
 
-const ReturnButton: React.FC<ReturnButtonProps> = ({width, color}) => {
+const ReturnButton: React.FC<ReturnButtonProps> = ({width, color, className}) => {
     
     const router = useRouter()
 
@@ -34,6 +35,7 @@ const ReturnButton: React.FC<ReturnButtonProps> = ({width, color}) => {
             <Image
                 alt = "Botão para retornar"
                 src = {buttonColor()}
+                className={className}
                 style={
                     {width: `${width}vh`}
                 }  
