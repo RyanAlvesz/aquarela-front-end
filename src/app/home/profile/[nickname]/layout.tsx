@@ -7,18 +7,20 @@ import UserProfileCard from "@/components/ui/utils/UserProfileCard"
 import { fetchWrapper } from "@/lib/api/fetch"
 import { setProfile } from "@/store/profileSlice"
 import { RootState, useAppDispatch, useAppSelector } from "@/store/store"
-import { User } from "@/types"
+import { BaseUser, DetailedUser } from "@/types"
 import { useParams } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
+type ProfileUser = BaseUser & DetailedUser
+
 interface GetResp {
-  usuario: User[]
+  usuario: ProfileUser[]
 }
 
-const testUser: User = {
+const testUser: ProfileUser = {
   id: 1,
     nome: "João Silva",
-    nome_usuario: "joaosilva",
+    nome_usuario: "testinho",
     foto_usuario: "https://firebasestorage.googleapis.com/v0/b/tcc-aquarela.appspot.com/o/1989-36.jpeg?alt=media&token=330aaa3e-00cd-41d0-a985-7042f79df60c",
     descricao: "Sou um artista apaixonado por pintura e design gráfico.",
     email: "joao.silva@example.com",
@@ -30,7 +32,7 @@ const testUser: User = {
     avaliacao: 4.5,
     seguidores: 150,
     seguindo: 75,
-    qnt_publicacoes: 2, // Atualizado para refletir o número de publicações
+    qnt_publicacoes: 2,
     publicacoes: [
         {
             tipo: "postagem",
@@ -41,8 +43,8 @@ const testUser: User = {
             marca_dagua: null,
             preco: null,
             quantidade: null,
-            id_dono_publicacao: 1,
             curtida: false,
+            favorito: true,
             preferencia: true,
             imagens: [
                 {
@@ -56,12 +58,12 @@ const testUser: User = {
             id_publicacao: 1,
             nome: "Peixes",
             descricao: "Um quadro muito bonito.",
-            item_digital: true, // Mudado para booleano
-            marca_dagua: true, // Mudado para booleano
+            item_digital: true,
+            marca_dagua: true,
             preco: 10000,
             quantidade: 1,
-            id_dono_publicacao: 2,
-            curtida: false, // Mudado para booleano
+            curtida: false,
+            favorito: false,
             preferencia: true,
             imagens: [
                 {
@@ -89,13 +91,11 @@ const testUser: User = {
 
 const ProfileLayout = ({children}: {children: React.ReactNode}) => {
 
-  const [userInfo, setUserInfo] = useState<(User)[]>([]);
+  const [userInfo, setUserInfo] = useState<(ProfileUser)[]>([]);
   const currentUser = useAppSelector((state: RootState) => state.user)
   
   const params = useParams()
-  
   const dispatch = useAppDispatch()
-  dispatch(setProfile(testUser))       
 
   const userProfileValidation = currentUser.nome_usuario === params.nickname? true : false
   const secondaryButton = userProfileValidation ? 'config' : 'share'
@@ -112,11 +112,14 @@ const ProfileLayout = ({children}: {children: React.ReactNode}) => {
 
     const fetchFeedItems = async () => {
       const resp = await fetchWrapper<GetResp>(url, options)
-      setUserInfo(resp.usuario || [])
+      setUserInfo([testUser])
+      dispatch(setProfile(userInfo[0]))       
+      // setUserInfo(resp.usuario || [])
     }
+
     fetchFeedItems()
     
-  }, [url])
+  }, [url, dispatch])
   
   return (
     <div className="flex flex-col items-center pt-8 min-h-full">

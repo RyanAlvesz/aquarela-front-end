@@ -1,4 +1,4 @@
-import { User } from "@/types"
+import { DetailedUser } from "@/types"
 import Image from "next/image"
 import React from "react"
 import standardProfile from "$/public/images/paintings/standard-profile-picture.jpg";
@@ -7,7 +7,7 @@ import starSVG from "$/public/images/svg/star.svg";
 import ToolTip from "./ToolTip";
 
 interface UserProfileCardProps {
-    user: User
+    user: DetailedUser
     currentUser: boolean
     currentUserId: number
 }

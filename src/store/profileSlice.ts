@@ -1,8 +1,8 @@
-import { User } from "@/types";
+import { BaseUser, DetailedUser } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ProfileState {
-    user: User | null
+    user: BaseUser & DetailedUser | null
 }
 
 const initialProfileState: ProfileState = {
@@ -13,7 +13,7 @@ export const profileSlice = createSlice({
     name: "profile",
     initialState: initialProfileState,
     reducers: {
-        setProfile: (state, action: PayloadAction<User>) => {
+        setProfile: (state, action: PayloadAction<BaseUser & DetailedUser>) => {
             state.user = action.payload; 
         },
         resetProfile: (state) => {

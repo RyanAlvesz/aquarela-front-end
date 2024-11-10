@@ -6,14 +6,14 @@ import AuthenticationInput from '../inputs/AuthenticationInput';
 import GoogleButton from '../buttons/GoogleButton';
 import AuthenticationChoice from '../text/AuthenticationChoice'
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { User } from '@/types';
+import { BaseUser } from '@/types';
 import alert, { loader, stopLoader } from '@/types/alert';
 import { fetchWrapper } from '@/lib/api/fetch';
 import { setUser } from '@/store/userSlice';
 import { useRouter } from 'next/navigation';
 
 interface usersResp {
-    usuarios: User[]
+    usuarios: BaseUser[]
 }
 
 const RegisterForm: React.FC = () => {
@@ -21,9 +21,9 @@ const RegisterForm: React.FC = () => {
     const dispatch = useAppDispatch();
     const router = useRouter()
 
-    const [users, setUsers] = useState<User[]>([])
+    const [users, setUsers] = useState<BaseUser[]>([])
 
-    const user: User & {validacao_senha: string} = {
+    const user: BaseUser & {validacao_senha: string} = {
         nome: useAppSelector((state) => state.input.name),
         nome_usuario: useAppSelector((state) => state.input.registerNickname),
         email: useAppSelector((state) => state.input.email),
@@ -81,7 +81,6 @@ const RegisterForm: React.FC = () => {
 
         e.preventDefault()        
 
-        console.log(alreadyRegisteredInfoValidation());
         if(passwordVerification() && alreadyRegisteredInfoValidation()){
 
             loader()
@@ -108,7 +107,7 @@ const RegisterForm: React.FC = () => {
             };
 
             interface getResp {
-                usuario: User,
+                usuario: BaseUser,
                 status_code: number
                 status: string
             }

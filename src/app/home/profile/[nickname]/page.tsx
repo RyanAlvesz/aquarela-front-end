@@ -2,11 +2,11 @@
 
 import DynamicFeed from "@/components/ui/feed/DynamicFeed"
 import { RootState, useAppSelector } from "@/store/store"
-import { Product, Publication, User } from "@/types"
+import { Product, Publication, BaseUser, DetailedUser } from "@/types"
 
 const Profile = () => {
 
-  const user = useAppSelector((state: RootState) => state.profile.user as User)
+  const user = useAppSelector((state: RootState) => state.profile.user as BaseUser & DetailedUser)
   
     return (
       <DynamicFeed

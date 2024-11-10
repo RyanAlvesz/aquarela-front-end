@@ -1,4 +1,4 @@
-export interface User {
+export interface BaseUser {
     id?: number
     nome: string;
     nome_usuario: string;
@@ -11,10 +11,13 @@ export interface User {
     telefone: string;
     disponibilidade?: boolean;
     avaliacao?: number | null
+}
+
+export interface DetailedUser extends BaseUser {
     seguidores?: number,
     seguindo?: number,
     qnt_publicacoes?: number,
-    publicacoes?: (Product | Publication)[],
+    publicacoes?: (Product | Publication)[] | (DetailedProduct | DetailedPublication)[],
     pastas?: Folder[]
     esta_seguindo?: boolean
 }
@@ -29,7 +32,7 @@ export interface Address {
     cidade: string;
     cep?: string;
     status: boolean;
-};
+}
 
 export interface Category {
     id: number
@@ -50,11 +53,15 @@ export interface Product {
     marca_dagua: boolean,
     preco: number,
     quantidade: number,
-    id_dono_publicacao?: number,
     curtida: boolean,
+    favorito: boolean,
     preferencia: boolean,
-    dono_publicacao?: User
     imagens: Image[]
+}
+
+export interface DetailedProduct extends Product {
+    id_dono_publicacao: number,
+    dono_publicacao: BaseUser
 }
 
 export interface Publication {
@@ -66,11 +73,15 @@ export interface Publication {
     marca_dagua: null,
     preco: null,
     quantidade: null,
-    id_dono_publicacao?: number,
     curtida: boolean,
+    favorito: boolean,
     preferencia: boolean,
-    dono_publicacao?: User
     imagens: Image[]
+}
+
+export interface DetailedPublication extends Publication{
+    id_dono_publicacao: number,
+    dono_publicacao: BaseUser
 }
 
 export interface Folder {
