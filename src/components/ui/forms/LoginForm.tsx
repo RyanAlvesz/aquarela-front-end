@@ -6,7 +6,7 @@ import GradientButton from "../buttons/GradientButton";
 import GoogleButton from "../buttons/GoogleButton";
 import { fetchWrapper } from "@/lib/api/fetch";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { User } from "@/types";
+import { BaseUser } from "@/types";
 import alert, { loader, stopLoader } from "@/types/alert";
 import { setUser } from "@/store/userSlice";
 import { useRouter } from "next/navigation";
@@ -30,7 +30,7 @@ const LoginForm = () => {
         status: boolean
         status_code: number
         message: string
-        usuario: User[]
+        usuario: (BaseUser & { id_usuario: number })[]
     }
 
     const emailValidation = async() => {
@@ -73,12 +73,14 @@ const LoginForm = () => {
         const emailResp = await emailValidation()
         const nicknameResp = await nicknameValidation()
 
-        if(emailResp.status){
-            dispatch(setUser(emailResp.usuario[0]))  
+        if (emailResp.status) {
+            const user = emailResp.usuario[0]
+            dispatch(setUser({ ...user, id: user.id_usuario }))  
             stopLoader()
             router.push('/home/feed')          
-        }else if(nicknameResp.status){
-            dispatch(setUser(nicknameResp.usuario[0]))
+        } else if (nicknameResp.status) {
+            const user = nicknameResp.usuario[0]
+            dispatch(setUser({ ...user, id: user.id_usuario }))
             stopLoader()
             router.push('/home/feed')
         }else{
