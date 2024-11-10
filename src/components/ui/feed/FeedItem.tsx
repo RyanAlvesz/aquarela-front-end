@@ -3,15 +3,19 @@
 import Image from "next/image"
 import Avatar from "../buttons/Avatar"
 import React, { useEffect, useState } from "react"
-import { Product, Publication } from "@/types"
+import { DetailedProduct, DetailedPublication, Product, Publication } from "@/types"
 import emptyHeartSVG from "$/public/images/svg/empty-heart.svg"
 import filledHeartSVG from "$/public/images/svg/filled-heart.svg"
 import useWindowDimensions from "@/hooks/useWindowDimension"
 import { useRouter } from "next/navigation"
 
 interface FeedItemProps {
-    item: Product | Publication
+    item: Product | DetailedProduct | Publication | DetailedPublication
     infoArea: boolean
+}
+
+const isDetailed = (item: Product | DetailedProduct | Publication | DetailedPublication): item is DetailedProduct | DetailedPublication => {
+    return 'id_dono_publicacao' in item;
 }
 
 const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea }) => {
@@ -85,7 +89,7 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea }) => {
                 onClick={handleItemClick}
                 className="w-full h-auto object-cover shadow-feed-item rounded"
             />
-            {infoArea && (
+            {infoArea && isDetailed(item) && (
                 <div className="flex justify-between items-center">
                     {item.tipo == 'produto' ? (
                         <>
