@@ -8,7 +8,7 @@ import UserProfileCard from "@/components/ui/utils/UserProfileCard"
 import { fetchWrapper } from "@/lib/api/fetch"
 import { setProfile } from "@/store/profileSlice"
 import { RootState, useAppDispatch, useAppSelector } from "@/store/store"
-import { BaseUser, DetailedUser, ProfileUser } from "@/types"
+import { ProfileUser } from "@/types"
 import { useParams, useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
