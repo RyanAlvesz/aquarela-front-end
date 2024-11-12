@@ -3,7 +3,7 @@
 import ConfigTitle from "@/components/ui/buttons/ConfigTitle"
 import GradientButton from "@/components/ui/buttons/GradientButton"
 import standardProfile from "$/public/images/paintings/standard-profile-picture.jpg";
-import { RootState, useAppSelector } from "@/store/store"
+import { RootState, useAppDispatch, useAppSelector } from "@/store/store"
 import Image, { StaticImageData } from "next/image"
 import { useEffect, useState } from "react"
 import ConfigInput from "@/components/ui/inputs/ConfigInput";
@@ -11,6 +11,8 @@ import { uploadImage } from "@/lib/firebase/app";
 import alert from "@/types/alert";
 import { BaseUser } from "@/types";
 import { fetchWrapper } from "@/lib/api/fetch";
+import { setUser } from "@/store/userSlice";
+import { DateTime } from 'luxon'
 
 interface usersResp {
   usuarios: BaseUser[]
@@ -19,7 +21,8 @@ interface usersResp {
 const ConfigProfile = () => {
   
   const user = useAppSelector((state: RootState) => state.user)
-  
+  const dispatch = useAppDispatch()
+
   const [alt, setAlt] = useState('')
   const [id, setId] = useState(0)
   const [name, setName] = useState('')
@@ -74,6 +77,10 @@ const ConfigProfile = () => {
     return true
   }
 
+  interface respProps {
+    status: boolean
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
     e.preventDefault() 
@@ -89,20 +96,8 @@ const ConfigProfile = () => {
       }
 
       const url: string = 'v1/aquarela/user/' + updatedUser.id
-
-      console.log({
-        nome: updatedUser.nome,
-        nome_usuario: updatedUser.nome_usuario,
-        foto_usuario: updatedUser.foto_usuario,
-        descricao: updatedUser.descricao,
-        email: updatedUser.email,
-        cpf: updatedUser.cpf,
-        data_nascimento: updatedUser.data_nascimento,
-        telefone: updatedUser.telefone,
-        disponibilidade: updatedUser.disponibilidade
-    });
-      
-
+      const parsedDate = DateTime.fromFormat(updatedUser.data_nascimento, 'dd-MM-yyyy')
+   
       const options = {
           method: 'PUT',
           headers: {
@@ -116,14 +111,32 @@ const ConfigProfile = () => {
               email: updatedUser.email,
               senha: updatedUser.senha,
               cpf: updatedUser.cpf,
-              data_nascimento: updatedUser.data_nascimento,
+              data_nascimento: parsedDate.toFormat("yyyy-MM-dd"),
               telefone: updatedUser.telefone,
               disponibilidade: updatedUser.disponibilidade
           })
-      }
+      }      
 
-      const resp = await fetchWrapper(url, options)
-      console.log(resp);
+      const resp = await fetchWrapper<respProps>(url, options)
+      console.log({
+        nome: updatedUser.nome,
+              nome_usuario: updatedUser.nome_usuario,
+              foto_usuario: updatedUser.foto_usuario,
+              descricao: updatedUser.descricao,
+              email: updatedUser.email,
+              senha: updatedUser.senha,
+              cpf: updatedUser.cpf,
+              data_nascimento: parsedDate.toFormat("yyyy-MM-dd"),
+              telefone: updatedUser.telefone,
+              disponibilidade: updatedUser.disponibilidade
+      });
+      
+      if(resp.status == true){
+        alert({icon:'success', title:'Perfil atualizado com sucesso'})
+        dispatch(setUser(updatedUser))
+      }else{
+        alert({icon:'error', title:'Erro ao atualizar'})
+      }
       
     }  
   }
@@ -161,7 +174,7 @@ const ConfigProfile = () => {
                   src={profileImage}
                   width={100}
                   height={100}
-                  className="rounded-full w-[13vh] h-[13vh] md:w-[10vh] md:h-[10vh]" 
+                  className="rounded-full w-[13vh] h-[13vh] md:w-[10vh] md:h-[10vh] object-cover" 
                 />
                 <div className="w-full text-center text-sm bg-blue-1 text-white rounded-md font-medium py-[6px] md:text-base">Alterar</div>
                 <input onChange={handleImageChange} type="file" accept="image/*" name="profilePicture" id="profilePicture" className="hidden" />
