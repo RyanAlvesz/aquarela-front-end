@@ -1,6 +1,6 @@
 'use client'
 
-import Image from "next/image"
+import Image, { StaticImageData } from "next/image"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
 
@@ -16,7 +16,8 @@ interface AvatarProps {
 const Avatar: React.FC<AvatarProps> = ({user, className, nickname}) => {    7
 
     const [alt, setAlt] = useState('')
-    const [profilePath, setProfilePath] = useState('')
+    const [profilePath, setProfilePath] = useState('')  
+    const [image, setImage] = useState<StaticImageData | string>(standardProfile)
 
     useEffect(()=>{
         setProfilePath(nickname)
@@ -24,6 +25,7 @@ const Avatar: React.FC<AvatarProps> = ({user, className, nickname}) => {    7
 
     useEffect(() => {
         setAlt(user.nome)
+        setImage(user.foto_usuario as string)
     }, [user])
 
     return (
@@ -33,10 +35,9 @@ const Avatar: React.FC<AvatarProps> = ({user, className, nickname}) => {    7
         >
                 <Image 
                     alt={alt} 
-                    src={user.foto_usuario? user.foto_usuario : standardProfile}
+                    src={image}
                     width={100}
                     height={100}
-                    priority
                     className="w-full h-full object-cover"
                 />
         </Link>
