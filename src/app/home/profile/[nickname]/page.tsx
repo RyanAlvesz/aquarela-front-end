@@ -9,10 +9,16 @@ const Profile = () => {
   const user = useAppSelector((state: RootState) => state.profile.user as BaseUser & DetailedUser)
   
     return (
-      <DynamicFeed
-        feed={user.publicacoes as (Product | Publication)[]}
-        infoArea = {false}
-      />
+      <>
+        {user.publicacoes == undefined || user.publicacoes.length == 0? (
+          <> Nenhuma publicação </>
+        ) : (
+          <DynamicFeed
+            feed={user.publicacoes as (Product | Publication)[]}
+            infoArea = {false}
+          />
+        )}
+      </>
     )
 }
 
