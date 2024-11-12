@@ -1,10 +1,11 @@
 import { ProfileUser } from "@/types"
 import Image from "next/image"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import standardProfile from "$/public/images/paintings/standard-profile-picture.jpg";
 import darkBlueCoinSVG from "$/public/images/svg/dark-blue-coin.svg";
 import starSVG from "$/public/images/svg/star.svg";
 import ToolTip from "./ToolTip";
+import { fetchWrapper } from "@/lib/api/fetch";
 
 interface UserProfileCardProps {
     user: ProfileUser
@@ -14,7 +15,29 @@ interface UserProfileCardProps {
 
 const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, currentUserId}) => {
     
-    const handleFollow = () => {}
+    const [isFollowing, setIsFollowing] = useState<boolean>(user.esta_seguindo as boolean)       
+
+    const handleFollow = async() => {
+        setIsFollowing(!isFollowing)
+        
+        const url = 'v1/aquarela/follower/user'
+        const options: RequestInit = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id_seguidor: currentUserId,
+                id_seguindo: user.id 
+            })
+        }        
+        const resp = await fetchWrapper(url, options)
+        
+    }
+    
+    useEffect(() => {
+    })
+
     const handleMessage = () => {}
     
     return (
@@ -29,7 +52,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, cur
             />
             <div className="flex gap-1 mb-[2px]">
                 <h1 className="font-bold text-body-mobile text-blue-1"> {user.nome} </h1>
-                {user.disponibilidade && (
+                {user.disponibilidade === true && (
                     <ToolTip message="Artista disponível">
                         <Image 
                             alt="Moeda"
@@ -66,12 +89,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, cur
             {!currentUser && (
                 <div className="flex items-center justify-center gap-2 mb-3">
                     <button 
-                        className={`w-[40vw] rounded-md py-2 font-medium text-sm flex items-center justify-center fade-animation bg-blue-1 text-white`}
+                        className={`w-[40vw] rounded-md py-2 font-medium text-sm flex items-center justify-center fade-animation ${isFollowing == false? 'bg-blue-1/90' : 'bg-blue-1'} text-white`}
                         onClick={handleFollow}
                     >
-                        {user.esta_seguindo? 'Seguindo' : 'Seguir'}
+                        {isFollowing == false? 'Seguir' : 'Seguindo'}
                     </button>
-                    {user.disponibilidade && (
+                    {user.disponibilidade === true && (
                         <button 
                             className={`w-[40vw] rounded-md py-2 font-medium text-sm flex items-center justify-center fade-animation bg-blue-5 text-blue-1`}
                             onClick={handleMessage}    
@@ -81,7 +104,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, cur
                     )}
                 </div>
             )}
-            <p className="text-sm text-blue-1 text-center mb-5"> {user.descricao} </p>
+            {user.descricao && (
+                <p className="text-sm text-blue-1 text-center mb-5"> {user.descricao} </p>
+            )}
         </div>
     )
 }
