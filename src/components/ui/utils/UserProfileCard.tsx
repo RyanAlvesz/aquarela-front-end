@@ -1,4 +1,4 @@
-import { DetailedUser } from "@/types"
+import { ProfileUser } from "@/types"
 import Image from "next/image"
 import React from "react"
 import standardProfile from "$/public/images/paintings/standard-profile-picture.jpg";
@@ -7,7 +7,7 @@ import starSVG from "$/public/images/svg/star.svg";
 import ToolTip from "./ToolTip";
 
 interface UserProfileCardProps {
-    user: DetailedUser
+    user: ProfileUser
     currentUser: boolean
     currentUserId: number
 }
@@ -24,6 +24,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, cur
                 alt={user.nome}
                 width={200}
                 height={200}
+                priority
                 className="h-[14vh] w-[14vh] shadow-feed-item object-cover rounded-full mb-1"
             />
             <div className="flex gap-1 mb-[2px]">
