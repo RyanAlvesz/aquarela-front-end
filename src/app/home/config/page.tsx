@@ -42,7 +42,7 @@ const Config = () => {
                   src={user.foto_usuario? user.foto_usuario : standardProfile}
                   width={200}
                   height={200}
-                  className="rounded-full h-[10vh] w-auto md:h-[4.5rem]"
+                  className="rounded-full h-[10vh] w-[10vh] md:h-[4.5rem] md:w-[4.5rem] object-cover"
                 />
                 <div className="text-blue-1 font-medium flex flex-col">
                   <h2 className="text-base md:text-2xl">{userName}</h2>
