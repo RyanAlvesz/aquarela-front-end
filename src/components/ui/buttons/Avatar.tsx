@@ -33,7 +33,11 @@ const Avatar: React.FC<AvatarProps> = ({user, className, nickname}) => {    7
         >
                 <Image 
                     alt={alt} 
-                    src={user.foto_usuario? user.foto_usuario : standardProfile} 
+                    src={user.foto_usuario? user.foto_usuario : standardProfile}
+                    width={100}
+                    height={100}
+                    priority
+                    className="w-full h-full object-cover"
                 />
         </Link>
     )
