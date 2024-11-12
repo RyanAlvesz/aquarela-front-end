@@ -91,8 +91,8 @@ const ConfigProfile = () => {
         ...user,
         ...(name && { nome: name }),
         ...(nickname && { nome_usuario: nickname }),
-        descricao: description,
-        foto_usuario: newProfilePicture,
+        ...(description && { descricao: description }), 
+        ...(newProfilePicture && { foto_usuario: newProfilePicture }),
       }
 
       const url: string = 'v1/aquarela/user/' + updatedUser.id
@@ -118,18 +118,6 @@ const ConfigProfile = () => {
       }      
 
       const resp = await fetchWrapper<respProps>(url, options)
-      console.log({
-        nome: updatedUser.nome,
-              nome_usuario: updatedUser.nome_usuario,
-              foto_usuario: updatedUser.foto_usuario,
-              descricao: updatedUser.descricao,
-              email: updatedUser.email,
-              senha: updatedUser.senha,
-              cpf: updatedUser.cpf,
-              data_nascimento: parsedDate.toFormat("yyyy-MM-dd"),
-              telefone: updatedUser.telefone,
-              disponibilidade: updatedUser.disponibilidade
-      });
       
       if(resp.status == true){
         alert({icon:'success', title:'Perfil atualizado com sucesso'})
