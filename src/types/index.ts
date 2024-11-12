@@ -22,6 +22,8 @@ export interface DetailedUser extends BaseUser {
     esta_seguindo?: boolean
 }
 
+export type ProfileUser = BaseUser & DetailedUser
+
 export interface Address {
     id_endereco: number;
     logradouro: string;
