@@ -3,104 +3,33 @@
 import DynamicTabContent from "@/components/ui/navigation/DynamicTabContent"
 import MobileNavigation from "@/components/ui/navigation/MobileNavigation"
 import MobileProfileOptions from "@/components/ui/navigation/MobileProfileOptions"
+import LoadingMessage from "@/components/ui/utils/LoadingMessage"
 import UserProfileCard from "@/components/ui/utils/UserProfileCard"
 import { fetchWrapper } from "@/lib/api/fetch"
 import { setProfile } from "@/store/profileSlice"
 import { RootState, useAppDispatch, useAppSelector } from "@/store/store"
-import { BaseUser, DetailedUser } from "@/types"
-import { useParams } from "next/navigation"
+import { BaseUser, DetailedUser, ProfileUser } from "@/types"
+import { useParams, useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
-type ProfileUser = BaseUser & DetailedUser
-
 interface GetResp {
-  usuario: ProfileUser[]
-}
-
-const testUser: ProfileUser = {
-  id: 1,
-    nome: "João Silva",
-    nome_usuario: "testinho",
-    foto_usuario: "https://firebasestorage.googleapis.com/v0/b/tcc-aquarela.appspot.com/o/1989-36.jpeg?alt=media&token=330aaa3e-00cd-41d0-a985-7042f79df60c",
-    descricao: "Sou um artista apaixonado por pintura e design gráfico.",
-    email: "joao.silva@example.com",
-    senha: "senhaSegura123",
-    cpf: "123.456.789-00",
-    data_nascimento: "1990-01-01",
-    telefone: "(11) 91234-5678",
-    disponibilidade: true,
-    avaliacao: 4.5,
-    seguidores: 150,
-    seguindo: 75,
-    qnt_publicacoes: 2,
-    publicacoes: [
-        {
-            tipo: "postagem",
-            id_publicacao: 4,
-            nome: "Arte na Praia",
-            descricao: "Uma arte muito bela",
-            item_digital: null,
-            marca_dagua: null,
-            preco: null,
-            quantidade: null,
-            curtida: false,
-            favorito: true,
-            preferencia: true,
-            imagens: [
-                {
-                    id_imagem: 5,
-                    url: "https://firebasestorage.googleapis.com/v0/b/tcc-aquarela.appspot.com/o/1989-36.jpeg?alt=media&token=330aaa3e-00cd-41d0-a985-7042f79df60c"
-                }
-            ]
-        },
-        {
-            tipo: "produto",
-            id_publicacao: 1,
-            nome: "Peixes",
-            descricao: "Um quadro muito bonito.",
-            item_digital: true,
-            marca_dagua: true,
-            preco: 10000,
-            quantidade: 1,
-            curtida: false,
-            favorito: false,
-            preferencia: true,
-            imagens: [
-                {
-                    id_imagem: 1,
-                    url: "https://firebasestorage.googleapis.com/v0/b/tcc-aquarela.appspot.com/o/1989-2.jpeg?alt=media&token=4deefd49-9489-4cb5-9d3d-fdc5cc165013"
-                },
-                {
-                    id_imagem: 2,
-                    url: "https://firebasestorage.googleapis.com/v0/b/tcc-aquarela.appspot.com/o/1989-28.jpeg?alt=media&token=0cf1dc3f-95ed-4686-b7c3-93c6fb7d7979"
-                }
-            ]
-        },
-    ], 
-    pastas: [
-      {
-        id: 1,
-        nome: '1989'
-      },
-      {
-        id: 2,
-        nome: 'Midnights'
-      }
-    ] 
+  usuario: ProfileUser
 }
 
 const ProfileLayout = ({children}: {children: React.ReactNode}) => {
 
-  const [userInfo, setUserInfo] = useState<(ProfileUser)[]>([]);
+  const [userInfo, setUserInfo] = useState<ProfileUser>({} as ProfileUser);
   const currentUser = useAppSelector((state: RootState) => state.user)
+  const router = useRouter()
   
+  const [loading, setLoading] = useState(true)
   const params = useParams()
   const dispatch = useAppDispatch()
 
   const userProfileValidation = currentUser.nome_usuario === params.nickname? true : false
   const secondaryButton = userProfileValidation ? 'config' : 'share'
 
-  const url = 'v1/aquarela/user/' + params.nickname
+  const url = `v1/aquarela/nickname/user/?nickname=${params.nickname}&client=${currentUser.id}`
 
   useEffect(() => {
 
@@ -112,9 +41,13 @@ const ProfileLayout = ({children}: {children: React.ReactNode}) => {
 
     const fetchFeedItems = async () => {
       const resp = await fetchWrapper<GetResp>(url, options)
-      setUserInfo([testUser])
-      dispatch(setProfile(userInfo[0]))       
-      // setUserInfo(resp.usuario || [])
+      if(resp.usuario){
+        setUserInfo(resp.usuario)
+        dispatch(setProfile(resp.usuario))       
+        setLoading(false)
+      }else{
+        router.push('/home/profile/' + currentUser.nome_usuario)
+      }
     }
 
     fetchFeedItems()
@@ -123,12 +56,18 @@ const ProfileLayout = ({children}: {children: React.ReactNode}) => {
   
   return (
     <div className="flex flex-col items-center pt-8 min-h-full">
-      <MobileProfileOptions secondaryButton={secondaryButton} />
-      <UserProfileCard currentUser={userProfileValidation} currentUserId={currentUser.id as number} user={testUser} />
-      <DynamicTabContent currentUser={userProfileValidation} userNickname={testUser.nome_usuario}>
-        {children}
-      </DynamicTabContent>
-      <MobileNavigation />
+      {loading ? (
+        <LoadingMessage message="Carregando usuário"/>
+      ) : (
+        <>
+          <MobileProfileOptions secondaryButton={secondaryButton} />
+          <UserProfileCard currentUser={userProfileValidation} currentUserId={currentUser.id as number} user={userInfo} />
+          <DynamicTabContent currentUser={userProfileValidation} userNickname={userInfo.nome_usuario}>
+            {children}
+          </DynamicTabContent>
+          <MobileNavigation />
+        </>
+      )}
     </div>
   )
 }
