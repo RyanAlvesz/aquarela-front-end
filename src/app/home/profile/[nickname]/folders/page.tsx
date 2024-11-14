@@ -11,7 +11,7 @@ const ProfileFolders = () => {
   const user = useAppSelector((state: RootState) => state.user)    
 
   return (
-    <main className="relative grid gap-4 px-4 grid-cols-[repeat(auto-fill,minmax(calc((100vw-4rem)/3),1fr))] md:gap-6 md:grid-cols-[repeat(3,minmax(0,calc(30vw/3)))]">
+    <main className="relative grid gap-4 px-4 pb-4 grid-cols-[repeat(auto-fill,minmax(calc((100vw-4rem)/3),1fr))] md:grid-cols-[repeat(3,minmax(0,calc(25vw/3)))]">
         {user.id === profile.id && (
           <Folder createButton></Folder>
         )}
