@@ -68,7 +68,7 @@ const ToolTip: React.FC<ToolTipProps> = ({children, message, placement = 'bottom
             {isVisible && (
                 <div 
                     ref={tooltipRef} 
-                    className="animate-fade-down animate-duration-1000 animate-ease-in-out select-none bg-blue-1 text-white font-medium py-1 px-2 rounded-md text-[90%] w-max absolute top-0 left-0"
+                    className="select-none bg-blue-1 z-50 text-white font-medium py-1 px-2 rounded-md text-[90%] w-max absolute top-0 left-0"
                     style={{
                         top: `${position.top}px`,
                         left: `${position.left}px`,
