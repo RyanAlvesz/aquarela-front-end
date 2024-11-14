@@ -18,8 +18,8 @@ const DynamicTabContentLinks: React.FC<DynamicTabContentLinksProps> = ({link, te
     return (
         <Link 
             href={link} 
-            className={`w-full border-b-2 pb-2 text-center relative text-sm font-medium
-                ${isActive? 'border-blue-1 text-blue-1 font-bold ease-linear duration-75' : 'border-blue-2 text-blue-2'}
+            className={`w-full bg-blue-7 md:bg-transparent border-b-2 py-2 text-center relative text-sm font-medium md:border-none md:text-[18px] md:px-3
+                ${isActive? 'border-blue-1 text-blue-1 font-bold md:animate-shake ease-linear duration-75 md:underline md:underline-offset-8' : 'border-blue-2 text-blue-2'}
             `}
         >
             {text}

@@ -32,21 +32,22 @@ const FeedPage = () => {
     const fetchFeedItems = async () => {
       const resp = await fetchWrapper<GetResp>(url, options)
       setFeedItems(resp.feed || [])
-      setIsLoading(false)
+      setIsLoading(false);
     }
     fetchFeedItems()
     
   }, [user.id, url])
+
 
   return (
     <>
       <main className="h-full relative flex flex-col grow bg-blue-7 md:bg-white pt-5 md:pt-0 gap-3 md:gap-2">
         <MobileSearchArea />
         {isLoading ? (
-                    <LoadingMessage message="Estamos preparando tudo para você!" />
-                ) : (
-                    <DynamicFeed feed={feedItems} infoArea />
-                )}
+            <LoadingMessage message="Estamos preparando tudo para você!" />
+        ) : (
+            <DynamicFeed feed={feedItems} infoArea="like"/>
+        )}
       </main>
       <MobileNavigation />
     </>

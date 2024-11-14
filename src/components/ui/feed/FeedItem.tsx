@@ -2,16 +2,18 @@
 
 import Image from "next/image"
 import Avatar from "../buttons/Avatar"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { DetailedProduct, DetailedPublication, Product, Publication } from "@/types"
 import emptyHeartSVG from "$/public/images/svg/empty-heart.svg"
 import filledHeartSVG from "$/public/images/svg/filled-heart.svg"
+import emptyFavoriteSVG from "$/public/images/svg/empty-favorite.svg"
+import filledFavoriteSVG from "$/public/images/svg/filled-favorite.svg"
 import useWindowDimensions from "@/hooks/useWindowDimension"
 import { useRouter } from "next/navigation"
 
 interface FeedItemProps {
     item: Product | DetailedProduct | Publication | DetailedPublication
-    infoArea: boolean
+    infoArea: 'like' | 'favorite' | false
 }
 
 const isDetailed = (item: Product | DetailedProduct | Publication | DetailedPublication): item is DetailedProduct | DetailedPublication => {
@@ -20,20 +22,25 @@ const isDetailed = (item: Product | DetailedProduct | Publication | DetailedPubl
 
 const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea }) => {
 
-    const [isLiked, setIsLiked] = useState(item.curtida)
-
+    const [isLiked, setIsLiked] = useState<boolean>(item.curtida)
+    const [isFavorited, setIsFavorited] = useState<boolean>(item.favorito)
+        
     const router = useRouter()
-
-    useEffect(() => {
-        setIsLiked(!isLiked);
-    }, [item.curtida]);
 
     const handleProductLike = () => {
         setIsLiked(prevLiked => !prevLiked)
     }
 
+    const handleProductFavorite = () => {
+        setIsFavorited(prevFavorited => !prevFavorited)
+    }
+
     const handlePublicationLike = () => {
         setIsLiked(prevLiked => !prevLiked)
+    }
+
+    const handlePublicationFavorite = () => {
+        setIsFavorited(prevFavorited => !prevFavorited)
     }
 
     const windowWidth = useWindowDimensions().width
@@ -81,11 +88,11 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea }) => {
         >
             <Image
                 alt={item.nome}
-                src={item.imagens ? item.imagens[0].url : ''}
+                src={item.imagens[0].url}
                 priority
                 onLoad={handleImageLoad}
-                width={1000}
-                height={1000}
+                width={500}
+                height={500}
                 onClick={handleItemClick}
                 className="w-full h-auto object-cover shadow-feed-item rounded"
             />
@@ -99,12 +106,21 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea }) => {
                                 className="w-8 h-8"
                             />
                             <h2 className="font-medium text-secondary-mobile md:text-[14px] text-blue-1">{`R$: ${item.preco}`}</h2>
-                            <button className="h-8 w-8" onClick={handleProductLike}>
-                                <Image
-                                    alt='Curtida'
-                                    src={isLiked ? filledHeartSVG : emptyHeartSVG}
-                                />
-                            </button>
+                            {infoArea == "like"? (
+                                <button className="h-8 w-8" onClick={handleProductLike}>
+                                    <Image
+                                        alt='Curtida'
+                                        src={isLiked == true ? filledHeartSVG : emptyHeartSVG}
+                                    />
+                                </button>
+                            ) : (
+                                <button className="h-8 w-8" onClick={handleProductFavorite}>
+                                    <Image
+                                        alt='Curtida'
+                                        src={isFavorited == true ? filledFavoriteSVG : emptyFavoriteSVG}
+                                    />
+                                </button>
+                            )}
                         </>
                     ) : (
                         <>
@@ -116,12 +132,21 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea }) => {
                                 />
                                 <h2 className="font-medium text-secondary-mobile md:text-[14px] text-blue-1">{`@${item.dono_publicacao.nome_usuario}`}</h2>
                             </div>
-                            <button className="h-8 w-8" onClick={handlePublicationLike}>
-                                <Image
-                                    alt='Curtida'
-                                    src={isLiked ? filledHeartSVG : emptyHeartSVG}
-                                />
-                            </button>
+                            {infoArea == 'like'? (
+                                <button className="h-8 w-8" onClick={handlePublicationLike}>
+                                    <Image
+                                        alt='Curtida'
+                                        src={isLiked == true ? filledHeartSVG : emptyHeartSVG}
+                                    />
+                                </button>
+                            ) : (
+                                <button className="h-8 w-8" onClick={handlePublicationFavorite}>
+                                    <Image
+                                        alt='Curtida'
+                                        src={isFavorited == true ? filledFavoriteSVG : emptyFavoriteSVG}
+                                    />
+                                </button>
+                            )}
                         </>
                     )
                     }

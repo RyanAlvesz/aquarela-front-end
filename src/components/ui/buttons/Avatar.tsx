@@ -24,8 +24,10 @@ const Avatar: React.FC<AvatarProps> = ({user, className, nickname}) => {    7
     }, [nickname])
 
     useEffect(() => {
-        setAlt(user.nome)
-        setImage(user.foto_usuario as string)
+        setAlt(user.nome)        
+        if(user.foto_usuario != ''){
+            setImage(user.foto_usuario as string)
+        }
     }, [user])
 
     return (

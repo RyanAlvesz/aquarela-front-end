@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@floating-ui/react": "^0.26.27",
     "@reduxjs/toolkit": "^2.2.7",
     "firebase": "^11.0.1",
     "luxon": "^3.5.0",

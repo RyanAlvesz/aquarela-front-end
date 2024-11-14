@@ -12,9 +12,9 @@ interface DynamicTabContentProps {
 const DynamicTabContent: React.FC<DynamicTabContentProps> = ({children, currentUser, userNickname}) => {
     
     return (
-        <nav className="w-full h-fit flex flex-col">
+        <nav className="w-full grow flex bg-blue-5/40 md:bg-transparent gap-4 flex-col md:items-center">
             <div 
-                className="grid items-center w-full justify-center h-[5vh]"
+                className="grid items-center w-full md:w-fit justify-center"
                 style={{
                     gridTemplateColumns: `repeat(${currentUser? '3' : '2'}, 1fr)`
                 }}

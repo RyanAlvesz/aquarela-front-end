@@ -26,6 +26,8 @@ const Folder: React.FC<FolderProps> = ({folder, createButton}) => {
                     alt="Pasta"
                     src={folderSVG}
                     className="w-max"
+                    width={100}
+                    height={100}
                 />
                 <Image 
                         alt="Pasta"
@@ -35,7 +37,7 @@ const Folder: React.FC<FolderProps> = ({folder, createButton}) => {
                         className="w-1/3 h-auto absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
                     />
             </div>
-            <p className="font-medium text-blue-2 text-sm -m-2">{createButton? 'Criar pasta' : folder?.nome}</p>
+            <p className="font-medium text-blue-1 -translate-y-2 md:-translate-y-4 md:font-bold text-sm -m-2">{createButton? 'Criar pasta' : folder?.nome}</p>
         </button>
     )
 } 

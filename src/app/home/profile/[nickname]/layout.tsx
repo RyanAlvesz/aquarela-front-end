@@ -17,7 +17,7 @@ interface GetResp {
 }
 
 const ProfileLayout = ({children}: {children: React.ReactNode}) => {
-
+  
   const [userInfo, setUserInfo] = useState<ProfileUser>({} as ProfileUser);
   const currentUser = useAppSelector((state: RootState) => state.user)
   const router = useRouter()
@@ -52,10 +52,10 @@ const ProfileLayout = ({children}: {children: React.ReactNode}) => {
 
     fetchFeedItems()
     
-  }, [url, dispatch])
+  }, [url, dispatch, currentUser, router])
   
   return (
-    <div className="flex flex-col items-center pt-8 min-h-full">
+    <div className="flex flex-col items-center pt-8 md:pt-0 min-h-full grow">
       {loading ? (
         <LoadingMessage message="Carregando usuário"/>
       ) : (
