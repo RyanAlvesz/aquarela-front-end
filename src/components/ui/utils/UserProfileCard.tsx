@@ -87,14 +87,14 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, cur
             {!currentUser && (
                 <div className="flex items-center justify-center gap-2 mb-5">
                     <button 
-                        className={`w-[40vw] md:w-[10vw] rounded-md py-2 font-medium text-sm flex items-center justify-center fade-animation ${isFollowing == false? 'bg-blue-1/90' : 'bg-blue-1'} text-white`}
+                        className={`w-[40vw] md:w-[10vw] rounded-md py-2 font-medium text-sm md:text-base flex items-center justify-center fade-animation ${isFollowing == false? 'bg-blue-1/90' : 'bg-blue-1'} text-white`}
                         onClick={handleFollow}
                     >
                         {isFollowing == false? 'Seguir' : 'Seguindo'}
                     </button>
                     {user.disponibilidade == true && (
                         <button 
-                            className={`w-[40vw] md:w-[10vw] rounded-md py-2 font-medium text-sm flex items-center justify-center fade-animation bg-blue-5 text-blue-1`}
+                            className={`w-[40vw] md:w-[10vw] rounded-md py-2 font-medium text-sm md:text-base flex items-center justify-center fade-animation bg-blue-5 text-blue-1`}
                             onClick={handleMessage}    
                         >
                             Enviar mensagem
