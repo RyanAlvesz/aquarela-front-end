@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        ubuntu: 'var(--font-ubuntu)',
+        ubuntu: 'var(--font-standard)',
         gloria: 'var(--font-gloria)'
       },
       colors: {
