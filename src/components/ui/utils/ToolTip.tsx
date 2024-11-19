@@ -58,7 +58,7 @@ const ToolTip: React.FC<ToolTipProps> = ({children, message, placement = 'bottom
     return(
 
         <div
-            className="relative h-fit flex items-center justify-center"
+            className="relative w-fit h-fit flex items-center justify-center"
             onMouseLeave={handleMouseLeave}
             onMouseEnter={handleMouseEnter}
         >
