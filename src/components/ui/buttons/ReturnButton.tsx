@@ -11,9 +11,10 @@ interface ReturnButtonProps {
     width: number;
     color: 'blue' | 'white' | 'darkBlue'
     className?: string
+    noZ?: boolean
 }
 
-const ReturnButton: React.FC<ReturnButtonProps> = ({width, color, className}) => {
+const ReturnButton: React.FC<ReturnButtonProps> = ({width, color, className, noZ}) => {
     
     const router = useRouter()
 
@@ -31,7 +32,7 @@ const ReturnButton: React.FC<ReturnButtonProps> = ({width, color, className}) =>
     }
 
     return(
-        <button onClick={handleBackClick} className={`h-full w-auto z-50`}>
+        <button onClick={handleBackClick} className={`h-full w-auto ${noZ? '' : 'z-50'}`}>
             <Image
                 alt = "Botão para retornar"
                 src = {buttonColor()}
