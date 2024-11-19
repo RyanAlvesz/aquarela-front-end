@@ -15,14 +15,14 @@ const Preferences: React.FC = () => {
     
     const [categories, setCategories] = useState<Category[]>([])
 
-    const url = 'v1/aquarela/categories'
-    const options: RequestInit = {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        cache: 'no-cache',
-    }
-
+    
     useEffect(() => {
+        const url = 'v1/aquarela/categories'
+        const options: RequestInit = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            cache: 'no-cache',
+        }
         const fetchCategories = async () => {
             const resp = await fetchWrapper<GetResp>(url, options)
             setCategories(resp.categorias || [])

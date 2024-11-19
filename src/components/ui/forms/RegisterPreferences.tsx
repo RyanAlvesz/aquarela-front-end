@@ -77,8 +77,12 @@ const RegisterPreferences: React.FC<PreferencesProps> = ({categories}) => {
             loader()
             const url: string = 'v1/aquarela/preferences/user'
             const resp = await fetchWrapper(url, options)
-            stopLoader()
-            router.push('/home/feed') 
+            if(resp){
+                stopLoader()
+                router.push('/home/feed') 
+            }else{
+                alert({icon:"warning", title:"Erro ao selecionar preferências"})
+            }
             
         }
 

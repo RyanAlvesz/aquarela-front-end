@@ -33,7 +33,7 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea }) => {
     const [isLiked, setIsLiked] = useState<boolean>(Number(item.curtida) === 1)
     const [isFavorited, setIsFavorited] = useState<boolean>(Number(item.favorito) === 1)
     const [isOptionsOpen, setOptionsOpen] = useState(false);
-    const [currentImageIndex, setCurrentImageIndex] = useState(0)
+    // const [currentImageIndex, setCurrentImageIndex] = useState(0)
     const [isHovered, setIsHovered] = useState(false);
     const currentUser = useAppSelector((state: RootState) => state.user)
 
@@ -137,19 +137,19 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea }) => {
         }
     }, [isOptionsOpen])
 
-    const handleNextImage = () => {
-        if (item.imagens.length > 1) {
-            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % item.imagens.length)
-        }
-    }
+    // const handleNextImage = () => {
+    //     if (item.imagens.length > 1) {
+    //         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % item.imagens.length)
+    //     }
+    // }
 
-    const handlePrevImage = () => {
-        if (item.imagens.length > 1) {
-            setCurrentImageIndex(
-                (prevIndex) => (prevIndex - 1 + item.imagens.length) % item.imagens.length
-            )
-        }
-    }
+    // const handlePrevImage = () => {
+    //     if (item.imagens.length > 1) {
+    //         setCurrentImageIndex(
+    //             (prevIndex) => (prevIndex - 1 + item.imagens.length) % item.imagens.length
+    //         )
+    //     }
+    // }
 
     const handleShare = async() => {
         const path = item.tipo === 'postagem' ? 'publication' : 'product'

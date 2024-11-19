@@ -32,7 +32,7 @@ export const userSlice = createSlice({
                 (state[field] as typeof value) = value;
             }
         },
-        resetUser: (state) => {
+        resetUser: () => {
             return initialUserState; 
         },
     },

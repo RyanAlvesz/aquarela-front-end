@@ -111,14 +111,21 @@ interface PopoverTriggerProps {
     asChild?: boolean;
 }
 
+type WithRef<T> = T & { ref?: React.Ref<unknown> }
+
 export const PopoverTrigger = React.forwardRef<
     HTMLElement,
     React.HTMLProps<HTMLElement> & PopoverTriggerProps
 >(function PopoverTrigger({ children, asChild = false, ...props }, propRef) {
 
     const context = usePopoverContext();
-    const childrenRef = (children as any).ref
-    const ref = useMergeRefs([context.refs.setReference, propRef, childrenRef])
+    const ref = useMergeRefs([
+        context.refs.setReference,
+        propRef,
+        React.isValidElement(children) && "ref" in children 
+            ? (children as WithRef<typeof children>).ref 
+            : null
+    ])
 
     if (asChild && React.isValidElement(children)) {
         return React.cloneElement(
