@@ -62,11 +62,11 @@ const Home = () => {
           </p>
         </div>
         <div className="flex flex-col md:grid md:grid-cols-2 gap-4 w-full text-xl md:text-[1.65rem] md:w-[35vw]">
-          <button className="flex items-center justify-center text-center h-[8.5vh] md:font-medium md:h-fit md:py-6 rounded-md md:rounded-lg bg-blue-1/80 hover:bg-blue-1 ease-linear duration-100">
-            <Link href={'/authentication/register'} className="">Criar conta</Link>
+          <button className="flex items-center justify-center text-center h-[8.5vh] md:font-medium md:h-fit rounded-md md:rounded-lg bg-blue-1/80 hover:bg-blue-1 ease-linear duration-100">
+            <Link href={'/authentication/register'} className="md:py-6 w-full">Criar conta</Link>
           </button>
-          <button className="flex items-center justify-center text-center h-[8.5vh] md:font-medium md:h-fit md:py-6 rounded-md md:rounded-lg bg-blue-2/80 hover:bg-blue-2 ease-linear duration-100">
-            <Link href={'/authentication/login'} className="">Fazer login</Link>
+          <button className="flex items-center justify-center text-center h-[8.5vh] md:font-medium md:h-fit rounded-md md:rounded-lg bg-blue-2/80 hover:bg-blue-2 ease-linear duration-100">
+            <Link href={'/authentication/login'} className="md:py-6 w-full">Fazer login</Link>
           </button>
         </div>
       </div>
