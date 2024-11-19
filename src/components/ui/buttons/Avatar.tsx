@@ -4,7 +4,7 @@ import Image, { StaticImageData } from "next/image"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
 
-import standardProfile from "$/public/images/paintings/standard-profile-picture.jpg";
+import standardProfile from "$/public/images/paintings/standard-profile-picture.png";
 import { BaseUser } from "@/types";
 
 interface AvatarProps {
