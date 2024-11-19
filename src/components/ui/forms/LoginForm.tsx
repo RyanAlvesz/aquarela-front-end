@@ -10,11 +10,21 @@ import { BaseUser } from "@/types";
 import alert, { loader, stopLoader } from "@/types/alert";
 import { setUser } from "@/store/userSlice";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import RememberMe from "../inputs/RemeberMe";
+import { useState } from "react";
+import { setRememberMe } from "@/store/RememberMe";
 
 const LoginForm = () => {
 
     const dispatch = useAppDispatch()
     const router = useRouter()
+
+    const [rememberMeInput, setRememberMeInput] = useState(false);
+
+    const handleRememberMe = (isChecked: boolean) => {
+        setRememberMeInput(isChecked)
+    }
 
     interface LoginUser {
         login: string
@@ -74,15 +84,24 @@ const LoginForm = () => {
         const nicknameResp = await nicknameValidation()
 
         if (emailResp.status) {
+        
             const user = emailResp.usuario[0]
             dispatch(setUser({ ...user, id: user.id_usuario }))  
             stopLoader()
             router.push('/home/feed')          
+        
         } else if (nicknameResp.status) {
+
             const user = nicknameResp.usuario[0]
             dispatch(setUser({ ...user, id: user.id_usuario }))
-            stopLoader()
+            
+            if(rememberMeInput){
+                dispatch(setRememberMe(true))                
+            }
+
+            stopLoader()            
             router.push('/home/feed')
+
         }else{
             alert({icon:"error", title:"Usuário não encontrado!"})
         }
@@ -108,6 +127,10 @@ const LoginForm = () => {
                 required
                 passwordVisibility
             />
+            <div className="flex justify-between items-center">
+                <RememberMe onChange={handleRememberMe}/>
+                <Link href={'/password/forgot'} className="text-blue-2 text-sm hover:underline underline-offset-2 md:text-base"> Esqueci minha senha </Link>
+            </div>
             <GradientButton className="w-full py-3 md:col-span-2" label='Login' primaryColor='blue-2' secundaryColor='blue-3' direction='right'/>
             <AuthenticationChoice/>
             <GoogleButton text='Entre com o Google'/>
