@@ -79,7 +79,7 @@ const AuthenticationInput: React.FC<AuthenticationInputProps> = ({ placeholder, 
     return (
         <>
             <label
-                className="flex items-center w-full text-body-mobile p-2 gap-2 rounded-md h-12 md:h-[6.5vh] md:text-body-desktop text-blue-2 bg-blue-5/50 shadow-md shadow-blue-5"
+                className="flex items-center w-full text-[120%] p-2 gap-2 rounded-md max-h-12 md:max-h-14 text-blue-2 bg-blue-5/30 shadow-sm shadow-blue-5"
             >
                 <Image
                     src={iconSrc}
@@ -95,7 +95,7 @@ const AuthenticationInput: React.FC<AuthenticationInputProps> = ({ placeholder, 
                     maxLength={maxChar}
                     autoComplete="off"
                     value={useAppSelector((state) => state.input[name])}
-                    className="w-full bg-transparent placeholder:text-blue-2 placeholder:text-body-mobile md:placeholder:text-body-desktop"
+                    className="w-full bg-transparent placeholder:text-blue-2 placeholder:text-[120%]"
                 />
                 {
                     passwordVisibility && (
