@@ -2,13 +2,20 @@
 
 import GradientButton from "@/components/ui/buttons/GradientButton"
 import ConfigTitle from "@/components/ui/buttons/ConfigTitle"
-import standardProfile from "$/public/images/paintings/standard-profile-picture.jpg";
+import standardProfile from "$/public/images/paintings/standard-profile-picture.png";
 import arrowSVG from "$/public/images/svg/arrow.svg";
 import Image from "next/image"
 import Link from "next/link"
-import { RootState, useAppSelector } from "@/store/store";
+import { RootState, useAppDispatch, useAppSelector } from "@/store/store";
 import ConfigOptions from "@/components/ui/buttons/ConfigOpitions";
 import { useEffect, useState } from "react";
+import { persistor } from "@/store/redux-provider";
+import { resetUser } from "@/store/userSlice";
+import { resetRememberMe } from "@/store/RememberMe";
+import { resetInputs } from "@/store/inputSlice";
+import { resetCategories } from "@/store/categoriesSlice";
+import { resetProfile } from "@/store/profileSlice";
+import { useRouter } from "next/navigation";
 
 const Config = () => {
 
@@ -16,13 +23,23 @@ const Config = () => {
   const [alt, setAlt] = useState('')
   const [userName, setUserName] = useState('')
 
+  const router = useRouter()
+  const dispatch = useAppDispatch()
+
   useEffect(() => {
     setAlt(user.nome)
     setUserName(user.nome)
   }, [user])
 
   const exit = () => {
-
+    persistor.purge().then(() => {
+      dispatch(resetUser())
+      dispatch(resetRememberMe())
+      dispatch(resetInputs())
+      dispatch(resetCategories())
+      dispatch(resetProfile())
+      router.push('/')
+    })
   }
 
   const deleteAccount = () => {
