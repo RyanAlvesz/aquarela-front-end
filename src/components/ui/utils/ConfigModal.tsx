@@ -1,3 +1,10 @@
+import { resetCategories } from "@/store/categoriesSlice";
+import { resetInputs } from "@/store/inputSlice";
+import { resetProfile } from "@/store/profileSlice";
+import { persistor } from "@/store/redux-provider";
+import { resetRememberMe } from "@/store/RememberMe";
+import { useAppDispatch } from "@/store/store";
+import { resetUser } from "@/store/userSlice";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -5,14 +12,22 @@ import React from "react";
 const ConfigModal: React.FC = () => {
 
     const router = useRouter()
+    const dispatch = useAppDispatch()
 
     const handleDeleteAccount = () => {}
     const handleExit = () => {
-        router.push('/')
+        persistor.purge().then(() => {
+            dispatch(resetUser())
+            dispatch(resetRememberMe())
+            dispatch(resetInputs())
+            dispatch(resetCategories())
+            dispatch(resetProfile())
+            router.push('/')
+        })
     }
 
     return(
-        <div className="w-[15vw] h-fit py-4 px-2 animate-fade-down animate-duration-1000 animate-ease-in-out flex flex-col gap-6 bg-white rounded-xl absolute top-full mt-4 shadow-[0_0_8px_0px_rgba(0,0,0,0.1)] right-0">
+        <div className="w-[15vw] z-40 relative h-fit py-4 px-2 animate-fade-down animate-duration-1000 animate-ease-in-out flex flex-col gap-6 bg-blue-8 mr-2 mt-4 rounded-xl shadow-[0_0_8px_0px_rgba(0,0,0,0.2)] right-0">
             <div className="flex flex-col gap-2">
                 <h3 className="text-xs px-2">Ajustes</h3>
                 <div className="flex flex-col gap-1 items-start text-start font-medium">
