@@ -6,10 +6,12 @@ interface ConfigInputProps {
     type: React.HTMLInputTypeAttribute
     value: string
     label: string
+    required?: boolean
+    maxLength?: number
     onChange: (newValue: string) => void
 }
 
-const ConfigInput: React.FC<ConfigInputProps> = ({label, type, onChange, value}) => {
+const ConfigInput: React.FC<ConfigInputProps> = ({label, type, onChange, value, required, maxLength}) => {
     
     const [inputValue, setInputValue] = useState(value)
 
@@ -24,7 +26,7 @@ const ConfigInput: React.FC<ConfigInputProps> = ({label, type, onChange, value})
     return(
         <div className="flex flex-col gap-1 w-full">
             <label htmlFor={label} className="font-medium text-blue-1 text-[1.15rem]">{label}</label>
-            <input onChange={handleChange} value={inputValue} type={type} id={label} name={label} className="p-2 md:px-3 h-[7vh] md:h-[6vh] rounded-md text-blue-1 bg-blue-5/90"/>
+            <input onChange={handleChange} value={inputValue} maxLength={maxLength} required={required} type={type} id={label} name={label} className="p-2 md:px-3 h-[7vh] md:h-12 rounded-md text-blue-1 bg-blue-5/90"/>
         </div>
     )
 }
