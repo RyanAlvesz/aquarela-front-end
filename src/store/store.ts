@@ -8,6 +8,7 @@ import { profileReducer } from "./profileSlice"
 import { userReducer } from "./userSlice"
 import { persistReducer } from "redux-persist"
 import storage from "redux-persist/lib/storage"
+import { rememberMeReducer } from "./RememberMe"
 
 const inputPersistConfig = {
     key: "inputs",
@@ -25,6 +26,12 @@ const inputPersistConfig = {
         'telephone',
     ],
 }
+
+const rememberMePersistConfig = {
+    key: "rememberMe",
+    storage: storage,
+    whitelist: ["rememberMe"],
+};
 
 const userPersistConfig = {
     key: "user",
@@ -49,7 +56,8 @@ const rootReducer = combineReducers({
     user: persistReducer(userPersistConfig, userReducer),
     scroll: scrollReducer,
     search: searchReducer,
-    profile: profileReducer
+    profile: profileReducer,
+    rememberMe: persistReducer(rememberMePersistConfig, rememberMeReducer),
 });   
 
 export const store = configureStore({
