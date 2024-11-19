@@ -1,11 +1,13 @@
 import { ProfileUser } from "@/types"
 import Image from "next/image"
 import React, { useEffect, useState } from "react"
-import standardProfile from "$/public/images/paintings/standard-profile-picture.jpg";
+import standardProfile from "$/public/images/paintings/standard-profile-picture.png";
 import darkBlueCoinSVG from "$/public/images/svg/dark-blue-coin.svg";
 import starSVG from "$/public/images/svg/star.svg";
 import ToolTip from "./ToolTip";
 import { fetchWrapper } from "@/lib/api/fetch";
+import { usePathname } from "next/navigation";
+import alert from "@/types/alert";
 
 interface UserProfileCardProps {
     user: ProfileUser
@@ -16,6 +18,7 @@ interface UserProfileCardProps {
 const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, currentUserId}) => {
     
     const [isFollowing, setIsFollowing] = useState<boolean>(user.esta_seguindo as boolean)       
+    const pathname = usePathname()
 
     const handleFollow = async() => {
         setIsFollowing(!isFollowing)
@@ -37,6 +40,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, cur
     })
 
     const handleMessage = () => {}
+    const handleShare = async () => {
+        await navigator.clipboard.writeText(pathname)
+        alert({
+            icon: 'success',
+            title: 'Perfil copiado para área de trasnferência'
+        })
+    }
     
     return (
         <div className="flex flex-col items-center justify-center w-full px-8">
@@ -92,14 +102,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, cur
                     >
                         {isFollowing == false? 'Seguir' : 'Seguindo'}
                     </button>
-                    {user.disponibilidade == true && (
-                        <button 
-                            className={`w-[40vw] md:w-[10vw] rounded-md py-2 font-medium text-sm md:text-base flex items-center justify-center fade-animation bg-blue-5 text-blue-1`}
-                            onClick={handleMessage}    
-                        >
-                            Enviar mensagem
-                        </button>
-                    )}
+                    <button 
+                        className={`w-[40vw] md:w-[10vw] rounded-md py-2 font-medium text-sm md:text-base flex items-center justify-center fade-animation bg-blue-5 text-blue-1`}
+                        onClick={user.disponibilidade == true? handleMessage : handleShare}    
+                    >
+                        {user.disponibilidade == true? 'Enviar mensagem' : 'Compartilhar'} 
+                    </button>
                 </div>
             )}
             {user.descricao && (
