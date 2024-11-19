@@ -2,7 +2,7 @@
 
 import ConfigTitle from "@/components/ui/buttons/ConfigTitle"
 import GradientButton from "@/components/ui/buttons/GradientButton"
-import standardProfile from "$/public/images/paintings/standard-profile-picture.jpg";
+import standardProfile from "$/public/images/paintings/standard-profile-picture.png";
 import { RootState, useAppDispatch, useAppSelector } from "@/store/store"
 import Image, { StaticImageData } from "next/image"
 import { useEffect, useState } from "react"
@@ -109,7 +109,6 @@ const ConfigProfile = () => {
               foto_usuario: updatedUser.foto_usuario,
               descricao: updatedUser.descricao,
               email: updatedUser.email,
-              senha: updatedUser.senha,
               cpf: updatedUser.cpf,
               data_nascimento: parsedDate.toFormat("yyyy-MM-dd"),
               telefone: updatedUser.telefone,
