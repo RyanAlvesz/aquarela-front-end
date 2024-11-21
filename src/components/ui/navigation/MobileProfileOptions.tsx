@@ -26,7 +26,7 @@ const MobileProfileOptions: React.FC<MobileProfileOptionsProps> = ({secondaryBut
         if(secondaryButton == 'config'){
             router.push('/home/config')
         } else {
-            await navigator.clipboard.writeText(pathname)
+            await navigator.clipboard.writeText('https://aquarela-front-end.vercel.app' + pathname)
             alert({
                 icon: 'success',
                 title: 'Perfil copiado para área de trasnferência'
@@ -36,7 +36,7 @@ const MobileProfileOptions: React.FC<MobileProfileOptionsProps> = ({secondaryBut
 
     return(
         <nav className={`absolute right-0 left-0 top-0 flex items-center p-4 md:hidden ${secondaryButton? 'justify-between' : 'justify-start'}`}>
-            <ReturnButton color="darkBlue" width={5}/>
+            <ReturnButton color="darkBlue" width={6}/>
             {secondaryButton && (
                 <button
                     onClick={handleClick}
@@ -47,7 +47,7 @@ const MobileProfileOptions: React.FC<MobileProfileOptionsProps> = ({secondaryBut
                         width={100}
                         height={100}
                         style={
-                            {width: "5vh"}
+                            {width: "6vh"}
                         }  
                     />
                 </button>

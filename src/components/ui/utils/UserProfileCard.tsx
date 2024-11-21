@@ -17,11 +17,12 @@ interface UserProfileCardProps {
 
 const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, currentUserId}) => {
     
-    const [isFollowing, setIsFollowing] = useState<boolean>(user.esta_seguindo as boolean)       
+    const [isFollowing, setIsFollowing] = useState<boolean>(Boolean(Number(user.esta_seguindo)))   
+    const [followersCount, setFollowersCount] = useState<number>(user.seguidores as number)   
+
     const pathname = usePathname()
 
     const handleFollow = async() => {
-        setIsFollowing(!isFollowing)
         const url = 'v1/aquarela/follower/user'
         const options: RequestInit = {
             method: 'POST',
@@ -32,16 +33,32 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, cur
                 id_seguidor: currentUserId,
                 id_seguindo: user.id 
             })
-        }        
-        await fetchWrapper(url, options)   
+        }     
+        
+        try {
+            
+            interface getResp {
+                status_code: number
+            }
+            
+            const resp = await fetchWrapper<getResp>(url, options)   
+            if(resp.status_code == 201){
+                setIsFollowing(prevState => !prevState)
+                setFollowersCount((prevCount) => isFollowing ? prevCount - 1 : prevCount + 1)
+            }
+
+        } catch (error) {
+            console.error(error)
+        }   
     }
     
     useEffect(() => {
-    })
+        setIsFollowing(Boolean(Number(user.esta_seguindo)))
+    }, [user.esta_seguindo])
 
     const handleMessage = () => {}
     const handleShare = async () => {
-        await navigator.clipboard.writeText(pathname)
+        await navigator.clipboard.writeText('https://aquarela-front-end.vercel.app' + pathname)
         alert({
             icon: 'success',
             title: 'Perfil copiado para área de trasnferência'
@@ -88,7 +105,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, cur
             </div>
             <p className="text-blue-2 text-sm mb-3 md:text-[18px]"> {`@${user.nome_usuario}`} </p>
             <div className={`text-blue-3 flex gap-2 items-center justify-center text-sm md:text-base md:font-medium ${currentUser? 'mb-5': 'mb-3'}`}>
-                {`${user.seguidores} ${user.seguidores == 1? 'seguidor' : 'seguidores'}`} 
+                {`${followersCount} ${user.seguidores == 1? 'seguidor' : 'seguidores'}`} 
                 <div className="w-1 h-1 rounded-full bg-blue-3" />
                 {`${user.seguindo} seguindo`}
                 <div className="w-1 h-1 rounded-full bg-blue-3" />
@@ -97,10 +114,10 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, cur
             {!currentUser && (
                 <div className="flex items-center justify-center gap-2 mb-5">
                     <button 
-                        className={`w-[40vw] md:w-[10vw] rounded-md py-2 font-medium text-sm md:text-base flex items-center justify-center fade-animation ${isFollowing == false? 'bg-blue-1/90' : 'bg-blue-1'} text-white`}
+                        className={`w-[40vw] md:w-[10vw] rounded-md py-2 font-medium text-sm md:text-base flex items-center justify-center fade-animation ${isFollowing === false ? 'bg-blue-1/90' : 'bg-blue-1'} text-white`}
                         onClick={handleFollow}
                     >
-                        {isFollowing == false? 'Seguir' : 'Seguindo'}
+                        {isFollowing === false? 'Seguir' : 'Seguindo'}
                     </button>
                     <button 
                         className={`w-[40vw] md:w-[10vw] rounded-md py-2 font-medium text-sm md:text-base flex items-center justify-center fade-animation bg-blue-5 text-blue-1`}
