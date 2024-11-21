@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import RememberMe from "../inputs/RemeberMe";
 import { useState } from "react";
-import { setRememberMe } from "@/store/RememberMe";
+import { setRememberMe } from "@/store/rememberMeSlice";
 
 const LoginForm = () => {
 
