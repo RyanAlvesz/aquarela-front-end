@@ -95,7 +95,7 @@ const AuthenticationInput: React.FC<AuthenticationInputProps> = ({ placeholder, 
                     maxLength={maxChar}
                     autoComplete="off"
                     value={useAppSelector((state) => state.input[name])}
-                    className="w-full bg-transparent placeholder:text-blue-2 placeholder:text-[120%]"
+                    className="w-full bg-transparent placeholder:text-blue-2 placeholder:text-[90%]"
                 />
                 {
                     passwordVisibility && (
