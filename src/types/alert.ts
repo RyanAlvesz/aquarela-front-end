@@ -1,11 +1,17 @@
 import Swal, { SweetAlertIcon } from 'sweetalert2'
 
-interface alertProps {
+interface AlertProps {
     title: string,
     icon: SweetAlertIcon
 }
 
-const alert = ({title, icon}: alertProps): void => {
+interface AlertPropsWithDescription extends AlertProps {
+    description: string,
+    confirmBtn?: string,
+    declineBtn?: string
+}
+
+const alert = ({title, icon}: AlertProps): void => {
     Swal.fire({
         position: 'top',
         timer: 2000,
@@ -36,9 +42,38 @@ const loader = (): void => {
     })
 } 
 
+const swalWithBootstrapButtons  = Swal.mixin({
+    customClass: {
+        confirmButton: 'alert-confirm-btn',
+        cancelButton: 'alert-decline-btn'
+      },
+      buttonsStyling: false,
+      heightAuto: false
+})
+
+const confirmAlert = async ({title, description, confirmBtn, declineBtn}: AlertPropsWithDescription): Promise<boolean> => {
+
+    return swalWithBootstrapButtons.fire({
+        title: `<p class="text-2xl text-blue-1"> ${title} <p>`,
+        html: `<p class="text-blue-2 text-lg mb-1">${description}</p>`,
+        icon: 'warning',
+        iconColor: '#5DA5B7',
+        showCancelButton: true,
+        confirmButtonText: confirmBtn ? confirmBtn : 'Sim',
+        cancelButtonText: declineBtn ? declineBtn : 'Não',
+        padding: '0 0 28px 0',
+        heightAuto: false,
+        background: '#E2E8EB',
+        reverseButtons: true
+    }).then((result) => {
+        return result.isConfirmed
+    })
+
+}
+
 const stopLoader = (): void => {
     Swal.close()
 }
 
 export default alert
-export {loader,stopLoader}
+export {loader,stopLoader, confirmAlert}
