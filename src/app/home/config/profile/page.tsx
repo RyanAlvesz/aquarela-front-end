@@ -12,7 +12,6 @@ import alert from "@/types/alert";
 import { BaseUser } from "@/types";
 import { fetchWrapper } from "@/lib/api/fetch";
 import { setUser } from "@/store/userSlice";
-import { DateTime } from 'luxon'
 
 interface usersResp {
   usuarios: BaseUser[]
@@ -96,7 +95,6 @@ const ConfigProfile = () => {
       }
 
       const url: string = 'v1/aquarela/user/' + updatedUser.id
-      const parsedDate = DateTime.fromFormat(updatedUser.data_nascimento, 'dd-MM-yyyy')
    
       const options = {
           method: 'PUT',
@@ -108,14 +106,9 @@ const ConfigProfile = () => {
               nome_usuario: updatedUser.nome_usuario,
               foto_usuario: updatedUser.foto_usuario,
               descricao: updatedUser.descricao,
-              email: updatedUser.email,
-              cpf: updatedUser.cpf,
-              data_nascimento: parsedDate.toFormat("yyyy-MM-dd"),
-              telefone: updatedUser.telefone,
-              disponibilidade: updatedUser.disponibilidade
           })
       }      
-
+      
       const resp = await fetchWrapper<respProps>(url, options)
       
       if(resp.status == true){

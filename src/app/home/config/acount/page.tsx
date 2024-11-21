@@ -105,8 +105,8 @@ const validateCPF = (cpf: string): boolean => {
 
   const validatePassword = (): boolean => {
     if (newPassword || passwordConfirmation) {
-      if (newPassword.length < 6) {
-        alert({ icon: 'warning', title: 'A senha deve ter pelo menos 6 caracteres.' })
+      if (newPassword.length < 4) {
+        alert({ icon: 'warning', title: 'A senha deve ter pelo menos 4 caracteres.' })
         return false
       }
       if (newPassword !== passwordConfirmation) {
@@ -148,10 +148,6 @@ const validateCPF = (cpf: string): boolean => {
               'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-              nome: updatedUser.nome,
-              nome_usuario: updatedUser.nome_usuario,
-              foto_usuario: updatedUser.foto_usuario,
-              descricao: updatedUser.descricao,
               email: updatedUser.email,
               ...(newPassword && { senha: newPassword }),
               cpf: updatedUser.cpf,
