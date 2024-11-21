@@ -17,6 +17,7 @@ const ProfileFavorites = () => {
 
   const currentUser = useAppSelector((state: RootState) => state.user)
   const [favoriteItens, setFavoriteItens] = useState<(DetailedProduct | DetailedPublication) []>([])
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const params = useParams()
   const router = useRouter()
 
@@ -32,8 +33,6 @@ const ProfileFavorites = () => {
   useEffect(() => {
 
     const url = 'v1/aquarela/favorite/user/' + currentUser.id
-    console.log(url);
-    
 
     const options: RequestInit = {
       method: 'GET',
@@ -43,24 +42,30 @@ const ProfileFavorites = () => {
 
     const fetchFeedItems = async () => {
       const resp = await fetchWrapper<GetResp>(url, options)
-      if (resp.itens.length > 0) {
+      if (resp.status == true) {
         setFavoriteItens(resp.itens)        
       }
+      setIsLoading(false)
     }
 
     fetchFeedItems()
 
-  }, [currentUser])
+  }, [currentUser])  
 
   return (
     <main className="flex items-center justify-center relative w-full">
-      {favoriteItens.length < 0 ? (
+      {isLoading ? (
+        <ProfileMessage message={'Carregando...'} />
+      ) : favoriteItens.length === 0 ? (
         <ProfileMessage message={'Sua lista de favoritos está vazia! Comece a salvar o que mais gosta'} />
       ) : (
         <DynamicFeed
           feed={favoriteItens}
           infoArea={"favorite"}
-          className="!bg-transparent md:!w-[60vw] md:!min-w-0"
+          className="!bg-transparent md:!w-[60vw] md:!min-w-0 md:!grid-cols-[repeat(auto-fill,minmax(calc((60vw-2rem)/3),1fr))]"
+          itemSize={(vw) => {
+            return (vw * 0.6) / 3
+          }}
         />
       )}
     </main>

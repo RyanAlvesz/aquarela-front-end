@@ -17,7 +17,10 @@ const Profile = () => {
           <DynamicFeed
             feed={profile.publicacoes as (Product | Publication)[]}
             infoArea = {false}
-            className="!bg-transparent md:!w-[60vw] md:!min-w-0"
+            className="!bg-transparent md:!w-[60vw] md:!min-w-0 md:!grid-cols-[repeat(auto-fill,minmax(calc((60vw-2rem)/3),1fr))]"
+            itemSize={(vw) => {
+              return (vw * 0.6) / 3
+            }}
           />
         )}
       </div>
