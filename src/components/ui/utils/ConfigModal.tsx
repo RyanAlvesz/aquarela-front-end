@@ -1,21 +1,59 @@
+import { fetchWrapper } from "@/lib/api/fetch";
 import { resetCategories } from "@/store/categoriesSlice";
 import { resetInputs } from "@/store/inputSlice";
 import { resetProfile } from "@/store/profileSlice";
 import { persistor } from "@/store/redux-provider";
-import { resetRememberMe } from "@/store/RememberMe";
-import { useAppDispatch } from "@/store/store";
+import { resetRememberMe } from "@/store/rememberMeSlice";
+import { RootState, useAppDispatch, useAppSelector } from "@/store/store";
 import { resetUser } from "@/store/userSlice";
+import { confirmAlert } from "@/types/alert";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 
+interface respProps {
+    status: boolean,
+    status_code: number,
+    message: string
+}
+
 const ConfigModal: React.FC = () => {
 
+    const user = useAppSelector((state: RootState) => state.user)
     const router = useRouter()
     const dispatch = useAppDispatch()
 
-    const handleDeleteAccount = () => {}
-    const handleExit = () => {
+    const handleDeleteAccount = async () => {
+        const alertResp: boolean = await confirmAlert(
+            {
+                title: 'Tem certeza que deseja excluir sua conta?',
+                icon: 'warning',
+                description: 'Você perderá todos as suas publicações e seguidores',
+                confirmBtn: 'Excluir',
+                declineBtn: 'Cancelar'
+            }
+        )
+        if (alertResp) {
+
+            const url: string = 'v1/aquarela/delete/user/' + user.id
+
+            const options = {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }
+
+            const resp = await fetchWrapper<respProps>(url, options)
+
+            if (resp.status) {
+                logout()
+            }
+
+        }
+    }
+
+    const logout = () => {
         persistor.purge().then(() => {
             dispatch(resetUser())
             dispatch(resetRememberMe())
@@ -26,7 +64,25 @@ const ConfigModal: React.FC = () => {
         })
     }
 
-    return(
+    const handleExit = async () => {
+
+        const alertResp: boolean = await confirmAlert(
+            {
+                title: 'Tem certeza que realmente deseja sair?',
+                icon: 'warning',
+                description: 'Você terá que realizar login novamente',
+                confirmBtn: 'Sair',
+                declineBtn: 'Cancelar'
+            }
+        )
+
+        if (alertResp) {
+            logout()
+        }
+
+    }
+
+    return (
         <div className="w-[15vw] z-40 relative h-fit py-4 px-2 animate-fade-down animate-duration-1000 animate-ease-in-out flex flex-col gap-6 bg-blue-8 mr-2 mt-4 rounded-xl shadow-[0_0_8px_0px_rgba(0,0,0,0.2)] right-0">
             <div className="flex flex-col gap-2">
                 <h3 className="text-xs px-2">Ajustes</h3>
