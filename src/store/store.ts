@@ -8,7 +8,8 @@ import { profileReducer } from "./profileSlice"
 import { userReducer } from "./userSlice"
 import { persistReducer } from "redux-persist"
 import storage from "redux-persist/lib/storage"
-import { rememberMeReducer } from "./RememberMe"
+import { rememberMeReducer } from "./rememberMeSlice"
+import { darkModeReducer } from "./darkModeSlice"
 
 const inputPersistConfig = {
     key: "inputs",
@@ -31,6 +32,12 @@ const rememberMePersistConfig = {
     key: "rememberMe",
     storage: storage,
     whitelist: ["rememberMe"],
+};
+
+const darkModePersistConfig = {
+    key: "darkMode",
+    storage: storage,
+    whitelist: ["darkMode"],
 };
 
 const userPersistConfig = {
@@ -58,6 +65,7 @@ const rootReducer = combineReducers({
     search: searchReducer,
     profile: profileReducer,
     rememberMe: persistReducer(rememberMePersistConfig, rememberMeReducer),
+    darkMode: persistReducer(darkModePersistConfig, darkModeReducer),
 });   
 
 export const store = configureStore({
