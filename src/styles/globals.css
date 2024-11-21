@@ -50,6 +50,35 @@ section::-webkit-scrollbar-thumb {
   border-radius: 16px;
 }
 
+.alert-decline-btn {
+  background-color: rgb(var(--blue-1));
+  border-radius: 0.5rem;
+  padding: 0.25rem 1.5rem;
+  height: 2.5rem;
+  width: 11rem;
+  font-size: 1.125rem;
+  color: white;
+  margin-right: 1.5rem;
+}
+
+.alert-confirm-btn {
+  background-color: rgb(var(--blue-2));
+  border-radius: 0.5rem;
+  padding: 0.25rem 1.5rem;
+  height: 2.5rem;
+  width: 11rem;
+  font-size: 1.125rem;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .alert-decline-btn,
+  .alert-confirm-btn {
+      font-size: 1rem;
+      width: 8rem;
+  }
+}
+
 :root {
   --blue-1: 32 65 73;
   --blue-2: 62 125 141;
