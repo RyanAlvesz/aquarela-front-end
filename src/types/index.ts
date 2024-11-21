@@ -87,10 +87,10 @@ export interface DetailedPublication extends Publication{
 }
 
 export interface Folder {
-    id: number
+    id_pasta: number
     nome: string
     id_usuario?: number
-    itens?: (Product | Publication)[] 
+    itens?: (DetailedProduct | DetailedPublication)[] 
 }
 
 
