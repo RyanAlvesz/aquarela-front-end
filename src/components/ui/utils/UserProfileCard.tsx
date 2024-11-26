@@ -57,6 +57,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, cur
     }, [user.esta_seguindo])
 
     const handleMessage = () => {}
+    
     const handleShare = async () => {
         await navigator.clipboard.writeText('https://aquarela-front-end.vercel.app' + pathname)
         alert({
