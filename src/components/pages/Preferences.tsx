@@ -15,7 +15,6 @@ const Preferences: React.FC = () => {
     
     const [categories, setCategories] = useState<Category[]>([])
 
-    
     useEffect(() => {
         const url = 'v1/aquarela/categories'
         const options: RequestInit = {

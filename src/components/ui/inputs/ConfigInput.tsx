@@ -22,7 +22,7 @@ const ConfigInput: React.FC<ConfigInputProps> = ({label, type, onChange, value, 
 
     useEffect(() => {
         setInputValue(value);
-      }, [value]);
+    }, [value]);
     
     return(
         <div className={"flex flex-col gap-1 w-full " + className}>

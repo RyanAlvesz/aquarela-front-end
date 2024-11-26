@@ -46,13 +46,13 @@ const CreatePublicationButton = () => {
                                     ${isMenuVisible ? "bottom-[calc(8vh+3rem)]" : "-bottom-[14vh]"}
                                 `}>
                     <CreatePublicationChoiceButton
-                        link={'/create/post'}
+                        link={'/home/create/publication'}
                         alt="Quadro"
                         image={frameSVG}
                         text="Criar publicação"
                     />
                     <CreatePublicationChoiceButton
-                        link={'/create/procuct'}
+                        link={'/home/create/procuct'}
                         alt="Moeda"
                         image={coinSVG}
                         text="Criar produto"

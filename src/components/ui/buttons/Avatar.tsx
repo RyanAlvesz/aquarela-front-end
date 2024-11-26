@@ -38,8 +38,8 @@ const Avatar: React.FC<AvatarProps> = ({user, className, nickname}) => {    7
                 <Image 
                     alt={alt} 
                     src={image}
-                    width={100}
-                    height={100}
+                    width={500}
+                    height={500}
                     priority
                     className="w-full h-full object-cover"
                 />

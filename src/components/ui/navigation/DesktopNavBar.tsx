@@ -13,6 +13,7 @@ import DesktopNavBarLink from "./DesktopNavBarLink";
 import ToolTip from "../utils/ToolTip";
 import ConfigModal from "../utils/ConfigModal";
 import Popover, { PopoverContent, PopoverTrigger } from "../utils/Popover";
+import DesktopPublicationButton from "../buttons/DesktopPublicationButton";
 
 
 const DesktopNavBar: React.FC = () => {
@@ -37,10 +38,7 @@ const DesktopNavBar: React.FC = () => {
                 text="Início"
                 link={'/home/feed'}
             />
-            <DesktopNavBarLink
-                text="Postar"
-                link={'/create/'}
-            />
+            <DesktopPublicationButton/>
             <DesktopNavBarLink
                 text="Histórico"
                 link={'/home/history'}

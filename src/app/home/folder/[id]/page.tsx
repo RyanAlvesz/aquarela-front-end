@@ -15,7 +15,7 @@ import ConfigInput from "@/components/ui/inputs/ConfigInput"
 import GradientButton from "@/components/ui/buttons/GradientButton"
 
 interface getResp {
-    pasta: IFolder[]
+    pasta: IFolder
     status_code: number
     status: boolean
 }
@@ -42,7 +42,7 @@ const FolderPage = () => {
     const router = useRouter()
     const pathname = usePathname()
 
-    useEffect(() => {
+    const fetchItems = async () => {
 
         const url: string = `v1/aquarela/folder?folder=${params.id}&client=${user.id}`
 
@@ -52,21 +52,20 @@ const FolderPage = () => {
             cache: 'no-cache',
         }
 
-        const fetchItems = async () => {
-            const resp = await fetchWrapper<getResp>(url, options)
-            if (resp.status && resp.pasta) {
-                setFolder(resp.pasta[0])
-                setFolderName(resp.pasta[0].nome)
-                setFolderInputName(resp.pasta[0].nome)
-                setCurrentUser(resp.pasta[0].id_usuario == user.id ? true : false)
-            } else {
-                setFolder(null)
-            }
+        const resp = await fetchWrapper<getResp>(url, options)
+        if (resp.status && resp.pasta) {
+            setFolder(resp.pasta)
+            setFolderName(resp.pasta.nome)
+            setFolderInputName(resp.pasta.nome)
+            setCurrentUser(resp.pasta.id_usuario == user.id ? true : false)
+        } else {
+            setFolder(null)
         }
+    }
 
+    useEffect(() => {
         fetchItems()
-
-    }, [params, user])
+    }, [])
 
     const handleShare = async () => {
         await navigator.clipboard.writeText('https://aquarela-front-end.vercel.app' + pathname)
@@ -200,6 +199,8 @@ const FolderPage = () => {
                     itemSize={(vw) => {
                         return (vw * 0.8) / 4
                     }}
+                    deleteFolder={folder}
+                    refreshItems={fetchItems}
                 />
             ) : (
                 <div className="flex items-center justify-center text-base md:text-xl text-center font-medium text-blue-1 p-6"> As publicações salvas ficarão aqui </div>
