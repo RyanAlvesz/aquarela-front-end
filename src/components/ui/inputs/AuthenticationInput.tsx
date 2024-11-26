@@ -28,15 +28,16 @@ const icons = {
 
 interface AuthenticationInputProps {
     placeholder: string
-    inputType: 'text' | 'password' | 'email' | 'phone' | 'date'
+    inputType: React.HTMLInputTypeAttribute
     required: boolean
     name: keyof IInputState
     image: keyof typeof icons
     maxChar: number
-    passwordVisibility?: boolean
+    minChar?: number
+    passwordVisibility?: boolean,
 }
 
-const AuthenticationInput: React.FC<AuthenticationInputProps> = ({ placeholder, inputType, required, name, image, maxChar, passwordVisibility }) => {
+const AuthenticationInput: React.FC<AuthenticationInputProps> = ({ placeholder, inputType, required, name, image, maxChar, minChar, passwordVisibility }) => {
 
     const [currentInputType, setCurrentInputType] = useState(inputType)
     const [isPasswordVisible, setIsPasswordVisible] = useState(passwordVisibility)
@@ -56,13 +57,21 @@ const AuthenticationInput: React.FC<AuthenticationInputProps> = ({ placeholder, 
         return value
     }
 
-    const formatCPF = (input: string): string => {
+    const formatCPF = (input: string): string => {  
         const cleanedInput = input.replace(/\D/g, '')
         const match = cleanedInput.match(/^(\d{3})(\d{3})(\d{3})(\d{0,2})?$/)
         if (match) {
             return `${match[1]}.${match[2]}.${match[3]}${match[4] ? '-' + match[4] : ''}`
         }
         return input
+    }
+
+    const removeAccents = (input: string): string => {
+        return input.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+    
+    const formatUsername = (input: string): string => {
+        return removeAccents(input.trim().replace(/\s+/g, ''));
     }
 
     const dispatch = useAppDispatch()
@@ -72,6 +81,8 @@ const AuthenticationInput: React.FC<AuthenticationInputProps> = ({ placeholder, 
             dispatch(setInputValue({ field: name, value: formatPhoneNumber(event.target.value) }))
         else if (name == 'cpf')
             dispatch(setInputValue({ field: name, value: formatCPF(event.target.value) }))
+        else if (name == 'registerNickname')
+            dispatch(setInputValue({ field: name, value: formatUsername(event.target.value) }))
         else
             dispatch(setInputValue({ field: name, value: event.target.value }))
     }
@@ -88,6 +99,7 @@ const AuthenticationInput: React.FC<AuthenticationInputProps> = ({ placeholder, 
                 />
                 <input
                     type={currentInputType}
+                    minLength={minChar}
                     placeholder={placeholder}
                     name={name}
                     required={required}

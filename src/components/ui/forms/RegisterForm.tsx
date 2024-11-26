@@ -34,6 +34,28 @@ const RegisterForm: React.FC = () => {
         telefone: useAppSelector((state) => state.input.telephone).replace(/\D/g, ''),
     }
 
+    const validateForm = (): boolean => {
+
+        const isEmpty = Object.entries(user).some(([key, value]) => {            
+            if (key !== "foto_usuario" && key !== "descricao") {
+                return !value || value.trim() === "";
+            }
+            return false;
+        })
+    
+        if (isEmpty) {
+            alert({ icon: 'warning', title: 'Por favor, preencha todos os campos obrigatórios.' });
+            return false
+        }
+    
+        if (user.senha && user.senha.length < 3) {
+            alert({ icon: 'warning', title: 'A senha deve ter no mínimo 3 caracteres.' });
+            return false
+        }
+
+        return true
+    }
+
     useEffect(() => {        
         const fetchUsers = async () => {
             const resp = await fetchWrapper<usersResp>('v1/aquarela/users')
@@ -80,6 +102,10 @@ const RegisterForm: React.FC = () => {
     const registerUser = async (e: React.FormEvent<HTMLFormElement>) => {
 
         e.preventDefault()        
+
+        if(!validateForm()){
+            return
+        }
 
         if(passwordVerification() && alreadyRegisteredInfoValidation()){
 
@@ -138,10 +164,10 @@ const RegisterForm: React.FC = () => {
                 image='nickname'
                 inputType='text'
                 name='registerNickname'
-                placeholder='Apelido'
+                placeholder='Nome de usuário'
                 required = {true}
                 maxChar={150}
-            />
+            />  
             <AuthenticationInput 
                 image='mail'
                 inputType='email'
@@ -156,6 +182,7 @@ const RegisterForm: React.FC = () => {
                 name='cpf'
                 placeholder='CPF'
                 required = {true}
+                minChar={14}
                 maxChar={14}
             />
             <AuthenticationInput 
@@ -165,6 +192,7 @@ const RegisterForm: React.FC = () => {
                 placeholder='Senha'
                 required = {true}
                 passwordVisibility
+                minChar={3}
                 maxChar={50}
             />
             <AuthenticationInput 
@@ -174,6 +202,7 @@ const RegisterForm: React.FC = () => {
                 placeholder='Confirme a senha'
                 required = {true}
                 passwordVisibility
+                minChar={3}
                 maxChar={50}
             />
             <AuthenticationInput 
@@ -182,6 +211,7 @@ const RegisterForm: React.FC = () => {
                 name='birthday'
                 placeholder='Data de Nascimento'
                 required = {true}
+                minChar={8}
                 maxChar={8}
             />
             <AuthenticationInput 
@@ -190,6 +220,7 @@ const RegisterForm: React.FC = () => {
                 name='telephone'
                 placeholder='Telefone'
                 required = {true}
+                minChar={15}
                 maxChar={15}
             />
             <GradientButton className="w-full py-3 md:col-span-2" label='Cadastrar' primaryColor='blue-1' secundaryColor='blue-3' direction='left'/>
