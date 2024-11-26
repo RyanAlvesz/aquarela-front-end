@@ -29,14 +29,13 @@ const alert = ({title, icon}: AlertProps): void => {
 const loader = (): void => {
     Swal.fire({
         position: 'center',
-        title: `<h1 class="text-blue-2 text-2xl md:text-4xl">Carregando...</h1>`,
-        html: `<div class="flex items-center justify-center w-full h-12 mb-[0.9rem]"> <div class="loader"> </div> </div>`,
+        imageUrl: 'https://firebasestorage.googleapis.com/v0/b/tcc-aquarela.appspot.com/o/icon.png?alt=media&token=437fe86f-3be3-4ad9-b56e-f56e31f8ca2c',
         padding: '0.5rem 1.5rem 1.5rem',
         showConfirmButton: false,
-        width: '20rem',
-        background: '#E2E8EB',
         heightAuto: false,
+        backdrop: 'radial-gradient(circle, rgba(32,65,73,0.75), rgba(0,0,0,0.75))',
         customClass: {
+            image: 'loading-wiggle',
             popup: 'alert-rounded'
         }
     })
