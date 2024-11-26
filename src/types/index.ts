@@ -63,7 +63,9 @@ export interface Product {
 
 export interface DetailedProduct extends Product {
     id_dono_publicacao: number,
-    dono_publicacao: BaseUser
+    dono_publicacao: DetailedUser,
+    quantidade_visualizacoes?: number | null,
+    comentarios?: Comment[]
 }
 
 export interface Publication {
@@ -83,7 +85,9 @@ export interface Publication {
 
 export interface DetailedPublication extends Publication{
     id_dono_publicacao: number,
-    dono_publicacao: BaseUser
+    dono_publicacao: DetailedUser,
+    quantidade_visualizacoes?: number | null,
+    comentarios?: Comment[]
 }
 
 export interface Folder {
@@ -93,5 +97,12 @@ export interface Folder {
     itens?: (DetailedProduct | DetailedPublication)[] 
 }
 
-
+export interface Comment {
+    id_comentario: number
+    mensagem: string
+    id_usuario: number
+    id_resposta: number | null
+    nome_usuario: string
+    foto_usuario: string
+}
 
