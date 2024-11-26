@@ -63,6 +63,7 @@ const ProfileFolders = () => {
       }
 
     }
+    
   }
 
   const handleLink = (folder: IFolder) => {
