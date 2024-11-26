@@ -1,4 +1,4 @@
-import { Product, Publication } from "@/types"
+import { Product, Publication, Folder as IFolder } from "@/types"
 import FeedItem from "./FeedItem"
 
 interface DynamicFeedProps {
@@ -6,9 +6,11 @@ interface DynamicFeedProps {
   infoArea: 'like' | 'favorite' | false
   className?: string
   itemSize?: (arg: number) => number
+  deleteFolder?: IFolder
+  refreshItems?: () => void
 }
 
-const DynamicFeed: React.FC<DynamicFeedProps> = ({ feed, infoArea, className, itemSize }) => {
+const DynamicFeed: React.FC<DynamicFeedProps> = ({ feed, infoArea, className, itemSize, deleteFolder, refreshItems }) => {
 
   const feedItemsWithImages = feed.filter(item => item.imagens && item.imagens.length > 0)
 
@@ -21,6 +23,8 @@ const DynamicFeed: React.FC<DynamicFeedProps> = ({ feed, infoArea, className, it
               infoArea = {infoArea}
               item={item}
               itemSize={itemSize}
+              deleteFolder={deleteFolder}
+              refreshItems={refreshItems}
             />
           )
       })}
