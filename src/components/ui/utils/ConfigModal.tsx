@@ -54,13 +54,13 @@ const ConfigModal: React.FC = () => {
     }
 
     const logout = () => {
+        router.push('/')
         persistor.purge().then(() => {
             dispatch(resetUser())
             dispatch(resetRememberMe())
             dispatch(resetInputs())
             dispatch(resetCategories())
             dispatch(resetProfile())
-            router.push('/')
         })
     }
 
