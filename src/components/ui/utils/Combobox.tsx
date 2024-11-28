@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useState } from "react"
+import { forwardRef, useRef, useState } from "react";
 import {
     autoUpdate,
     size,
@@ -10,8 +10,8 @@ import {
     useListNavigation,
     useRole,
     FloatingFocusManager,
-    FloatingPortal
-} from "@floating-ui/react"
+    FloatingPortal,
+} from "@floating-ui/react";
 
 interface ItemProps {
     children: React.ReactNode
@@ -27,11 +27,11 @@ const Item = forwardRef<HTMLDivElement, ItemProps & React.HTMLProps<HTMLDivEleme
                 role="option"
                 id={id}
                 aria-selected={active}
-                className={`${active ? 'bg-blue-4/50' : 'bg-none'} rounded-md p-2`}
+                className={`${active ? "bg-blue-4/50" : ""} rounded-md p-2`}
                 {...rest}
                 style={{
                     cursor: "pointer",
-                    ...rest.style
+                    ...rest.style,
                 }}
             >
                 {children}
@@ -40,23 +40,28 @@ const Item = forwardRef<HTMLDivElement, ItemProps & React.HTMLProps<HTMLDivEleme
     }
 )
 
+Item.displayName = "Item"
+
 interface ComboboxProps<T> {
     items: T[]
-    value: T | null
-    onChange: (item: T) => void
-    getItemLabel?: (item: T) => string
+    strAtr: keyof T
+    selectItem: (item: T) => void
+    noItemsLabel: string
     label: string
+    className?: string
 }
 
 const Combobox = <T,>({
     items,
-    value,
-    onChange,
+    strAtr,
+    selectItem,
+    noItemsLabel,
     label,
-    getItemLabel = (item) => String(item)
+    className = ''
 }: ComboboxProps<T>) => {
     const [open, setOpen] = useState(false)
     const [activeIndex, setActiveIndex] = useState<number | null>(null)
+    const [inputValue, setInputValue] = useState<string>("")
 
     const listRef = useRef<Array<HTMLElement | null>>([])
 
@@ -70,12 +75,12 @@ const Combobox = <T,>({
                 apply({ rects, availableHeight, elements }) {
                     Object.assign(elements.floating.style, {
                         width: `${rects.reference.width}px`,
-                        maxHeight: `${availableHeight}px`
+                        maxHeight: `${availableHeight}px`,
                     })
                 },
-                padding: 10
-            })
-        ]
+                padding: 10,
+            }),
+        ],
     })
 
     const role = useRole(context, { role: "listbox" })
@@ -85,47 +90,52 @@ const Combobox = <T,>({
         activeIndex,
         onNavigate: setActiveIndex,
         virtual: true,
-        loop: true
+        loop: true,
     })
 
-    const {
-        getReferenceProps,
-        getFloatingProps,
-        getItemProps
-    } = useInteractions([role, dismiss, listNav])
+    const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([
+        role,
+        dismiss,
+        listNav,
+    ])
 
-    const filteredItems = items.filter((item) => {
-        const label = getItemLabel(item);
-        return value && typeof value === 'string' && label.toLowerCase().startsWith(value.toLowerCase())
-    })
+    
+    const sortedItems = items.sort((a, b) =>
+        String(a[strAtr]).localeCompare(String(b[strAtr]), 'pt-BR')
+    )
+
+    const filteredItems = sortedItems.filter((item) =>
+        String(item[strAtr]).toLowerCase().includes(inputValue.toLowerCase())
+    )
+
+    const limitedItems = filteredItems.slice(0, 5)
 
     return (
-        <label htmlFor={label} className="flex flex-col gap-1">
-            <span className="text-blue-1 font-medium">{label}</span>
+        <label className={`flex flex-col gap-1 ${className}`}>
+            {label && <span className="text-blue-1 font-medium">{label}</span>}
             <input
-                className="bg-blue-5/70 focus:outline focus:outline-1 outline-blue-5 rounded w-full text-[100%] text-blue-2 px-2 py-3"
-                id={label}
-                name={label}
+                className="bg-blue-5/70 focus:outline focus:outline-1 outline-blue-5 rounded w-full h-12 text-[100%] text-blue-2 px-2 py-3"
                 {...getReferenceProps({
                     ref: refs.setReference,
                     onChange: (event) => {
-                        const inputValue = (event.target as HTMLInputElement).value
-                        setOpen(inputValue !== "")
+                        const value = (event.target as HTMLInputElement).value
+                        setInputValue(value)
+                        setOpen(value !== "")
                         setActiveIndex(0)
                     },
-                    value: value ? getItemLabel(value) : "",
+                    value: inputValue,
                     "aria-autocomplete": "list",
                     onKeyDown(event) {
-                        if (
-                            event.key === "Enter" &&
-                            activeIndex != null &&
-                            filteredItems[activeIndex]
-                        ) {
-                            onChange(filteredItems[activeIndex])
-                            setActiveIndex(null)
-                            setOpen(false)
+                        if (event.key === "Enter") {
+                            event.preventDefault()
+                            if (activeIndex !== null && limitedItems[activeIndex]) {
+                                selectItem(limitedItems[activeIndex])
+                                setInputValue("")
+                                setOpen(false)
+                                refs.domReference.current?.focus()
+                            }
                         }
-                    }
+                    },
                 })}
             />
             <FloatingPortal>
@@ -136,37 +146,36 @@ const Combobox = <T,>({
                         visuallyHiddenDismiss
                     >
                         <div
-                            className="bg-blue-5/70 rounded-md p-2 text-blue-1 mt-2 gap-2"
+                            className="bg-blue-5 rounded-md p-2 text-blue-1 mt-2 gap-2"
                             {...getFloatingProps({
                                 ref: refs.setFloating,
                                 style: {
-                                    ...floatingStyles
-                                }
+                                    ...floatingStyles,
+                                },
                             })}
                         >
-                            {filteredItems.length > 0 ? (
-                                filteredItems.map((item, index) => (
+                            {limitedItems.length > 0 ? (
+                                limitedItems.map((item, index) => (
                                     <Item
+                                        key={`${String(item[strAtr])}-${index}`}
                                         {...getItemProps({
-                                            key: getItemLabel(item),
                                             ref(node) {
                                                 listRef.current[index] = node
                                             },
                                             onClick() {
-                                                onChange(item)
+                                                selectItem(item)
+                                                setInputValue("")
                                                 setOpen(false)
                                                 refs.domReference.current?.focus()
-                                            }
+                                            },
                                         })}
                                         active={activeIndex === index}
                                     >
-                                        {getItemLabel(item)}
+                                        {String(item[strAtr])}
                                     </Item>
                                 ))
                             ) : (
-                                <div className="w-full">
-                                    {label} não encontradas
-                                </div>
+                                <div className="w-full text-center">{noItemsLabel}</div>
                             )}
                         </div>
                     </FloatingFocusManager>
@@ -177,3 +186,4 @@ const Combobox = <T,>({
 }
 
 export default Combobox
+

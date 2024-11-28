@@ -5,11 +5,12 @@ interface ConfigTitleProps{
     text: string
     returnButton: boolean,
     desktopReturnButton?: boolean
+    className?: string
 }
 
-const ConfigTitle: React.FC<ConfigTitleProps> = ({text, returnButton, desktopReturnButton}) => {
+const ConfigTitle: React.FC<ConfigTitleProps> = ({text, returnButton, desktopReturnButton, className}) => {
     return(
-        <nav className={`flex items-center justify-between ${!desktopReturnButton? 'md:justify-center' : ''}`}>
+        <nav className={`flex items-center justify-between ${className} ${!desktopReturnButton? 'md:justify-center' : ''}`}>
             <div className={`flex items-center justify-start ${!desktopReturnButton? 'md:hidden' : 'md:w-[6vh]'}`}>
                 {returnButton? (
                     <ReturnButton color="darkBlue" width={6} className={`md:!w-[4.5vh] z-0 relative`} noZ/>

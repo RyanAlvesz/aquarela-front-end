@@ -52,7 +52,7 @@ const CreatePublicationButton = () => {
                         text="Criar publicação"
                     />
                     <CreatePublicationChoiceButton
-                        link={'/home/create/procuct'}
+                        link={'/home/create/product'}
                         alt="Moeda"
                         image={coinSVG}
                         text="Criar produto"
