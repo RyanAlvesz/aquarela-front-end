@@ -199,7 +199,7 @@ const FolderPage = () => {
                     itemSize={(vw) => {
                         return (vw * 0.8) / 4
                     }}
-                    deleteFolder={folder}
+                    {...(currentUser && { deleteFolder: folder })}
                     refreshItems={fetchItems}
                 />
             ) : (

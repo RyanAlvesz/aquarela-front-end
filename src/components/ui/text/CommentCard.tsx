@@ -76,7 +76,7 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment, currentUser, itemOwn
 
     return (
         <div
-            className="flex justify-center gap-2 w-full mt-4 hover:bg-blue-7/60 px-3 py-2 rounded-md relative"
+            className="flex justify-center gap-2 w-full mt-4 h-fit hover:bg-blue-7/60 px-3 py-2 rounded-md relative"
             onMouseOver={() => setIsHovered(true)}
             onMouseLeave={() => {
                 if (!isOptionsOpen) setIsHovered(false);

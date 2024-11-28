@@ -170,7 +170,7 @@ const ProductPage: React.FC = () => {
   }
 
   const handleEdit = () => {
-
+    router.push('/home/edit/product/' + product?.id_publicacao)
   }
 
   const handleReturn = () => {
@@ -250,7 +250,7 @@ const ProductPage: React.FC = () => {
         <main className="flex flex-col w-full md:grid md:grid-cols-[auto_auto] md:px-[6.5vw] md:gap-6 md:h-[80vh] md:justify-center md:w-fit">
           <MobilePublicationHeader createFolder={setIsCreateFolderButton} item={product} onFavorite={handleProductFavorite} />
           <ItemImageBox isCreateFolderButton={isCreateFolderButton} setIsCreateFolderButton={setIsCreateFolderButton} item={product} onFavorite={handleProductFavorite} />
-          <section className="grow flex flex-col h-full justify-between md:min-w-[40vw]">
+          <section className="grow flex flex-col h-full justify-between md:min-w-[calc((100vw-13vw-1.5rem)/2)]">
             <div className="flex flex-col w-full">
               <UserDetails
                 edit={handleEdit}

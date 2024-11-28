@@ -169,7 +169,7 @@ const PublicationPage: React.FC = () => {
   }
 
   const handleEdit = () => {
-
+    router.push('/home/edit/publication/' + publication?.id_publicacao)
   }
 
   const handleReturn = () => {
@@ -246,10 +246,10 @@ const PublicationPage: React.FC = () => {
           </button>
         </div>
       ) : (
-        <main className="flex flex-col w-full md:grid md:grid-cols-[auto_auto] md:px-[6.5vw] md:gap-6 md:h-[80vh] md:justify-center md:w-fit">
+        <main className="flex flex-col w-full md:grid md:grid-cols-[auto_auto] md:px-[6.5vw] md:gap-6 md:h-[80vh] md:justify-center ">
           <MobilePublicationHeader createFolder={setIsCreateFolderButton} item={publication} onFavorite={handlePublicationFavorite} />
           <ItemImageBox isCreateFolderButton={isCreateFolderButton} setIsCreateFolderButton={setIsCreateFolderButton} item={publication} onFavorite={handlePublicationFavorite} />
-          <section className="grow flex flex-col h-full justify-between md:min-w-[40vw]">
+          <section className="grow flex flex-col h-full justify-between md:min-w-[calc((100vw-13vw-1.5rem)/2)]">
             <div className="flex flex-col w-full">
               <UserDetails
                 edit={handleEdit}

@@ -88,6 +88,7 @@ export interface DetailedPublication extends Publication{
     dono_publicacao: DetailedUser,
     quantidade_visualizacoes?: number | null,
     comentarios?: Comment[]
+    categorias?: Category[]
 }
 
 export interface Folder {

@@ -11,6 +11,7 @@ import { RootState, useAppSelector } from "@/store/store"
 import { fetchWrapper } from "@/lib/api/fetch"
 import ConfigInput from "../inputs/ConfigInput"
 import GradientButton from "../buttons/GradientButton"
+import watermarkImage from "$/public/images/logo/watermark.png"
 
 interface ItemImageBoxProps {
     item: DetailedPublication | DetailedProduct
@@ -74,7 +75,7 @@ const ItemImageBox: React.FC<ItemImageBoxProps> = ({ item, onFavorite, setIsCrea
     return (
         <>
             <div
-                className="h-fit w-full md:w-fit md:h-full md:place-self-end md:self-start md:min-w-[20vw] flex justify-end overflow-hidden relative"
+                className="h-auto md:min-w-[calc((100vw-13vw-1.5rem)/8)] md:max-h-[80vh] md:max-w-[calc((100vw-13vw-1.5rem)/2)] md:place-self-end md:self-start flex justify-end overflow-hidden relative"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => {
                     if (!isOptionsOpen) setIsHovered(false)
@@ -83,11 +84,23 @@ const ItemImageBox: React.FC<ItemImageBoxProps> = ({ item, onFavorite, setIsCrea
                 <Image
                     src={item.imagens[0].url}
                     alt={item.nome}
-                    width={500}
-                    height={500}
+                    width={1000}
+                    height={1000}
                     priority
-                    className="h-full w-full md:w-auto max-w-full shadow-inner object-cover md:rounded-2xl"
+                    className="h-full w-fit max-h-full shadow-inner object-cover md:rounded-2xl"
                 />
+                {item.tipo === 'produto' && Boolean(item.marca_dagua) && (
+                    <div
+                    className={`flex items-center justify-center absolute inset-0 rounded-md md:rounded-2xl pointer-events-none`}
+                    >
+                    <div
+                        className="absolute bg-cover inset-0  w-[165%] h-[165%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -rotate-12"
+                        style={{
+                            backgroundImage: `url(${watermarkImage.src})`
+                        }}
+                    />
+                    </div>
+                )}
                 {
                     isHovered && (
                         <div className="hidden md:flex justify-end ease-linear animate-fade overflow-hidden p-2 rounded-xl absolute inset-0 bg-black/40">

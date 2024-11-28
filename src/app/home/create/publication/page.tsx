@@ -174,7 +174,7 @@ const CreatePublication = () => {
       <form onSubmit={(e) => handleSubmit(e)} className="grow flex flex-col px-4 gap-6 md:grid md:grid-cols-2 md:px-0 md:gap-12 md:h-fit">
         <label
           onClick={(e) => {
-            if (image !== '') {
+            if (image !== '') {              
               e.preventDefault()
             }
           }}

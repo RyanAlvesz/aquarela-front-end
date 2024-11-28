@@ -46,7 +46,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({publication, publicationOwner,
                     </ToolTip>
                     <ToolTip message="Editar">
                         <div 
-                            className="flex items-center justify-center text-xl gap-1 font-medium text-blue-1"
+                            className="flex items-center justify-center text-xl gap-1 font-medium text-blue-1 cursor-pointer"
                             onClick={edit}
                         >
                             <Image

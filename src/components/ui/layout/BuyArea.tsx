@@ -18,7 +18,7 @@ const handleAddCart = () => {
 const BuyArea: React.FC<BuyAreaProps> = ({ product }) => {
     return (
         <div className="flex w-full items-center justify-between p-3 pb-5">
-            <h3 className="text-2xl text-blue-1 font-medium"> R$ {product.preco}</h3>
+            <h3 className="text-2xl text-blue-1 font-medium"> R$ {String(product.preco).replace('.',',')}</h3>
             <div className="flex items-center justify-center gap-2 md:gap-4">
                 <button 
                     onClick={handleAddCart}
