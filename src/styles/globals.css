@@ -103,6 +103,12 @@ section::-webkit-scrollbar-thumb {
   }
 }
 
+@media (max-width: 2560px) {
+  .loading-wiggle{
+    height: 8rem;
+  }
+}
+
 .items-info{
   grid-template-areas: 
   "a1 a3"

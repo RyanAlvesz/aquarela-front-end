@@ -3,8 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import GradientButton from '@/components/ui/buttons/GradientButton';
 import AuthenticationInput from '../inputs/AuthenticationInput';
-import GoogleButton from '../buttons/GoogleButton';
-import AuthenticationChoice from '../text/AuthenticationChoice'
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { BaseUser } from '@/types';
 import alert, { loader, stopLoader } from '@/types/alert';
@@ -151,7 +149,7 @@ const RegisterForm: React.FC = () => {
     }
 
     return (
-        <form onSubmit={registerUser} className='w-full flex flex-col gap-4 md:gap-y-5 md:gap-x-4 md:grid md:grid-cols-2'>
+        <form onSubmit={registerUser} className='w-full flex flex-col gap-4 md:gap-y-5 md:gap-x-4 md:grid md:grid-cols-2 2xl:gap-8'>
             <AuthenticationInput 
                 image='user'
                 inputType='text'
@@ -223,9 +221,7 @@ const RegisterForm: React.FC = () => {
                 minChar={15}
                 maxChar={15}
             />
-            <GradientButton className="w-full py-3 md:col-span-2" label='Cadastrar' primaryColor='blue-1' secundaryColor='blue-3' direction='left'/>
-            <AuthenticationChoice />
-            <GoogleButton text='Cadastre com o Google'/>
+            <GradientButton className="w-full py-3 md:col-span-2 2xl:h-20 2xl:[&>p]:!text-4xl 2xl:py-8 2xl:mt-4" label='Cadastrar' primaryColor='blue-1' secundaryColor='blue-3' direction='left'/>
         </form>
     )
 }

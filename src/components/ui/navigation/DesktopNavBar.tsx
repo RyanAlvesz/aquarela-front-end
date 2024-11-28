@@ -21,7 +21,7 @@ const DesktopNavBar: React.FC = () => {
     const user = useAppSelector((state: RootState) => state.user)
 
     return (
-        <nav className="hidden z-20 h-[10vh] md:flex items-center justify-between p-[2.5vh] gap-6 fixed top-0 left-0 right-0 bg-white">
+        <nav className="hidden z-20 h-[10vh] md:flex items-center justify-between p-[2.5vh] gap-6 fixed top-0 left-0 right-0 bg-white 2xl:h-[8vh] 2xl:p-[2vh]">
             <Link
                 href={'/home/feed'}
                 className="h-full shrink-0"

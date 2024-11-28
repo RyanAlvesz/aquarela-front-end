@@ -8,7 +8,7 @@ import LoginForm from "../ui/forms/LoginForm";
 const Login = () => {
     return (
         <ReduxProvider>
-            <main className="flex flex-col items-center pt-[calc(25vh-6vh-2rem)] px-4 pb-4 gap-6 md:bg-blue-8 md:justify-center md:px-[8vw] md:py-9 md:max-h-screen md:overflow-scroll">
+            <main className="flex flex-col items-center pt-[calc(25vh-6vh-2rem)] px-4 pb-4 gap-6 md:bg-blue-8 md:justify-center md:px-[8vw] md:py-9 md:max-h-screen md:overflow-scroll 2xl:gap-12">
                 <LoginBackground/>
                 <AuthenticationTitle title='Bem-vindo!' subtitle='Faça login na sua conta' />
                 <LoginForm/>

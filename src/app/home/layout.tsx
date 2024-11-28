@@ -7,7 +7,7 @@ const HomeLayout = ({children}: {children: React.ReactNode}) => {
     
     return(
         <ReduxProvider>
-            <div className="bg-blue-7 flex flex-col md:bg-white min-h-screen md:pt-[calc(10vh+1rem)]">
+            <div className="bg-blue-7 flex flex-col md:bg-white min-h-screen md:pt-[calc(10vh+1rem)] 2xl:pt-[calc(8vh+1rem)]">
                 <DesktopNavBar />
                 {children}
             </div>

@@ -18,7 +18,7 @@ interface UserProfileCardProps {
 const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, currentUserId}) => {
     
     const [isFollowing, setIsFollowing] = useState<boolean>(Boolean(Number(user.esta_seguindo)))   
-    const [followersCount, setFollowersCount] = useState<number>(user.seguidores as number)   
+    const [followersCount, setFollowersCount] = useState<number>(Number(user.seguidores))   
 
     const pathname = usePathname()
 
@@ -71,13 +71,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, cur
             <Image 
                 src={user.foto_usuario? user.foto_usuario : standardProfile}
                 alt={user.nome}
-                width={200}
-                height={200}
+                width={5000}
+                height={5000}
                 priority
-                className="h-[14vh] w-[14vh] shadow-feed-item object-cover rounded-full mb-1"
+                className="h-[14vh] w-[14vh] shadow-feed-item object-cover rounded-full mb-1 2xl:h-[10vh] 2xl:w-[10vh] 2xl:mb-3"
             />
             <div className="flex items-center gap-1 mb-[2px]">
-                <h1 className="font-bold text-body-mobile text-blue-1 md:text-2xl"> {user.nome} </h1>
+                <h1 className="font-bold text-body-mobile text-blue-1 md:text-2xl 2xl:text-3xl"> {user.nome} </h1>
                 {user.disponibilidade === true && (
                     <ToolTip message="Artista disponível">
                         <Image 
@@ -85,7 +85,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, cur
                             src={darkBlueCoinSVG}
                             width={100}
                             height={100}
-                            className="h-6 w-fit"
+                            className="h-6 2xl:h-8 w-fit"
                         />
                     </ToolTip>
                 )}
@@ -97,9 +97,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, cur
                                 src={starSVG}
                                 width={100}
                                 height={100}
-                                className="h-6 w-fit"
+                                className="h-6 2xl:h-8 w-fit"
                             />
-                            <span className="absolute select-none text-white text-[10px] font-medium top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">{Math.ceil(user.avaliacao)}</span>
+                            <span className="absolute select-none text-white text-[10px] font-medium top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 2xl:text-sm">{Math.ceil(user.avaliacao)}</span>
                         </div>
                     </ToolTip>
                 )}
@@ -115,13 +115,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, cur
             {!currentUser && (
                 <div className="flex items-center justify-center gap-2 mb-5">
                     <button 
-                        className={`w-[40vw] md:w-[10vw] rounded-md py-2 font-medium text-sm md:text-base flex items-center justify-center fade-animation ${isFollowing === false ? 'bg-blue-1/90' : 'bg-blue-1'} text-white`}
+                        className={`w-[40vw] md:w-[10vw] 2xl:w-[6.5vw] rounded-md py-2 font-medium text-sm md:text-base flex items-center justify-center fade-animation ${isFollowing === false ? 'bg-blue-1/90' : 'bg-blue-1'} text-white`}
                         onClick={handleFollow}
                     >
                         {isFollowing === false? 'Seguir' : 'Seguindo'}
                     </button>
                     <button 
-                        className={`w-[40vw] md:w-[10vw] rounded-md py-2 font-medium text-sm md:text-base flex items-center justify-center fade-animation bg-blue-5 text-blue-1`}
+                        className={`w-[40vw] md:w-[10vw] 2xl:w-[6.5vw] rounded-md py-2 font-medium text-sm md:text-base flex items-center justify-center fade-animation bg-blue-5 text-blue-1`}
                         onClick={user.disponibilidade == true? handleMessage : handleShare}    
                     >
                         {user.disponibilidade == true? 'Enviar mensagem' : 'Compartilhar'} 

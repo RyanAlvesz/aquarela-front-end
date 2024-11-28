@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 const RegisterPage = () => {
   return (
     <Register />
-  );
+  )
 }
 
 export default RegisterPage

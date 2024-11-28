@@ -1,16 +1,13 @@
 'use client'
 
-import AuthenticationChoice from "../text/AuthenticationChoice"
 import AuthenticationInput from "../inputs/AuthenticationInput"
 import GradientButton from "../buttons/GradientButton";
-import GoogleButton from "../buttons/GoogleButton";
 import { fetchWrapper } from "@/lib/api/fetch";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { BaseUser } from "@/types";
 import alert, { loader, stopLoader } from "@/types/alert";
 import { setUser } from "@/store/userSlice";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import RememberMe from "../inputs/RemeberMe";
 import { useState } from "react";
 import { setRememberMe } from "@/store/rememberMeSlice";
@@ -109,7 +106,7 @@ const LoginForm = () => {
     }
     
     return (
-        <form onSubmit={login} className='w-full flex flex-col gap-6 md:gap-y-5 md:gap-x-4'>
+        <form onSubmit={login} className='w-full flex flex-col gap-6 md:gap-y-5 md:gap-x-4 2xl:gap-8'>
             <AuthenticationInput
                 image="user"
                 inputType="text"
@@ -129,11 +126,8 @@ const LoginForm = () => {
             />
             <div className="flex justify-between items-center">
                 <RememberMe onChange={handleRememberMe}/>
-                <Link href={'/password/forgot'} className="text-blue-2 text-sm hover:underline underline-offset-2 md:text-base"> Esqueci minha senha </Link>
             </div>
-            <GradientButton className="w-full py-3 md:col-span-2" label='Login' primaryColor='blue-2' secundaryColor='blue-3' direction='right'/>
-            <AuthenticationChoice/>
-            <GoogleButton text='Entre com o Google'/>
+            <GradientButton className="w-full py-3 md:col-span-2 2xl:h-20 2xl:[&>p]:!text-4xl 2xl:py-8 2xl:mt-4" label='Login' primaryColor='blue-2' secundaryColor='blue-3' direction='right'/>
         </form>
     )
 }
