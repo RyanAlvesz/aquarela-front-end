@@ -9,11 +9,10 @@ import { fetchWrapper } from "@/lib/api/fetch"
 import { Category, DetailedPublication } from "@/types"
 import Image from "next/image"
 import { useEffect, useState } from "react"
-import addSVG from '$/public/images/svg/plus.svg'
 import { RootState, useAppSelector } from "@/store/store"
-import { uploadImage } from "@/lib/firebase/app"
 import alert from "@/types/alert"
 import { useParams } from "next/navigation"
+import LoadingMessage from "@/components/ui/utils/LoadingMessage"
 
 interface GetRespCategory {
   categorias: Category[]
@@ -38,7 +37,7 @@ const CreatePublication = () => {
   const [description, setDescription] = useState<string>('')
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([])
   const [image, setImage] = useState<string>('')
-  const [isImageUploaded, setIsImageUploaded] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleCategorySelection = (category: Category) => {
     setSelectedCategories((prevSelected) => {
@@ -72,6 +71,7 @@ const CreatePublication = () => {
         setDescription(resp.postagem[0].descricao)
         setImage(resp.postagem[0].imagens[0].url)
         setSelectedCategories(resp.postagem[0].categorias as Category[])
+        setIsLoading(false)
       } else {
         setPublication(null)
       }
@@ -88,40 +88,29 @@ const CreatePublication = () => {
       headers: { 'Content-Type': 'application/json' },
       cache: 'no-cache',
     }
-    const resp = await fetchWrapper<GetRespCategory>(url, options)
+    const resp = await fetchWrapper<GetRespCategory>(url, options)    
     setCategoriesArray(resp.categorias)
   }
 
   useEffect(() => {
-    fetchCategories()
     fetchPublicationData()
-  },[])
+    fetchCategories()
+  }, [])
+
+  useEffect(() => {
+    if(categoriesArray.length > 0 && selectedCategories.length > 0){
+      const filteredCategories = categoriesArray.filter(
+        (category) => !selectedCategories.some((selected) => selected.id === category.id)
+      )
+      setCategoriesArray(filteredCategories)
+    }
+  }, [selectedCategories])
 
   const handleRemoveCategory = (category: Category) => {
     setSelectedCategories((prevSelected) =>
       prevSelected.filter((item) => item.id !== category.id)
     )
     setCategoriesArray((prevCategories) => [...prevCategories, category])
-  }
-
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      setIsImageUploaded(false)
-      const url = await uploadImage(file, '/user/' + currentUser.id + '/posts')
-      if (url) {
-        setImage(url)
-        setTimeout(() => {
-          setIsImageUploaded(true)
-        }, 5000)
-      } else {
-        alert({ icon: 'error', title: 'Erro ao enviar imagem' })
-      }
-    }
-  }
-
-  const handleRemoveImage = () => {
-    setImage('')
   }
 
   const inputValidation = () => {
@@ -144,19 +133,11 @@ const CreatePublication = () => {
       resp = false
     }
 
-    if (!image) {
-      alert({
-        icon: 'error',
-        title: 'Insira uma imagem'
-      })
-      resp = false
-    }
-
     return resp
 
   }
 
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
     e.preventDefault()
 
@@ -164,38 +145,33 @@ const CreatePublication = () => {
 
     if (validation) {
 
-      const url = 'v1/aquarela/post'
+      const url = 'v1/aquarela/post/' + publication?.id_publicacao
       const options: RequestInit = {
-        method: 'POST',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           nome: title,
           descricao: description || '',
-          id_usuario: currentUser.id,
-          imagens: [
-            {
-              url: image
-            }
-          ],
+          id_usuario: publication?.id_dono_publicacao,
           categorias: selectedCategories.map(category => category.id)
         })
 
       }
 
-      try {
-        const resp = await fetchWrapper<GetRespPost>(url, options)        
-        if(resp.status_code == 201){
+      try { 
+        const resp = await fetchWrapper<GetRespPost>(url, options)
+        if (resp.status_code == 200) {
           alert({
             icon: 'success',
-            title: 'Publicação criada com sucesso'
+            title: 'Publicação atualizada'
           })
         }
       } catch (error) {
         alert({
           icon: 'error',
-          title: 'Erro ao publicar'
+          title: 'Erro ao atualizar'
         })
       }
 
@@ -204,105 +180,63 @@ const CreatePublication = () => {
   }
 
   return (
-    <main className="bg-blue-7 min-h-screen flex flex-col gap-6 justify-center p-4 md:py-8 md:bg-transparent md:h-fit md:gap-8 md:px-[15vw]">
-      <ConfigTitle text="Editar publicação" returnButton />
-      <form onSubmit={(e) => handleSubmit(e)} className="grow flex flex-col px-4 gap-6 md:grid md:grid-cols-2 md:px-0 md:gap-12 md:h-fit">
-        <label
-          onClick={(e) => {
-            if (image !== '') {              
-              e.preventDefault()
-            }
-          }}
-          htmlFor='image'
-          className="w-full relative bg-blue-5/50 rounded-md md:rounded-2xl overflow-hidden cursor-pointer bg-center bg-cover bg-no-repeat"
-          style={{
-            height: image ? 'fit-content' : '60vh'
-          }}
-        >
-          {image && (
+    <main className="bg-blue-7 min-h-screen flex flex-col gap-6 justify-center p-4 md:py-8 md:bg-transparent md:min-h-fit md:gap-8 md:px-[15vw]">
+      {isLoading ? (
+          <LoadingMessage message="Carregando publicação" />
+      ) : ( 
+        <>
+          <ConfigTitle text="Editar publicação" returnButton />
+          <form onSubmit={(e) => handleSubmit(e)} className="grow flex flex-col px-4 gap-6 md:grid md:grid-cols-2 md:px-0 md:gap-12 md:h-fit">
             <Image
               src={image}
               alt="Imagem"
               width={500}
               height={500}
-              className={`w-full h-auto object-contain`}
+              className={`w-full h-auto object-contain rounded-md md:rounded-2xl`}
             />
-          )}
-          {isImageUploaded ? (
-            <div
-              className={` flex items-center justify-center absolute ${image == '' ?
-                'top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2/5 h-auto' :
-                'top-4 right-4 rotate-45 w-1/6 h-auto bg-blue-4/80 rounded-full p-1 md:w-[10%]'
-                }`}
-              onClick={() => {
-                if (image !== '') {
-                  handleRemoveImage()
-                }
-              }}
-            >
-              <Image
-                src={addSVG}
-                alt="Adicionar imagem"
-                width={100}
-                height={100}
-                className={`w-full h-full`}
-                priority
+            <fieldset className="flex flex-col gap-3 md:h-fit">
+              <CreateItemInput
+                label="Título"
+                onChange={setTitle}
+                type="text"
+                value={title}
+                className="md:[&>input]:h-14 md:[&>span]:text-xl"
               />
-            </div>
-          ) : (
-            <div className="flex items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16">
-              <div className="image-loader !w-1/2 !h-1/2"></div>
-            </div>
-          )}
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            className="hidden"
-            id="image"
-          />
-        </label>
-        <fieldset className="flex flex-col gap-3 md:h-fit">
-          <CreateItemInput
-            label="Título"
-            onChange={setTitle}
-            type="text"
-            value={title}
-            className="md:[&>input]:h-14 md:[&>span]:text-xl"
-          />
-          <CreateItemInput
-            label="Descrição"
-            onChange={setDescription}
-            type="text"
-            value={description}
-            className="md:[&>input]:h-14 md:[&>span]:text-xl"
-          />
-          <Combobox
-            items={categoriesArray}
-            strAtr="nome"
-            selectItem={(category: Category) => handleCategorySelection(category)}
-            noItemsLabel="Categoria não encontrada"
-            label="Categoria"
-            className="md:[&>input]:h-14 md:[&>span]:text-xl"
-          />
-          <div className="flex w-full flex-wrap gap-2">
-            {selectedCategories.map((category) => (
-              <SelectedCategory
-                removeItem={() => handleRemoveCategory(category)}
-                category={category}
-                key={category.id}
+              <CreateItemInput
+                label="Descrição"
+                onChange={setDescription}
+                type="text"
+                value={description}
+                className="md:[&>input]:h-14 md:[&>span]:text-xl"
               />
-            ))}
-          </div>
-          <GradientButton
-            className="w-full h-14 [&>p]:!text-xl md:[&>p]:!text-2xl md:h-16 mt-2"
-            direction="left"
-            label="Salvar"
-            primaryColor='blue-2'
-            secundaryColor='blue-3'
-          />
-        </fieldset>
-      </form>
+              <Combobox
+                items={categoriesArray}
+                strAtr="nome"
+                selectItem={(category: Category) => handleCategorySelection(category)}
+                noItemsLabel="Categoria não encontrada"
+                label="Categoria"
+                className="md:[&>input]:h-14 md:[&>span]:text-xl"
+              />
+              <div className="flex w-full flex-wrap gap-2">
+                {selectedCategories.map((category) => (
+                  <SelectedCategory
+                    removeItem={() => handleRemoveCategory(category)}
+                    category={category}
+                    key={category.id}
+                  />
+                ))}
+              </div>
+              <GradientButton
+                className="w-full h-14 [&>p]:!text-xl md:[&>p]:!text-2xl md:h-16 mt-2"
+                direction="left"
+                label="Salvar"
+                primaryColor='blue-2'
+                secundaryColor='blue-3'
+              />
+            </fieldset>
+          </form>
+        </>
+      )}
     </main>
   )
 

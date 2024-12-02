@@ -215,7 +215,7 @@ const CreateProduct = () => {
   }
 
   return (
-    <main className="bg-blue-7 min-h-screen flex flex-col gap-6 justify-center p-4 md:py-8 md:bg-transparent md:h-fit md:gap-8 md:px-[15vw]">
+    <main className="bg-blue-7 min-h-screen flex flex-col gap-6 justify-center p-4 md:py-8 md:bg-transparent md:min-h-fit md:gap-8 md:px-[15vw]">
       <ConfigTitle text="Criar produto" returnButton />
       <form onSubmit={(e) => handleSubmit(e)} className="grow flex flex-col px-4 gap-6 md:grid md:grid-cols-2 md:px-0 md:gap-12 md:h-fit">
         <label
