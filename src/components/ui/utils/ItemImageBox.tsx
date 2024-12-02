@@ -18,9 +18,10 @@ interface ItemImageBoxProps {
     onFavorite: () => Promise<boolean>
     setIsCreateFolderButton: (arg: boolean) => void
     isCreateFolderButton: boolean
+    setImageLoad: (arg: boolean) => void
 }
 
-const ItemImageBox: React.FC<ItemImageBoxProps> = ({ item, onFavorite, setIsCreateFolderButton, isCreateFolderButton }) => {
+const ItemImageBox: React.FC<ItemImageBoxProps> = ({ item, onFavorite, setIsCreateFolderButton, isCreateFolderButton, setImageLoad }) => {
 
     const [isOptionsOpen, setOptionsOpen] = useState(false)
     const [isHovered, setIsHovered] = useState(false)
@@ -28,6 +29,15 @@ const ItemImageBox: React.FC<ItemImageBoxProps> = ({ item, onFavorite, setIsCrea
     const currentUser = useAppSelector((state: RootState) => state.user)
     const [folderName, setFolderName] = useState<string>('')
     const [loading, setLoading] = useState(false)
+    
+    const [isTall, setIsTall] = useState(false)
+
+    const img = new (window.Image)()
+    img.src = item.imagens[0].url
+    img.onload = () => {
+        setImageLoad(true)
+        setIsTall(img.height > img.width)
+    }
 
     useEffect(() => {
         if (loading) {
@@ -75,7 +85,8 @@ const ItemImageBox: React.FC<ItemImageBoxProps> = ({ item, onFavorite, setIsCrea
     return (
         <>
             <div
-                className="h-auto md:min-w-[calc((100vw-13vw-1.5rem)/8)] md:max-h-[80vh] md:max-w-[calc((100vw-13vw-1.5rem)/2)] md:place-self-end md:self-start flex justify-end overflow-hidden relative"
+                className={`h-auto md:place-self-end md:self-start flex justify-end overflow-hidden md:rounded-2xl relative
+                            ${isTall ? "md:h-[80vh] md:w-max" : "md:w-[calc((100vw-13vw-1.5rem)/2)] md:h-max"}`}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => {
                     if (!isOptionsOpen) setIsHovered(false)
@@ -87,18 +98,18 @@ const ItemImageBox: React.FC<ItemImageBoxProps> = ({ item, onFavorite, setIsCrea
                     width={1000}
                     height={1000}
                     priority
-                    className="h-full w-fit max-h-full shadow-inner object-cover md:rounded-2xl"
+                    className={`shadow-inner md:rounded-2xl object-contain w-full h-full`}
                 />
                 {item.tipo === 'produto' && Boolean(item.marca_dagua) && (
                     <div
-                    className={`flex items-center justify-center absolute inset-0 rounded-md md:rounded-2xl pointer-events-none`}
+                        className={`flex items-center justify-center absolute inset-0 rounded-md md:rounded-2xl pointer-events-none`}
                     >
-                    <div
-                        className="absolute bg-cover inset-0  w-[165%] h-[165%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -rotate-12"
-                        style={{
-                            backgroundImage: `url(${watermarkImage.src})`
-                        }}
-                    />
+                        <div
+                            className="absolute bg-cover inset-0  w-[165%] h-[165%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -rotate-12"
+                            style={{
+                                backgroundImage: `url(${watermarkImage.src})`
+                            }}
+                        />
                     </div>
                 )}
                 {

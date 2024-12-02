@@ -49,6 +49,11 @@ const PublicationPage: React.FC = () => {
   const [hasVisualized, setHasVisualized] = useState(false)
   const [isFollowing, setIsFollowing] = useState<boolean>(Boolean(Number(publication?.dono_publicacao.esta_seguindo)))
   const [isCreateFolderButton, setIsCreateFolderButton] = useState<boolean>(false)
+  const [imageLoad, setImageLoad] = useState<boolean>(false)
+
+  const handleImageLoad = (isLoaded: boolean) => {
+    setImageLoad(isLoaded)
+  }
 
   const fetchPublicationData = async () => {
 
@@ -233,7 +238,7 @@ const PublicationPage: React.FC = () => {
 
   return (
     <>
-      {loading ? (
+      {(loading && !imageLoad) ? (
         <LoadingMessage message="Procurando a obra no acervo..." />
       ) : publication == null ? (
         <div className="absolute bg-blue-7 md:bg-white inset-0 flex flex-col gap-3 md:gap-8 items-center px-6 justify-center text-2xl md:text-title-mobile text-blue-1 font-medium text-center">
@@ -248,7 +253,7 @@ const PublicationPage: React.FC = () => {
       ) : (
         <main className="flex flex-col w-full md:grid md:grid-cols-[auto_auto] md:px-[6.5vw] md:gap-6 md:h-[80vh] md:justify-center ">
           <MobilePublicationHeader createFolder={setIsCreateFolderButton} item={publication} onFavorite={handlePublicationFavorite} />
-          <ItemImageBox isCreateFolderButton={isCreateFolderButton} setIsCreateFolderButton={setIsCreateFolderButton} item={publication} onFavorite={handlePublicationFavorite} />
+          <ItemImageBox setImageLoad={handleImageLoad} isCreateFolderButton={isCreateFolderButton} setIsCreateFolderButton={setIsCreateFolderButton} item={publication} onFavorite={handlePublicationFavorite} />
           <section className="grow flex flex-col h-full justify-between md:min-w-[calc((100vw-13vw-1.5rem)/2)]">
             <div className="flex flex-col w-full">
               <UserDetails

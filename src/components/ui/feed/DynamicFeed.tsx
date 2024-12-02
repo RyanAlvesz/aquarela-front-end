@@ -7,10 +7,11 @@ interface DynamicFeedProps {
   className?: string
   itemSize?: (arg: number) => number
   deleteFolder?: IFolder
+  deleteItem?: boolean
   refreshItems?: () => void
 }
 
-const DynamicFeed: React.FC<DynamicFeedProps> = ({ feed, infoArea, className, itemSize, deleteFolder, refreshItems }) => {
+const DynamicFeed: React.FC<DynamicFeedProps> = ({ feed, infoArea, className, itemSize, deleteFolder, deleteItem, refreshItems }) => {
 
   const feedItemsWithImages = feed.filter(item => item.imagens && item.imagens.length > 0)
 
@@ -25,6 +26,7 @@ const DynamicFeed: React.FC<DynamicFeedProps> = ({ feed, infoArea, className, it
               itemSize={itemSize}
               deleteFolder={deleteFolder}
               refreshItems={refreshItems}
+              deleteItem={deleteItem}
             />
           )
       })}

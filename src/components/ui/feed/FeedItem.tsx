@@ -17,7 +17,7 @@ import useWindowDimensions from "@/hooks/useWindowDimension"
 import { useRouter } from "next/navigation"
 import { fetchWrapper } from "@/lib/api/fetch"
 import { RootState, useAppSelector } from "@/store/store"
-import alert, { loader, stopLoader } from "@/types/alert"
+import alert, { confirmAlert, loader, stopLoader } from "@/types/alert"
 import Popover, { PopoverContent, PopoverTrigger } from "../utils/Popover"
 import ItemModal from "./ItemModal"
 import ConfigInput from "../inputs/ConfigInput"
@@ -29,6 +29,7 @@ interface FeedItemProps {
     infoArea: 'like' | 'favorite' | false
     itemSize?: (arg: number) => number
     deleteFolder?: IFolder
+    deleteItem?: boolean
     refreshItems?: () => void
 }
 
@@ -36,7 +37,7 @@ const isDetailed = (item: Product | DetailedProduct | Publication | DetailedPubl
     return 'id_dono_publicacao' in item;
 }
 
-const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFolder, refreshItems }) => {
+const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFolder, deleteItem, refreshItems }) => {
 
     const [isLiked, setIsLiked] = useState<boolean>(Number(item.curtida) === 1)
     const [isFavorited, setIsFavorited] = useState<boolean>(Number(item.favorito) === 1)
@@ -297,6 +298,57 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
 
     }
 
+    const handleDeleteItem = async() => {
+
+        let resp
+        
+        const alertResp: boolean = await confirmAlert(
+            {
+              title: `Deletar ${item.tipo}?`,
+              icon: 'warning',
+              description: 'Essa ação não poderá ser desfeita',
+              confirmBtn: 'Deletar',
+              declineBtn: 'Cancelar'
+            }
+        )
+
+        if(alertResp){
+            
+            if(item.tipo == 'produto'){
+                const url: string = 'v1/aquarela/products/' + item.id_publicacao 
+                const options: RequestInit = {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }
+                resp = await fetchWrapper(url, options)
+            }else{
+                const url: string = 'v1/aquarela/delete/post/' + item.id_publicacao 
+                const options: RequestInit = {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }
+                resp = await fetchWrapper(url, options)
+            }
+    
+            if(resp){
+                
+                alert({
+                    icon: 'success',
+                    title: 'Publicação deletada com sucesso'
+                })
+                if (refreshItems) {
+                    refreshItems()
+                }
+            }
+
+        }
+
+    }
+
     return (
         <>
             <div
@@ -368,6 +420,22 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
                                 </div>
                             )}
                             <div className="flex w-full justify-end gap-3 pointer-events-auto">
+                                {deleteItem && (
+                                    <ToolTip message={`Excluir ${item.tipo}`}>
+                                        <button
+                                            className="bg-blue-1 rounded-full w-8 h-8 2xl:w-10 2xl:h-10 flex items-center justify-center"
+                                            onClick={handleDeleteItem}
+                                        >
+                                            <Image
+                                                alt="Remover"
+                                                src={deleteSVG}
+                                                width={100}
+                                                height={100}
+                                                className="w-[55%] h-auto rotate-45"
+                                            />
+                                        </button>
+                                    </ToolTip>
+                                )}
                                 {deleteFolder && (
                                     <ToolTip message="Remover da pasta">
                                         <button

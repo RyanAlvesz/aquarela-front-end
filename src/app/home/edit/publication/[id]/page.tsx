@@ -72,7 +72,6 @@ const CreatePublication = () => {
         setDescription(resp.postagem[0].descricao)
         setImage(resp.postagem[0].imagens[0].url)
         setSelectedCategories(resp.postagem[0].categorias as Category[])
-        console.log(resp.postagem);
       } else {
         setPublication(null)
       }

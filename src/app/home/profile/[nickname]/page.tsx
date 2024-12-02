@@ -8,6 +8,8 @@ import { Product, Publication, BaseUser, DetailedUser } from "@/types"
 const Profile = () => {
 
   const profile = useAppSelector((state: RootState) => state.profile.user as BaseUser & DetailedUser)
+  const currentUser = useAppSelector((state: RootState) => state.user)
+  const isCurrentUser = profile.id === currentUser.id
   
     return (
       <div className="flex items-center justify-center relative w-full">
@@ -21,6 +23,7 @@ const Profile = () => {
             itemSize={(vw) => {
               return (vw * 0.6) / 3
             }}
+            {...(isCurrentUser && {deleteItem: true} )}
           />
         )}
       </div>

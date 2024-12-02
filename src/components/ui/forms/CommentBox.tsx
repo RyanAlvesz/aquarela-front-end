@@ -11,7 +11,7 @@ interface CommentBoxProps {
 
 const CommentBox: React.FC<CommentBoxProps> = ({user, comment, handleSubmitComment, setComment}) => {
     return (
-        <div className="flex fixed bottom-0 left-0 right-0 p-4 bg-white gap-4 md:relative md:py-0">
+        <div className="flex fixed bottom-0 left-0 right-0 p-4 md:px-3 bg-white gap-4 md:relative md:py-0">
             <Avatar nickname={user.nome_usuario} user={user} className="w-12 h-12 md:w-14 md:h-14" />
             <input
                 type="text"
