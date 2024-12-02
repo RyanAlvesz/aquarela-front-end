@@ -10,6 +10,7 @@ import { persistReducer } from "redux-persist"
 import storage from "redux-persist/lib/storage"
 import { rememberMeReducer } from "./rememberMeSlice"
 import { darkModeReducer } from "./darkModeSlice"
+import { filterReducer } from "./filterSlice"
 
 const inputPersistConfig = {
     key: "inputs",
@@ -66,6 +67,7 @@ const rootReducer = combineReducers({
     profile: profileReducer,
     rememberMe: persistReducer(rememberMePersistConfig, rememberMeReducer),
     darkMode: persistReducer(darkModePersistConfig, darkModeReducer),
+    filter: filterReducer,
 });   
 
 export const store = configureStore({

@@ -300,19 +300,6 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
     return (
         <>
             <div
-                className={`flex-col gap-2 p-2 h-fit ${isLoading ? 'flex' : 'hidden'}`}
-                style={{ width: itemWidth + 'px' }}
-            >
-                <div
-                    className="w-full bg-blue-6/70 animate-pulse rounded-xl"
-                    style={{ height: itemWidth + 'px' }}
-                />
-                <div
-                    className="w-full bg-blue-6/70 animate-pulse rounded-xl"
-                    style={{ height: baseHeight + 'px' }}
-                />
-            </div>
-            <div
                 className={`flex-col gap-2 p-2 cursor-pointer ${isLoading ? 'hidden' : 'flex'}`}
                 style={{
                     gridRowEnd: `span ${calculateGridRowEnd()}`,

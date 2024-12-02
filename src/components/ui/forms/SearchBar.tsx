@@ -8,6 +8,8 @@ import { usePathname, useRouter } from "next/navigation"
 import { useAppDispatch, useAppSelector } from "@/store/store"
 import { setQuery } from "@/store/searchSlice"
 import { useEffect, useState } from "react"
+import Popover, { PopoverContent, PopoverTrigger } from "../utils/Popover"
+import FilterPopover from "../utils/FilterPopover"
 
 const SearchBar = () => {
 
@@ -31,13 +33,20 @@ const SearchBar = () => {
     return(
         <form onSubmit={handleSearch} className="flex items-center gap-2 md:gap-4 bg-blue-5/50 rounded-md md:rounded-lg justify-center h-[6vh] md:h-full w-full py-1 px-2 md:py-2 hover:bg-blue-5/80 ease-linear duration-100 2xl:py-2 2xl:px-3">
             {searchArea && (
-                <button className="h-full">
-                    <Image
-                        alt="Filtro"
-                        src={filterSVG}
-                        className="h-full w-fit"
-                    />
-                </button>
+                <Popover>
+                    <PopoverTrigger asChild>
+                        <div className="h-full cursor-pointer">
+                            <Image
+                                alt="Filtro"
+                                src={filterSVG}
+                                className="h-full w-fit"
+                            />
+                        </div>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                        <FilterPopover />
+                    </PopoverContent>
+                </Popover>
             )}
             <input 
                 type="text"
