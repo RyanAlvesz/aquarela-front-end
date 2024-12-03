@@ -251,7 +251,7 @@ const PublicationPage: React.FC = () => {
           </button>
         </div>
       ) : (
-        <main className="flex flex-col w-full md:grid md:grid-cols-[auto_auto] md:px-[6.5vw] md:gap-6 md:h-[80vh] md:justify-center ">
+        <main className="flex flex-col w-full md:grid md:grid-cols-[auto_auto] md:px-[6.5vw] md:gap-6 md:h-[80vh] md:mb-[5vh] md:justify-center ">
           <MobilePublicationHeader createFolder={setIsCreateFolderButton} item={publication} onFavorite={handlePublicationFavorite} />
           <ItemImageBox setImageLoad={handleImageLoad} isCreateFolderButton={isCreateFolderButton} setIsCreateFolderButton={setIsCreateFolderButton} item={publication} onFavorite={handlePublicationFavorite} />
           <section className="grow flex flex-col h-full justify-between md:min-w-[calc((100vw-13vw-1.5rem)/2)]">

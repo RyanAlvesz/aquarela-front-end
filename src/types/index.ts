@@ -66,6 +66,7 @@ export interface DetailedProduct extends Product {
     dono_publicacao: DetailedUser,
     quantidade_visualizacoes?: number | null,
     comentarios?: Comment[]
+    categorias?: Category[]
 }
 
 export interface Publication {

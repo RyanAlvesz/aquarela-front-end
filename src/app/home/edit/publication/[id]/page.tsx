@@ -18,7 +18,7 @@ interface GetRespCategory {
   categorias: Category[]
 }
 
-interface GetResPublication extends GetRespPost {
+interface GetRespPublication extends GetRespPost {
   postagem: DetailedPublication[]
 }
 
@@ -26,7 +26,7 @@ interface GetRespPost {
   status_code: number
 }
 
-const CreatePublication = () => {
+const EditPublication = () => {
 
   const params = useParams()
   const postId = params.id
@@ -64,7 +64,7 @@ const CreatePublication = () => {
     }
 
     try {
-      const resp = await fetchWrapper<GetResPublication>(url, options)
+      const resp = await fetchWrapper<GetRespPublication>(url, options)
       if (resp.status_code === 200 && resp.postagem) {
         setPublication(resp.postagem[0])
         setTitle(resp.postagem[0].nome)
@@ -242,4 +242,4 @@ const CreatePublication = () => {
 
 }
 
-export default CreatePublication
+export default EditPublication

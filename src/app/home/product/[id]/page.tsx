@@ -251,7 +251,7 @@ const ProductPage: React.FC = () => {
           </button>
         </div>
       ) : (
-        <main className="flex flex-col w-full md:grid md:grid-cols-[auto_auto] md:px-[6.5vw] md:gap-6 md:h-[80vh] md:justify-center md:w-fit">
+        <main className="flex flex-col w-full md:grid md:grid-cols-[auto_auto] md:px-[6.5vw] md:gap-6 md:h-[80vh] md:mb-[5vh] md:justify-center md:w-fit">
           <MobilePublicationHeader createFolder={setIsCreateFolderButton} item={product} onFavorite={handleProductFavorite} />
           <ItemImageBox setImageLoad={handleImageLoad} isCreateFolderButton={isCreateFolderButton} setIsCreateFolderButton={setIsCreateFolderButton} item={product} onFavorite={handleProductFavorite} />
           <section className="grow flex flex-col h-full justify-between md:min-w-[calc((100vw-13vw-1.5rem)/2)]">
@@ -264,6 +264,7 @@ const ProductPage: React.FC = () => {
                 follow={handleFollow}
               />
               <PublicationDetails
+                className="[&>div]:!h-[10vh]"
                 publication={product}
                 like={handlePublicationLike}
                 favorite={handleProductFavorite}
@@ -275,7 +276,7 @@ const ProductPage: React.FC = () => {
                 product={product} 
               />
             </div>
-            <CommentArea className="[&>div]:md:h-[35vh]" refreshComments={fetchPublicationData} itemOwner={product.dono_publicacao} currentUser={user} comments={comments} />
+            <CommentArea className="[&>div]:md:max-h-[35vh]" refreshComments={fetchPublicationData} itemOwner={product.dono_publicacao} currentUser={user} comments={comments} />
             <div className="flex flex-col">
               <SocialButtonArea
                 classname="hidden md:flex items-center gap-2 p-3"
