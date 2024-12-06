@@ -151,7 +151,7 @@ const RegisterForm: React.FC = () => {
     }
 
     return (
-        <form onSubmit={registerUser} className='w-full flex flex-col gap-4 md:gap-y-5 md:gap-x-4 md:grid md:grid-cols-2 2xl:gap-8'>
+        <form onSubmit={registerUser} className='w-full flex flex-col gap-4 md:gap-y-5 md:gap-x-4 md:grid md:grid-cols-2'>
             <AuthenticationInput 
                 image='user'
                 inputType='text'
@@ -223,7 +223,7 @@ const RegisterForm: React.FC = () => {
                 minChar={15}
                 maxChar={15}
             />
-            <GradientButton className="w-full py-3 md:col-span-2 2xl:h-20 2xl:[&>p]:!text-4xl 2xl:py-8 2xl:mt-4" label='Cadastrar' primaryColor='blue-1' secundaryColor='blue-3' direction='left'/>
+            <GradientButton className="w-full py-3 md:col-span-2" label='Cadastrar' primaryColor='blue-1' secundaryColor='blue-3' direction='left'/>
         </form>
     )
 }

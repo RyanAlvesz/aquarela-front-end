@@ -247,7 +247,7 @@ const ProductPage: React.FC = () => {
             className="bg-blue-5/80 rounded-full ease-linear duration-100 hover:bg-blue-1 hover:[&>span]:text-white"
             onClick={handleReturn}
           >
-            <span className="font-bold text-secondary-mobile md:text-secondary-desktop text-blue-1 uppercase py-2 px-4 md:px-8 md:py-6 2xl:px-12 2xl:py-6 flex ease-linear duration-100">Voltar ao museu</span>
+            <span className="font-bold text-secondary-mobile md:text-secondary-desktop text-blue-1 uppercase py-2 px-4 md:px-8 md:py-6 flex ease-linear duration-100">Voltar ao museu</span>
           </button>
         </div>
       ) : (

@@ -22,9 +22,12 @@ const FeedPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const windowWidth = useWindowDimensions()
 
+  
+  
   useEffect(() => {
-    if(windowWidth.width as number >= 2560){
-      setFeedCollums(7)
+    console.log(windowWidth.width);
+    if(windowWidth.width as number >= 1920){
+      setFeedCollums(6)
     } else {
       setFeedCollums(5)
     }
@@ -60,7 +63,7 @@ const FeedPage = () => {
           <DynamicFeed
             feed={feedItems}
             infoArea="like"
-            className="2xl:!grid-cols-[repeat(auto-fill,minmax(calc((100vw-2rem)/7),1fr))]"
+            className="2xl:!grid-cols-[repeat(auto-fill,minmax(calc((100vw-2rem)/6),1fr))]"
             itemSize={(vw) => {
               return (vw) / feedCollums
             }}

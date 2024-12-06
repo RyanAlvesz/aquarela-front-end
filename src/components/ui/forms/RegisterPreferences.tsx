@@ -94,11 +94,11 @@ const RegisterPreferences: React.FC<PreferencesProps> = ({categories}) => {
         <form
             onSubmit={registerPreferences}
             className="grid grid-rows-[calc(16vh-3rem)_calc(84vh-6.5rem)_calc(4.5rem-2rem)] relative w-screen overflow-x-hidden min-h-screen bg-blue-7 px-[12.5vw] py-8 gap-6 
-                        md:grid-rows-[calc(20vh-5vh)_calc(80vh-5vh-6rem)_calc(6rem-5vh)] md:bg-blue-8 md:py-[5vh] md:px-[7.5vh] md:gap-[2.5vh] 2xl:grid-rows-[calc(20vh-5vh)_calc(80vh-5vh-8rem)_calc(8rem-5vh)]">
+                        md:grid-rows-[calc(20vh-5vh)_calc(80vh-5vh-6rem)_calc(6rem-5vh)] md:bg-blue-8 md:py-[5vh] md:px-[7.5vh] md:gap-[2.5vh]">
             <ScrollButton className="hidden md:flex absolute w-[4vh] h-[4vh] top-[calc(20.5vh+((80vh-5vh-6rem)/2))] left-[1.75vh]" onClick={scrollLeft} />
             <PreferencesLogoText/>   
             <PreferencesButtonGrid categories={categories} />
-            <GradientButton className="px-5 md:px-8 h-full place-self-end [&>p]:!text-body-mobile [&>p]:md:!text-body-desktop 2xl:px-12" direction="left" label="Próximo" primaryColor={'blue-1'} secundaryColor={'blue-2'}/>
+            <GradientButton className="px-5 md:px-8 h-full place-self-end [&>p]:!text-body-mobile [&>p]:md:!text-body-desktop" direction="left" label="Próximo" primaryColor={'blue-1'} secundaryColor={'blue-2'}/>
             <ScrollButton className="hidden md:flex absolute w-[4vh] h-[4vh] top-[calc(20.5vh+((80vh-5vh-6rem)/2))] right-[1.75vh] rotate-180" onClick={scrollRight}/>
         </form>
     )

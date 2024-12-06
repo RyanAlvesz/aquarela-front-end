@@ -116,7 +116,7 @@ const LoginForm = () => {
     }
     
     return (
-        <form onSubmit={login} className='w-full flex flex-col gap-6 md:gap-y-5 md:gap-x-4 2xl:gap-8'>
+        <form onSubmit={login} className='w-full flex flex-col gap-6 md:gap-y-5 md:gap-x-4'>
             <AuthenticationInput
                 image="user"
                 inputType="text"
@@ -137,7 +137,7 @@ const LoginForm = () => {
             <div className="flex justify-between items-center">
                 <RememberMe onChange={handleRememberMe}/>
             </div>
-            <GradientButton className="w-full py-3 md:col-span-2 2xl:h-20 2xl:[&>p]:!text-4xl 2xl:py-8 2xl:mt-4" label='Login' primaryColor='blue-2' secundaryColor='blue-3' direction='right'/>
+            <GradientButton className="w-full py-3 md:col-span-2" label='Login' primaryColor='blue-2' secundaryColor='blue-3' direction='right'/>
         </form>
     )
 }

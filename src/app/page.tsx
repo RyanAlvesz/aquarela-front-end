@@ -46,7 +46,7 @@ const Home = () => {
       className="h-screen bg-cover bg-center bg-no-repeat animate-fade ease-linear duration-700"
       style={{ backgroundImage: `url(${images[currentIndex].src})` }}
     >
-      <div className="flex flex-col gap-[10vh] px-10 md:justify-center md:items-center py-8 bg-black/40 h-full w-full text-white 2xl:gap-[5vh]">
+      <div className="flex flex-col gap-[10vh] px-10 md:justify-center md:items-center py-8 bg-black/40 h-full w-full text-white">
         <div className="grow flex flex-col items-center justify-center gap-4 md:grow-0">
           <h1>
             <Image
@@ -61,11 +61,11 @@ const Home = () => {
             {slogans[currentSloganIndex]}
           </p>
         </div>
-        <div className="flex flex-col md:grid md:grid-cols-2 gap-4 w-full text-xl md:text-[1.65rem] md:w-[35vw] 2xl:text-3xl">
-          <button className="flex items-center justify-center text-center h-[8.5vh] md:font-medium md:h-fit rounded-md md:rounded-lg bg-blue-1/80 hover:bg-blue-1 ease-linear duration-100 2xl:h-[8vh]">
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-4 w-full text-xl md:text-[1.65rem] md:w-[35vw]">
+          <button className="flex items-center justify-center text-center h-[8.5vh] md:font-medium md:h-fit rounded-md md:rounded-lg bg-blue-1/80 hover:bg-blue-1 ease-linear duration-100">
             <Link href={'/authentication/register'} className="md:py-6 w-full">Criar conta</Link>
           </button>
-          <button className="flex items-center justify-center text-center h-[8.5vh] md:font-medium md:h-fit rounded-md md:rounded-lg bg-blue-2/80 hover:bg-blue-2 ease-linear duration-100 2xl:h-[8vh]">
+          <button className="flex items-center justify-center text-center h-[8.5vh] md:font-medium md:h-fit rounded-md md:rounded-lg bg-blue-2/80 hover:bg-blue-2 ease-linear duration-100">
             <Link href={'/authentication/login'} className="md:py-6 w-full">Fazer login</Link>
           </button>
         </div>

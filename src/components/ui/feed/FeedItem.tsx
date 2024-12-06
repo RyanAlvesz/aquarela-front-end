@@ -416,13 +416,13 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
                     )}
                     {isHovered && (
                         <div
-                            className="hidden md:flex items-end overflow-hidden p-2 ease-linear animate-fade rounded-md md:rounded-xl absolute inset-0 bg-black/40 pointer-events-none 2xl:p-4"
+                            className="hidden md:flex items-end overflow-hidden p-2 ease-linear animate-fade rounded-md md:rounded-xl absolute inset-0 bg-black/40 pointer-events-none"
                         >
                             {hasMultipleImages && (
                                 <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 flex justify-between p-2 pointer-events-auto">
                                     <button
                                         onClick={handlePrevImage}
-                                        className="bg-white rounded-full w-8 h-8 2xl:w-10 2xl:h-10 flex items-center justify-center"
+                                        className="bg-white rounded-full w-8 h-8 flex items-center justify-center"
                                     >
                                         <Image
                                             src={arrowSVG}
@@ -434,7 +434,7 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
                                     </button>
                                     <button
                                         onClick={handleNextImage}
-                                        className="bg-white rounded-full w-8 h-8 2xl:w-10 2xl:h-10 flex items-center justify-center rotate-180"
+                                        className="bg-white rounded-full w-8 h-8 flex items-center justify-center rotate-180"
                                     >
                                         <Image
                                             src={arrowSVG}
@@ -450,7 +450,7 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
                                 {deleteItem && (
                                     <ToolTip message={`Excluir ${item.tipo}`}>
                                         <button
-                                            className="bg-blue-1 rounded-full w-8 h-8 2xl:w-10 2xl:h-10 flex items-center justify-center"
+                                            className="bg-blue-1 rounded-full w-8 h-8 flex items-center justify-center"
                                             onClick={handleDeleteItem}
                                         >
                                             <Image
@@ -466,7 +466,7 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
                                 {deleteFolder && (
                                     <ToolTip message="Remover da pasta">
                                         <button
-                                            className="bg-blue-1 rounded-full w-8 h-8 2xl:w-10 2xl:h-10 flex items-center justify-center"
+                                            className="bg-blue-1 rounded-full w-8 h-8 flex items-center justify-center"
                                             onClick={handleDeleteItemFolder}
                                         >
                                             <Image
@@ -480,7 +480,7 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
                                     </ToolTip>
                                 )}
                                 <button
-                                    className="bg-white rounded-full w-8 h-8 2xl:w-10 2xl:h-10 flex items-center justify-center"
+                                    className="bg-white rounded-full w-8 h-8 flex items-center justify-center"
                                     onClick={handleShare}
                                 >
                                     <Image
@@ -499,7 +499,7 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
                                 }}>
                                     <PopoverTrigger asChild onClick={() => setOptionsOpen((v) => !v)}>
                                         <button
-                                            className="bg-white rounded-full w-8 h-8 2xl:w-10 2xl:h-10 flex items-center justify-center"
+                                            className="bg-white rounded-full w-8 h-8 flex items-center justify-center"
                                         >
                                             <Image
                                                 alt="Opções"
@@ -533,11 +533,11 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
                                 <Avatar
                                     nickname={item.dono_publicacao.nome_usuario}
                                     user={item.dono_publicacao}
-                                    className="w-8 h-8 2xl:w-10 2xl:h-10"
+                                    className="w-8 h-8"
                                 />
-                                <h2 className="font-medium text-secondary-mobile md:text-base text-blue-1 2xl:text-lg">{`R$: ${item.preco}`}</h2>
+                                <h2 className="font-medium text-secondary-mobile md:text-base text-blue-1">{`R$: ${item.preco}`}</h2>
                                 {infoArea == "like" ? (
-                                    <button className="h-8 w-8 2xl:h-10 2xl:w-10" onClick={handleProductLike}>
+                                    <button className="h-8 w-8" onClick={handleProductLike}>
                                         <Image
                                             alt='Curtida'
                                             width={100}
@@ -546,7 +546,7 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
                                         />
                                     </button>
                                 ) : (
-                                    <button className="h-8 w-8 2xl:h-10 2xl:w-10" onClick={handleProductFavorite}>
+                                    <button className="h-8 w-8" onClick={handleProductFavorite}>
                                         <Image
                                             alt='Favorito'
                                             width={100}
@@ -562,12 +562,12 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
                                     <Avatar
                                         nickname={item.dono_publicacao.nome_usuario}
                                         user={item.dono_publicacao}
-                                        className="w-8 h-8 2xl:w-10 2xl:h-10"
+                                        className="w-8 h-8"
                                     />
-                                    <h2 className="font-medium text-secondary-mobile md:text-[14px] text-blue-1 2xl:text-lg">{`@${item.dono_publicacao.nome_usuario}`}</h2>
+                                    <h2 className="font-medium text-secondary-mobile md:text-[14px] text-blue-1">{`@${item.dono_publicacao.nome_usuario}`}</h2>
                                 </div>
                                 {infoArea == 'like' ? (
-                                    <button className="h-8 w-8 2xl:h-10 2xl:w-10" onClick={handlePublicationLike}>
+                                    <button className="h-8 w-8" onClick={handlePublicationLike}>
                                         <Image
                                             alt='Curtida'
                                             height={100}
@@ -576,7 +576,7 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
                                         />
                                     </button>
                                 ) : (
-                                    <button className="h-8 w-8 2xl:h-10 2xl:w-10" onClick={handlePublicationFavorite}>
+                                    <button className="h-8 w-8" onClick={handlePublicationFavorite}>
                                         <Image
                                             alt='Favorito'
                                             height={100}
@@ -598,7 +598,7 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
                     <form
                         onClick={(e) => e.stopPropagation()}
                         onSubmit={(e) => e.preventDefault()}
-                        className="bg-blue-7 w-[90vw] md:w-[35vw] 2xl:w-[20vw] rounded-2xl flex flex-col items-center h-fit p-8"
+                        className="bg-blue-7 w-[90vw] md:w-[35vw] rounded-2xl flex flex-col items-center h-fit p-8"
                     >
                         <h2 className="text-2xl md:text-3xl text-blue-1 font-bold mb-6">Criar pasta</h2>
                         <ConfigInput label="Nome" onChange={setFolderName} type="text" value={folderName} className="md:[&>label]:text-2xl md:[&>input]:h-12" maxLength={100} required />

@@ -125,7 +125,7 @@ const ItemModal: React.FC<ItemModalProps> = ({ item, onFavorite, createFolder })
     return (
         <div className="relative">
             {!saveItem ? (
-                <div className="w-[65vw] md:w-[15vw] 2xl:w-[10vw] z-40 relative h-fit py-4 px-2 animate-fade-down animate-duration-1000 animate-ease-in-out flex flex-col gap-6 bg-blue-8 rounded-xl shadow-[0_0_8px_0px_rgba(0,0,0,0.2)] right-0 2xl:text-xl">
+                <div className="w-[65vw] md:w-[15vw] z-40 relative h-fit py-4 px-2 animate-fade-down animate-duration-1000 animate-ease-in-out flex flex-col gap-6 bg-blue-8 rounded-xl shadow-[0_0_8px_0px_rgba(0,0,0,0.2)] right-0">
                     <div className="flex flex-col gap-1 items-start text-start text-blue-1 font-medium">
                         <button onClick={handleFavorite} className="text-start hover:bg-blue-2/20 ease-linear duration-150 w-full p-1 px-2 rounded-md"> {favorite ? 'Desfavoritar' : 'Favoritar'} </button>
                         <button onClick={handleDownload} className="text-start hover:bg-blue-2/20 ease-linear duration-150 w-full p-1 px-2 rounded-md">Baixar imagem</button>
@@ -133,7 +133,7 @@ const ItemModal: React.FC<ItemModalProps> = ({ item, onFavorite, createFolder })
                     </div>
                 </div>
             ) : (
-                <div className="w-[85vw] md:w-[25vw] 2xl:w-[15vw] z-50 relative h-fit animate-fade animate-duration-1000 animate-ease-in-out flex flex-col bg-blue-8 rounded-xl shadow-[0_0_8px_0px_rgba(0,0,0,0.2)] right-0">
+                <div className="w-[85vw] md:w-[25vw] z-50 relative h-fit animate-fade animate-duration-1000 animate-ease-in-out flex flex-col bg-blue-8 rounded-xl shadow-[0_0_8px_0px_rgba(0,0,0,0.2)] right-0">
                     <div className="flex flex-col w-full items-start py-4 pb-0 px-4 text-start text-blue-1 font-medium">
                         {folders.length > 0 ? (
                             <div className="w-full flex flex-col gap-2">
