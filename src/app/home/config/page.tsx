@@ -41,13 +41,15 @@ const Config = () => {
 
   const logout = () => {
     router.push('/')
-    persistor.purge().then(() => {
-      dispatch(resetUser())
-      dispatch(resetRememberMe())
-      dispatch(resetInputs())
-      dispatch(resetCategories())
-      dispatch(resetProfile())
-    })
+    setTimeout(() => {
+      persistor.purge().then(() => {
+        dispatch(resetUser())
+        dispatch(resetRememberMe())
+        dispatch(resetInputs())
+        dispatch(resetCategories())
+        dispatch(resetProfile())
+      })
+    }, 2500)
   }
 
   const exit = async () => {
@@ -136,9 +138,6 @@ const Config = () => {
               </li>
               <li>
                 <ConfigOptions text="Preferências" url="/home/config/preferences" />
-              </li>
-              <li>
-                <ConfigOptions text="Ajustar feed inicial" url="/home/config/feed" />
               </li>
             </ul>
           </div>

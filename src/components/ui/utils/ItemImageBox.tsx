@@ -2,11 +2,11 @@
 
 import { DetailedProduct, DetailedPublication, Folder as IFolder } from "@/types"
 import Image from "next/image"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import Popover, { PopoverContent, PopoverTrigger } from "./Popover"
 import ItemModal from "../feed/ItemModal"
 import optionsSVG from "$/public/images/svg/options-white.svg"
-import { loader, stopLoader } from "@/types/alert"
+import alert from "@/types/alert"
 import { RootState, useAppSelector } from "@/store/store"
 import { fetchWrapper } from "@/lib/api/fetch"
 import ConfigInput from "../inputs/ConfigInput"
@@ -28,7 +28,6 @@ const ItemImageBox: React.FC<ItemImageBoxProps> = ({ item, onFavorite, setIsCrea
 
     const currentUser = useAppSelector((state: RootState) => state.user)
     const [folderName, setFolderName] = useState<string>('')
-    const [loading, setLoading] = useState(false)
     
     const [isTall, setIsTall] = useState(false)
 
@@ -39,17 +38,9 @@ const ItemImageBox: React.FC<ItemImageBoxProps> = ({ item, onFavorite, setIsCrea
         setIsTall(img.height > img.width)
     }
 
-    useEffect(() => {
-        if (loading) {
-            loader()
-        }
-    }, [loading])
-
     const createFolder = async () => {
 
         if (folderName != '') {
-
-            setLoading(true)
 
             const url: string = 'v1/aquarela/folder'
 
@@ -73,11 +64,47 @@ const ItemImageBox: React.FC<ItemImageBoxProps> = ({ item, onFavorite, setIsCrea
             const resp = await fetchWrapper<getResp>(url, options)
 
             if (resp && resp.status_code == 201) {
-                stopLoader()
+
+                alert({icon: 'success', title:'Pasta criada com sucesso. O item foi salvo!'})
+
+                await addFolderItem(resp.pasta.id_pasta)
                 setIsCreateFolderButton(false)
                 setFolderName('')
+
             }
 
+        }
+
+    }
+
+    const addFolderItem = async(id: number) => {
+
+        if (item.tipo == 'produto') {
+            const url: string = 'v1/aquarela/folders/products'
+            const options: RequestInit = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id_produto: item.id_publicacao,
+                    id_pasta: id
+                })
+            }
+            await fetchWrapper(url, options)
+        } else {
+            const url: string = 'v1/aquarela/folders/posts'
+            const options: RequestInit = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id_postagem: item.id_publicacao,
+                    id_pasta: id
+                })
+            }
+            await fetchWrapper(url, options)
         }
 
     }

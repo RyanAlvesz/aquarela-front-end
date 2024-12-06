@@ -83,9 +83,17 @@ const LoginForm = () => {
         if (emailResp.status) {
         
             const user = emailResp.usuario[0]
+
+            if(rememberMeInput){
+                dispatch(setRememberMe(true))                
+            }
+            
             dispatch(setUser({ ...user, id: user.id_usuario }))  
-            stopLoader()
-            router.push('/home/feed')          
+
+            setTimeout(() => {
+                stopLoader()
+                router.push('/home/feed')          
+            }, 2500)
         
         } else if (nicknameResp.status) {
 
@@ -96,8 +104,10 @@ const LoginForm = () => {
                 dispatch(setRememberMe(true))                
             }
 
-            stopLoader()            
-            router.push('/home/feed')
+            setTimeout(() => {
+                stopLoader()            
+                router.push('/home/feed')
+            }, 2500)
 
         }else{
             alert({icon:"error", title:"Usuário não encontrado!"})

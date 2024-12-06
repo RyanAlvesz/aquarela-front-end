@@ -13,6 +13,7 @@ import addSVG from '$/public/images/svg/plus.svg'
 import { RootState, useAppSelector } from "@/store/store"
 import { uploadImage } from "@/lib/firebase/app"
 import alert from "@/types/alert"
+import { useRouter } from "next/navigation"
 
 interface GetResp {
   categorias: Category[]
@@ -20,10 +21,14 @@ interface GetResp {
 
 interface GetRespPost {
   status_code: number
+  postagem: {
+    id: number
+  }
 }
 
 const CreatePublication = () => {
 
+  const router = useRouter()
   const currentUser = useAppSelector((state: RootState) => state.user)
   const [categoriesArray, setCategoriesArray] = useState<Category[]>([])
   const [title, setTitle] = useState<string>('')
@@ -156,6 +161,9 @@ const CreatePublication = () => {
             icon: 'success',
             title: 'Publicação criada com sucesso'
           })
+          setTimeout(() => {
+            router.push('/home/publication/' + resp.postagem.id)
+          }, 2500)
         }
       } catch (error) {
         alert({

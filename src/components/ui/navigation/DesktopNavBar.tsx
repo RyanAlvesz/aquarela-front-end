@@ -59,7 +59,7 @@ const DesktopNavBar: React.FC = () => {
                     height={100}
                 />
             </Link>
-            <div className="flex items-center justify-center gap-1 h-full relative">
+            <div className="flex shrink-0 items-center justify-center gap-1 h-full relative">
                 <Avatar
                     nickname={user.nome_usuario}
                     user={user}

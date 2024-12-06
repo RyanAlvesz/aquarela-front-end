@@ -17,7 +17,7 @@ import useWindowDimensions from "@/hooks/useWindowDimension"
 import { useRouter } from "next/navigation"
 import { fetchWrapper } from "@/lib/api/fetch"
 import { RootState, useAppSelector } from "@/store/store"
-import alert, { confirmAlert, loader, stopLoader } from "@/types/alert"
+import alert, { confirmAlert } from "@/types/alert"
 import Popover, { PopoverContent, PopoverTrigger } from "../utils/Popover"
 import ItemModal from "./ItemModal"
 import ConfigInput from "../inputs/ConfigInput"
@@ -47,7 +47,6 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
     const currentUser = useAppSelector((state: RootState) => state.user)
     const [isCreateFolderButton, setIsCreateFolderButton] = useState<boolean>(false)
     const [folderName, setFolderName] = useState<string>('')
-    const [loading, setLoading] = useState(false)
     const hasMultipleImages = Boolean(item.imagens.length > 1)
     const windowWidth = useWindowDimensions().width
     const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number } | null>(null);
@@ -55,12 +54,6 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
     const itemWidth = itemSize ? itemSize(windowWidth as number) : (windowWidth as number - 32) / 5
 
     const router = useRouter()
-
-    useEffect(() => {
-        if (loading) {
-            loader()
-        }
-    }, [loading])
 
     const handleProductLike = async () => {
 
@@ -214,8 +207,6 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
 
         if (folderName != '') {
 
-            setLoading(true)
-
             const url: string = 'v1/aquarela/folder'
 
             const options = {
@@ -238,11 +229,47 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
             const resp = await fetchWrapper<getResp>(url, options)
 
             if (resp && resp.status_code == 201) {
-                stopLoader()
+
+                alert({icon: 'success', title:'Pasta criada com sucesso. O item foi salvo!'})
+                
+                await addFolderItem(resp.pasta.id_pasta)
                 setIsCreateFolderButton(false)
                 setFolderName('')
+
             }
 
+        }
+
+    }
+
+    const addFolderItem = async(id: number) => {
+
+        if (item.tipo == 'produto') {
+            const url: string = 'v1/aquarela/folders/products'
+            const options: RequestInit = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id_produto: item.id_publicacao,
+                    id_pasta: id
+                })
+            }
+            await fetchWrapper(url, options)
+        } else {
+            const url: string = 'v1/aquarela/folders/posts'
+            const options: RequestInit = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id_postagem: item.id_publicacao,
+                    id_pasta: id
+                })
+            }
+            await fetchWrapper(url, options)
         }
 
     }
@@ -338,7 +365,7 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
                 
                 alert({
                     icon: 'success',
-                    title: 'Publicação deletada com sucesso'
+                    title: `Item deletado com sucesso`
                 })
                 if (refreshItems) {
                     refreshItems()

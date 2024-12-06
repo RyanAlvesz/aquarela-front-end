@@ -78,8 +78,10 @@ const RegisterPreferences: React.FC<PreferencesProps> = ({categories}) => {
             const url: string = 'v1/aquarela/preferences/user'
             const resp = await fetchWrapper(url, options)
             if(resp){
-                stopLoader()
-                router.push('/home/feed') 
+                setTimeout(() => {
+                    stopLoader()
+                    router.push('/home/feed') 
+                }, 2500)
             }else{
                 alert({icon:"warning", title:"Erro ao selecionar preferências"})
             }

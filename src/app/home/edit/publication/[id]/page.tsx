@@ -10,8 +10,8 @@ import { Category, DetailedPublication } from "@/types"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import { RootState, useAppSelector } from "@/store/store"
-import alert from "@/types/alert"
-import { useParams } from "next/navigation"
+import alert, { confirmAlert } from "@/types/alert"
+import { useParams, useRouter } from "next/navigation"
 import LoadingMessage from "@/components/ui/utils/LoadingMessage"
 
 interface GetRespCategory {
@@ -29,6 +29,7 @@ interface GetRespPost {
 const EditPublication = () => {
 
   const params = useParams()
+  const router = useRouter()
   const postId = params.id
   const [publication, setPublication] = useState<DetailedPublication | null>(null)
   const currentUser = useAppSelector((state: RootState) => state.user)
@@ -179,6 +180,45 @@ const EditPublication = () => {
 
   }
 
+  const handleDelete = async () => {
+
+    const alertResp: boolean = await confirmAlert(
+      {
+        title: `Deletar publicação?`,
+        icon: 'warning',
+        description: 'Essa ação não poderá ser desfeita',
+        confirmBtn: 'Deletar',
+        declineBtn: 'Cancelar'
+      }
+    )
+
+    if (alertResp) {
+      const url: string = 'v1/aquarela/delete/post/' + publication?.id_publicacao
+      const options: RequestInit = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+      const resp = await fetchWrapper(url, options)
+
+      if (resp) {
+
+        alert({
+          icon: 'success',
+          title: 'Publicação deletada com sucesso'
+        })
+
+        setTimeout(() => {
+          router.push('/home/feed')
+        }, 2500)
+
+      }
+
+    }
+
+  }
+
   return (
     <main className="bg-blue-7 min-h-screen flex flex-col gap-6 justify-center p-4 md:py-8 md:bg-transparent md:min-h-fit md:gap-8 md:px-[15vw]">
       {isLoading ? (
@@ -226,13 +266,24 @@ const EditPublication = () => {
                   />
                 ))}
               </div>
-              <GradientButton
-                className="w-full h-14 [&>p]:!text-xl md:[&>p]:!text-2xl md:h-16 mt-2"
-                direction="left"
-                label="Salvar"
-                primaryColor='blue-2'
-                secundaryColor='blue-3'
-              />
+              <div className="flex flex-col md:grid md:grid-cols-2 items-center justify-center w-full gap-2 md:gap-4">
+                <GradientButton
+                  className="w-full h-14 [&>p]:!text-xl md:[&>p]:!text-2xl md:h-16 mt-2"
+                  direction="left"
+                  label="Salvar"
+                  primaryColor='blue-2'
+                  secundaryColor='blue-3'
+                />
+                <GradientButton
+                  className="w-full h-14 [&>p]:!text-xl md:[&>p]:!text-2xl md:h-16 mt-2"
+                  direction="right"
+                  label="Excluir"
+                  primaryColor='blue-4'
+                  secundaryColor='blue-3'
+                  type="button"
+                  onClick={handleDelete}
+                />
+              </div>
             </fieldset>
           </form>
         </>

@@ -16,6 +16,7 @@ import { uploadImage } from "@/lib/firebase/app"
 import alert from "@/types/alert"
 import CreateItemCheckbox from "@/components/ui/inputs/CreateItemCheckbox"
 import CreateItemNumberInput from "@/components/ui/inputs/CreateItemNumberInput"
+import { useRouter } from "next/navigation"
 
 interface GetResp {
   categorias: Category[]
@@ -23,10 +24,14 @@ interface GetResp {
 
 interface GetRespProduct {
   status_code: number
+  produto: {
+    id: number
+  }
 }
 
 const CreateProduct = () => {
 
+  const router = useRouter()
   const currentUser = useAppSelector((state: RootState) => state.user)
   const [categoriesArray, setCategoriesArray] = useState<Category[]>([])
   const [title, setTitle] = useState<string>('')
@@ -202,6 +207,9 @@ const CreateProduct = () => {
             icon: 'success',
             title: 'Produto criado com sucesso'
           })
+          setTimeout(() => {
+            router.push('/home/product/' + resp.produto.id)
+          }, 2500)
         }
       } catch (error) {
         alert({

@@ -11,10 +11,10 @@ import Image from "next/image"
 import watermarkImage from "$/public/images/logo/watermark.png"
 import { useEffect, useState } from "react"
 import { RootState, useAppSelector } from "@/store/store"
-import alert from "@/types/alert"
+import alert, { confirmAlert } from "@/types/alert"
 import CreateItemCheckbox from "@/components/ui/inputs/CreateItemCheckbox"
 import CreateItemNumberInput from "@/components/ui/inputs/CreateItemNumberInput"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import LoadingMessage from "@/components/ui/utils/LoadingMessage"
 
 interface GetRespCategory {
@@ -32,6 +32,7 @@ interface GetRespPost {
 const EditProduct = () => {
 
   const params = useParams()
+  const router = useRouter()
   const postId = params.id
   const [product, setProduct] = useState<DetailedProduct | null>(null)
   const currentUser = useAppSelector((state: RootState) => state.user)
@@ -101,7 +102,7 @@ const EditProduct = () => {
       headers: { 'Content-Type': 'application/json' },
       cache: 'no-cache',
     }
-    const resp = await fetchWrapper<GetRespCategory>(url, options)    
+    const resp = await fetchWrapper<GetRespCategory>(url, options)
     setCategoriesArray(resp.categorias)
   }
 
@@ -111,7 +112,7 @@ const EditProduct = () => {
   }, [])
 
   useEffect(() => {
-    if(categoriesArray.length > 0 && selectedCategories.length > 0){
+    if (categoriesArray.length > 0 && selectedCategories.length > 0) {
       const filteredCategories = categoriesArray.filter(
         (category) => !selectedCategories.some((selected) => selected.id === category.id)
       )
@@ -131,7 +132,7 @@ const EditProduct = () => {
   }, [price])
 
   useEffect(() => {
-    if(isNaN(quantity)){
+    if (isNaN(quantity)) {
       setQuantity(0);
     }
   }, [quantity])
@@ -164,7 +165,7 @@ const EditProduct = () => {
       resp = false
     }
 
-    if (priceWithTax < 5.5  || priceWithTax > 50000) {
+    if (priceWithTax < 5.5 || priceWithTax > 50000) {
       alert({
         icon: 'error',
         title: 'O valor do produto deve estar entre R$:5,5 e R$:50.000'
@@ -184,7 +185,7 @@ const EditProduct = () => {
 
   }
 
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
     e.preventDefault()
 
@@ -209,7 +210,7 @@ const EditProduct = () => {
           categorias: selectedCategories.map(category => category.id)
         })
 
-      }      
+      }
 
       console.log({
         nome: title,
@@ -221,11 +222,11 @@ const EditProduct = () => {
         quantidade: quantity,
         categorias: selectedCategories.map(category => category.id)
       });
-      
+
 
       try {
-        const resp = await fetchWrapper<GetRespPost>(url, options)        
-        if(resp.status_code == 200){
+        const resp = await fetchWrapper<GetRespPost>(url, options)
+        if (resp.status_code == 200) {
           alert({
             icon: 'success',
             title: 'Produto atualizado'
@@ -242,11 +243,50 @@ const EditProduct = () => {
 
   }
 
+  const handleDelete = async () => {
+
+    const alertResp: boolean = await confirmAlert(
+      {
+        title: `Deletar produto?`,
+        icon: 'warning',
+        description: 'Essa ação não poderá ser desfeita',
+        confirmBtn: 'Deletar',
+        declineBtn: 'Cancelar'
+      }
+    )
+
+    if (alertResp) {
+      const url: string = 'v1/aquarela/products/' + product?.id_publicacao
+      const options: RequestInit = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+      const resp = await fetchWrapper(url, options)
+
+      if (resp) {
+
+        alert({
+          icon: 'success',
+          title: 'Produto deletada com sucesso'
+        })
+
+        setTimeout(() => {
+          router.push('/home/feed')
+        }, 2500)
+
+      }
+
+    }
+
+  }
+
   return (
     <main className="bg-blue-7 min-h-screen flex flex-col gap-6 justify-center p-4 md:py-8 md:bg-transparent md:min-h-fit md:gap-8 md:px-[15vw]">
       {isLoading ? (
-          <LoadingMessage message="Carregando produto" />
-      ) : ( 
+        <LoadingMessage message="Carregando produto" />
+      ) : (
         <>
           <ConfigTitle text="Editar produto" returnButton />
           <form onSubmit={(e) => handleSubmit(e)} className="grow flex flex-col px-4 gap-6 md:grid md:grid-cols-2 md:px-0 md:gap-12 md:h-fit">
@@ -270,10 +310,10 @@ const EditProduct = () => {
                   className={`flex items-center justify-center absolute inset-0 rounded-md md:rounded-2xl pointer-events-none`}
                 >
                   <div
-                      className="absolute bg-cover inset-0  w-[165%] h-[165%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -rotate-12"
-                      style={{
-                          backgroundImage: `url(${watermarkImage.src})`
-                      }}
+                    className="absolute bg-cover inset-0  w-[165%] h-[165%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -rotate-12"
+                    style={{
+                      backgroundImage: `url(${watermarkImage.src})`
+                    }}
                   />
                 </div>
               )}
@@ -330,7 +370,7 @@ const EditProduct = () => {
                 className="md:[&>div]:h-14 md:[&>span]:text-xl"
               />
               <div className="flex flex-col w-full gap-1 my-2">
-                <p className="text-blue-2 text-lg md:text-xl text-center animate-fade duration-75 ease-linear"> Taxa: 10%. </p>
+                <p className="text-blue-2 text-lg md:text-xl text-center animate-fade duration-75 ease-linear"> Taxa de serviço: 10%. </p>
                 {!isNaN(priceWithTax) && (
                   <p className="text-blue-1 text-lg md:text-xl text-center animate-fade duration-75 ease-linear"> Preço final: R$:{priceWithTax.toFixed(2).replace('.', ',')} </p>
                 )}
@@ -347,13 +387,24 @@ const EditProduct = () => {
                   *O envio dos itens é sua responsabilidade
                 </p>
               )}
-              <GradientButton
-                className="w-full h-14 [&>p]:!text-xl md:[&>p]:!text-2xl md:h-16 mt-2"
-                direction="left"
-                label="Publicar"
-                primaryColor='blue-2'
-                secundaryColor='blue-3'
-              />
+              <div className="flex flex-col md:grid md:grid-cols-2 items-center justify-center w-full gap-2 md:gap-4">
+                <GradientButton
+                  className="w-full h-14 [&>p]:!text-xl md:[&>p]:!text-2xl md:h-16 mt-2"
+                  direction="left"
+                  label="Publicar"
+                  primaryColor='blue-2'
+                  secundaryColor='blue-3'
+                />
+                <GradientButton
+                  className="w-full h-14 [&>p]:!text-xl md:[&>p]:!text-2xl md:h-16 mt-2"
+                  direction="right"
+                  label="Excluir"
+                  primaryColor='blue-4'
+                  secundaryColor='blue-3'
+                  type="button"
+                  onClick={handleDelete}
+                />
+              </div>
             </fieldset>
           </form>
         </>

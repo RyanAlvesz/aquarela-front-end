@@ -58,8 +58,10 @@ const ProfileFolders = () => {
       const resp = await fetchWrapper<getResp>(url, options)
 
       if (resp && resp.status_code == 201) {
-        stopLoader()
-        handleLink(resp.pasta)
+        setTimeout(() => {
+          stopLoader()
+          handleLink(resp.pasta)
+        }, 2500)
       }
 
     }

@@ -55,13 +55,15 @@ const ConfigModal: React.FC = () => {
 
     const logout = () => {
         router.push('/')
-        persistor.purge().then(() => {
-            dispatch(resetUser())
-            dispatch(resetRememberMe())
-            dispatch(resetInputs())
-            dispatch(resetCategories())
-            dispatch(resetProfile())
-        })
+        setTimeout(() => {
+            persistor.purge().then(() => {
+                dispatch(resetUser())
+                dispatch(resetRememberMe())
+                dispatch(resetInputs())
+                dispatch(resetCategories())
+                dispatch(resetProfile())
+            })
+        }, 2500)
     }
 
     const handleExit = async () => {
@@ -89,7 +91,6 @@ const ConfigModal: React.FC = () => {
                 <div className="flex flex-col gap-1 items-start text-start font-medium 2xl:text-xl">
                     <Link href={'/home/config'} className="hover:bg-blue-2/20 ease-linear duration-150 w-full p-1 px-2 rounded-md"> Configurações </Link>
                     <Link href={'/home/config/profile'} className="hover:bg-blue-2/20 ease-linear duration-150 w-full p-1 px-2 rounded-md"> Editar perfil </Link>
-                    <Link href={'/home/config/feed'} className="hover:bg-blue-2/20 ease-linear duration-150 w-full p-1 px-2 rounded-md"> Ajustar tela inicial </Link>
                     <Link href={'/home/config/preferences'} className="hover:bg-blue-2/20 ease-linear duration-150 w-full p-1 px-2 rounded-md"> Preferências </Link>
                 </div>
             </div>

@@ -140,8 +140,10 @@ const RegisterForm: React.FC = () => {
             
             if (resp && resp.usuario) {
                 dispatch(setUser(resp.usuario));
-                stopLoader()
-                router.push('/preferences')
+                setTimeout(() => {
+                    stopLoader()
+                    router.push('/preferences')
+                }, 2500)
             }
 
         }
