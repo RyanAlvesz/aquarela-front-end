@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export interface BaseUser {
     id?: number
     nome: string;
@@ -84,7 +86,7 @@ export interface Publication {
     imagens: Image[]
 }
 
-export interface DetailedPublication extends Publication{
+export interface DetailedPublication extends Publication {
     id_dono_publicacao: number,
     dono_publicacao: DetailedUser,
     quantidade_visualizacoes?: number | null,
@@ -96,7 +98,7 @@ export interface Folder {
     id_pasta: number
     nome: string
     id_usuario?: number
-    itens?: (DetailedProduct | DetailedPublication)[] 
+    itens?: (DetailedProduct | DetailedPublication)[]
 }
 
 export interface Comment {
@@ -108,3 +110,26 @@ export interface Comment {
     foto_usuario: string
 }
 
+export interface Chat {
+    id: string;
+    user1: ChatProfile
+    user2: ChatProfile
+    lastMessage?: Message
+    messages?: Message[]
+}
+
+export interface ChatProfile {
+    id: number
+    avatar: string
+    nickname: string
+}
+
+export interface LastMessage {
+    text: string
+    timestamp: Timestamp | null
+}
+
+export interface Message extends LastMessage{
+    id: number
+    userId: number
+}

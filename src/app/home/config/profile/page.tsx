@@ -7,9 +7,9 @@ import { RootState, useAppDispatch, useAppSelector } from "@/store/store"
 import Image, { StaticImageData } from "next/image"
 import { useEffect, useState } from "react"
 import ConfigInput from "@/components/ui/inputs/ConfigInput";
-import { uploadImage } from "@/lib/firebase/app";
+import { updateUserInChats, uploadImage } from "@/lib/firebase/app";
 import alert from "@/types/alert";
-import { BaseUser } from "@/types";
+import { BaseUser, ChatProfile } from "@/types";
 import { fetchWrapper } from "@/lib/api/fetch";
 import { setUser } from "@/store/userSlice";
 
@@ -113,7 +113,16 @@ const ConfigProfile = () => {
       
       if(resp.status == true){
         alert({icon:'success', title:'Perfil atualizado com sucesso'})
+
+        const updatedChatUser: ChatProfile = {
+          id: updatedUser.id as number,
+          nickname: updatedUser.nome_usuario,
+          avatar: updatedUser.foto_usuario as string
+        }
+
+        await updateUserInChats(updatedChatUser)
         dispatch(setUser(updatedUser))
+
       }else{
         alert({icon:'error', title:'Erro ao atualizar'})
       }
@@ -156,7 +165,7 @@ const ConfigProfile = () => {
                   height={100}
                   className="rounded-full w-[13vh] h-[13vh] md:w-[10vh] md:h-[10vh] object-cover" 
                 />
-                <div className="w-full text-center text-sm bg-blue-1 text-white rounded-md font-medium py-[6px] md:text-base">Alterar</div>
+                <div className="w-full text-center text-sm bg-blue-1 cursor-pointer text-white rounded-md font-medium py-[6px] md:text-base">Alterar</div>
                 <input onChange={handleImageChange} type="file" accept="image/*" name="profilePicture" id="profilePicture" className="hidden" />
                 {!isImageUploaded && (
                   <div className="flex items-center absolute top-0 justify-center w-[13vh] h-[13vh] md:w-[10vh] md:h-[10vh]">

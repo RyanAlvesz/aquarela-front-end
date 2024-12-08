@@ -1,4 +1,4 @@
-import { ProfileUser } from "@/types"
+import { BaseUser, Chat, ProfileUser } from "@/types"
 import Image from "next/image"
 import React, { useEffect, useState } from "react"
 import standardProfile from "$/public/images/paintings/standard-profile-picture.png";
@@ -6,21 +6,27 @@ import darkBlueCoinSVG from "$/public/images/svg/dark-blue-coin.svg";
 import starSVG from "$/public/images/svg/star.svg";
 import ToolTip from "./ToolTip";
 import { fetchWrapper } from "@/lib/api/fetch";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import alert from "@/types/alert";
+import { checkIfChatExists, createChat } from "@/lib/firebase/app";
+import { useDispatch } from "react-redux";
+import { setOpenChatId } from "@/store/openChatSlice";
 
 interface UserProfileCardProps {
     user: ProfileUser
-    currentUser: boolean
+    isCurrentUser: boolean
     currentUserId: number
+    currentUser: BaseUser
 }
 
-const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, currentUserId}) => {
+const UserProfileCard: React.FC<UserProfileCardProps> = ({user, isCurrentUser, currentUser, currentUserId}) => {
     
     const [isFollowing, setIsFollowing] = useState<boolean>(Boolean(Number(user.esta_seguindo)))   
     const [followersCount, setFollowersCount] = useState<number>(Number(user.seguidores))   
 
+    const router = useRouter()
     const pathname = usePathname()
+    const dispatch = useDispatch()
 
     const handleFollow = async() => {
         const url = 'v1/aquarela/follower/user'
@@ -56,13 +62,50 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, cur
         setIsFollowing(Boolean(Number(user.esta_seguindo)))
     }, [user.esta_seguindo])
 
-    const handleMessage = () => {}
+    const handleMessage = async() => {
+
+        const existingChat = await checkIfChatExists(user.id as number, currentUserId)
+
+        if(!existingChat){
+        
+            const [nickname1, nickname2] = [currentUser.nome_usuario, user.nome_usuario].sort();
+            const newChatId = `${nickname1}-${nickname2}`
+
+            const chat: Chat = {
+                id: newChatId,
+                user1: {
+                    id: currentUserId,
+                    nickname: currentUser.nome_usuario,
+                    avatar: currentUser.foto_usuario ? currentUser.foto_usuario : '',
+                },
+                user2: {
+                    id: user.id as number,
+                    nickname: user.nome_usuario,
+                    avatar: user.foto_usuario ? user.foto_usuario : '',
+                }
+            }
+                
+            const chatResp = await createChat(chat)
+        
+            if(!chatResp) {
+                return
+            } else {
+                dispatch(setOpenChatId(newChatId))
+            }
+        
+        } else {
+            dispatch(setOpenChatId(existingChat.id))
+        }
+        
+        router.push('/home/chat')
+        
+    }
     
     const handleShare = async () => {
         await navigator.clipboard.writeText('https://aquarela-front-end.vercel.app' + pathname)
         alert({
             icon: 'success',
-            title: 'Perfil copiado para área de trasnferência'
+            title: 'Perfil copiado para área de transferência'
         })
     }
     
@@ -105,14 +148,14 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({user, currentUser, cur
                 )}
             </div>
             <p className="text-blue-2 text-sm mb-3 md:text-[18px]"> {`@${user.nome_usuario}`} </p>
-            <div className={`text-blue-3 flex gap-2 items-center justify-center text-sm md:text-base md:font-medium ${currentUser? 'mb-5': 'mb-3'}`}>
+            <div className={`text-blue-3 flex gap-2 items-center justify-center text-sm md:text-base md:font-medium ${isCurrentUser? 'mb-5': 'mb-3'}`}>
                 {`${followersCount} ${user.seguidores == 1? 'seguidor' : 'seguidores'}`} 
                 <div className="w-1 h-1 rounded-full bg-blue-3" />
                 {`${user.seguindo} seguindo`}
                 <div className="w-1 h-1 rounded-full bg-blue-3" />
                 {`${user.qnt_publicacoes} ${user.qnt_publicacoes == 1? 'publicação' : 'publicações'}`}
             </div>
-            {!currentUser && (
+            {!isCurrentUser && (
                 <div className="flex items-center justify-center gap-2 mb-5">
                     <button 
                         className={`w-[40vw] md:w-[10vw] rounded-md py-2 font-medium text-sm md:text-base flex items-center justify-center fade-animation ${isFollowing === false ? 'bg-blue-1/90' : 'bg-blue-1'} text-white`}

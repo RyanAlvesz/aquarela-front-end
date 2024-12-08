@@ -11,6 +11,7 @@ import storage from "redux-persist/lib/storage"
 import { rememberMeReducer } from "./rememberMeSlice"
 import { darkModeReducer } from "./darkModeSlice"
 import { filterReducer } from "./filterSlice"
+import { chatReducer } from "./openChatSlice"
 
 const inputPersistConfig = {
     key: "inputs",
@@ -68,6 +69,7 @@ const rootReducer = combineReducers({
     rememberMe: persistReducer(rememberMePersistConfig, rememberMeReducer),
     darkMode: persistReducer(darkModePersistConfig, darkModeReducer),
     filter: filterReducer,
+    chatOpenId: chatReducer,
 });   
 
 export const store = configureStore({

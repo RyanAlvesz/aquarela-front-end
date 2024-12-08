@@ -1,29 +1,19 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
-interface PreferencesInputPros {
+interface PreferencesInputProps {
     label: string;
-    initialState?: boolean;
-    onChange?: (state: boolean) => void;
+    isChecked: boolean;
+    onChange: () => void;
 }
 
-const PreferencesInput: React.FC<PreferencesInputPros> = ({ label, initialState = false, onChange }) => {
-
-    const [isChecked, setIsChecked] = useState(initialState);
-
-    const handleChange = () => {
-        const newState = !isChecked;
-        setIsChecked(newState)
-        if (onChange) {
-            onChange(newState)
-        }
-    };
+const PreferencesInput: React.FC<PreferencesInputProps> = ({ label, isChecked, onChange }) => {
 
     return (
         <label className="flex items-center w-full gap-2 md:gap-4 cursor-pointer">
             <input
                 type="checkbox"
                 checked={isChecked}
-                onChange={handleChange}
+                onChange={onChange}
                 className="hidden"
             />
             <div
