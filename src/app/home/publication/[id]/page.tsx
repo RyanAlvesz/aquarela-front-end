@@ -169,7 +169,7 @@ const PublicationPage: React.FC = () => {
     await navigator.clipboard.writeText('https://aquarela-front-end.vercel.app' + pathname)
     alert({
       icon: 'success',
-      title: 'Publicação copiada para área de trasnferência'
+      title: 'Publicação copiada para área de transferência'
     })
   }
 

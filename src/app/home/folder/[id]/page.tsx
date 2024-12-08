@@ -71,7 +71,7 @@ const FolderPage = () => {
         await navigator.clipboard.writeText('https://aquarela-front-end.vercel.app' + pathname)
         alert({
             icon: 'success',
-            title: 'Pasta copiada para área de trasnferência'
+            title: 'Pasta copiada para área de transferência'
         })
     }
 

@@ -20,12 +20,9 @@ const FeedPage = () => {
   const user = useAppSelector((state: RootState) => state.user)
   const [feedCollums, setFeedCollums] = useState(5)
   const [isLoading, setIsLoading] = useState(true);
-  const windowWidth = useWindowDimensions()
-
-  
+  const windowWidth = useWindowDimensions()  
   
   useEffect(() => {
-    console.log(windowWidth.width);
     if(windowWidth.width as number >= 1920){
       setFeedCollums(6)
     } else {

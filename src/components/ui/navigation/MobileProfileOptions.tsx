@@ -29,7 +29,7 @@ const MobileProfileOptions: React.FC<MobileProfileOptionsProps> = ({secondaryBut
             await navigator.clipboard.writeText('https://aquarela-front-end.vercel.app' + pathname)
             alert({
                 icon: 'success',
-                title: 'Perfil copiado para área de trasnferência'
+                title: 'Perfil copiado para área de transferência'
             })
         }
     }    

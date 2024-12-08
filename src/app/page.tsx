@@ -15,7 +15,7 @@ const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [currentSloganIndex, setCurrentSloganIndex] = useState(0)
 
-  const images: StaticImageData[] = [image1, image2, image3, image4, image5]
+  const images: StaticImageData[] = [image1, image4, image3, image2, image5]
 
   const slogans: string[] = [
     "Pinte histórias, conecte pessoas.", 
@@ -46,7 +46,7 @@ const Home = () => {
       className="h-screen bg-cover bg-center bg-no-repeat animate-fade ease-linear duration-700"
       style={{ backgroundImage: `url(${images[currentIndex].src})` }}
     >
-      <div className="flex flex-col gap-[10vh] px-10 md:justify-center md:items-center py-8 bg-black/40 h-full w-full text-white">
+      <div className="flex flex-col gap-[10vh] px-10 md:justify-center md:items-center py-8 bg-black/50 h-full w-full text-white">
         <div className="grow flex flex-col items-center justify-center gap-4 md:grow-0">
           <h1>
             <Image

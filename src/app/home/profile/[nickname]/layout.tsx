@@ -61,7 +61,7 @@ const ProfileLayout = ({children}: {children: React.ReactNode}) => {
       ) : (
         <>
           <MobileProfileOptions secondaryButton={secondaryButton} />
-          <UserProfileCard currentUser={userProfileValidation} currentUserId={currentUser.id as number} user={userInfo} />
+          <UserProfileCard isCurrentUser={userProfileValidation} currentUser={currentUser} currentUserId={currentUser.id as number} user={userInfo} />
           <DynamicTabContent currentUser={userProfileValidation} userNickname={userInfo.nome_usuario}>
             {children}
           </DynamicTabContent>

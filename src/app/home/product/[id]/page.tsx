@@ -170,7 +170,7 @@ const ProductPage: React.FC = () => {
     await navigator.clipboard.writeText('https://aquarela-front-end.vercel.app' + pathname)
     alert({
       icon: 'success',
-      title: 'Produto copiada para área de trasnferência'
+      title: 'Produto copiada para área de transferência'
     })
   }
 

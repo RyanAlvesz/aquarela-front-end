@@ -65,7 +65,7 @@ const DesktopNavBar: React.FC = () => {
                     user={user}
                     className="h-full"
                 />
-                    <Popover>
+                    <Popover placement="bottom-end">
                         <PopoverTrigger asChild>
                             <div
                                 className={`shrink-0 h-full cursor-pointer w-auto [&>div]:h-full [&>div>div:first-child]:h-full [&[data-state='open']_img]:rotate-90`}

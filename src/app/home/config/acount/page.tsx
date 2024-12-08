@@ -49,25 +49,25 @@ const ConfigAcount = () => {
   const validatePhoneNumber = (phone: string): boolean => {
     const cleanedPhone = phone.replace(/\D/g, '')
     if (cleanedPhone.length !== 11) {
-        alert({ icon: 'warning', title: 'Telefone deve ter 11 dígitos.' })
-        return false
+      alert({ icon: 'warning', title: 'Telefone deve ter 11 dígitos.' })
+      return false
     }
     return true
-}
+  }
 
-const validateCPF = (cpf: string): boolean => {
+  const validateCPF = (cpf: string): boolean => {
     const cleanedCPF = cpf.replace(/\D/g, '')
     if (cleanedCPF.length !== 11) {
-        alert({ icon: 'warning', title: 'CPF deve ter 11 dígitos.' })
-        return false
+      alert({ icon: 'warning', title: 'CPF deve ter 11 dígitos.' })
+      return false
     }
     return true
-}
+  }
 
-  useEffect(() => {        
+  useEffect(() => {
     const fetchUsers = async () => {
-        const resp = await fetchWrapper<usersResp>('v1/aquarela/users')
-        setUsers(resp.usuarios)
+      const resp = await fetchWrapper<usersResp>('v1/aquarela/users')
+      setUsers(resp.usuarios)
     }
     fetchUsers()
   }, [])
@@ -75,29 +75,29 @@ const validateCPF = (cpf: string): boolean => {
   const duplicatedInfo = (): boolean => {
     let resp = true
     users.forEach((registeredUser) => {
-        if (
-            email === registeredUser.email && registeredUser.email !== user.email
-        ) {
-            alert({icon:'warning', title:'Email já cadastrado'})
-            resp = false
-        } else if (
-          cpf === registeredUser.cpf && registeredUser.cpf !== user.cpf
-        ) {
-          alert({icon:'warning', title:'CPF já cadastrado'})
-          resp = false
-        } else if (
-          phone === registeredUser.telefone && registeredUser.telefone !== user.telefone
-        ) {
-          alert({icon:'warning', title:'Telefone já cadastrado'})
-          resp = false
-        }
+      if (
+        email === registeredUser.email && registeredUser.email !== user.email
+      ) {
+        alert({ icon: 'warning', title: 'Email já cadastrado' })
+        resp = false
+      } else if (
+        cpf === registeredUser.cpf && registeredUser.cpf !== user.cpf
+      ) {
+        alert({ icon: 'warning', title: 'CPF já cadastrado' })
+        resp = false
+      } else if (
+        phone === registeredUser.telefone && registeredUser.telefone !== user.telefone
+      ) {
+        alert({ icon: 'warning', title: 'Telefone já cadastrado' })
+        resp = false
+      }
     })
     return resp
   }
 
   const updateValidation = () => {
-    if(email == '' || cpf == '' || phone == '' || birth == '') {
-      alert({icon:'warning', title:'Informações obrigatórias não preenchidas.'})
+    if (email == '' || cpf == '' || phone == '' || birth == '') {
+      alert({ icon: 'warning', title: 'Informações obrigatórias não preenchidas.' })
       return false
     }
     return true
@@ -121,49 +121,49 @@ const validateCPF = (cpf: string): boolean => {
     status: boolean
   }
 
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
-    
-    e.preventDefault() 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+
+    e.preventDefault()
 
     if (!validatePhoneNumber(phone)) return
     if (!validateCPF(cpf)) return
-    if(updateValidation() && duplicatedInfo() && validatePassword()){
+    if (updateValidation() && duplicatedInfo() && validatePassword()) {
 
       const cleanedPhone = phone.replace(/\D/g, '')
-      const cleanedCPF = cpf.replace(/\D/g, '') 
+      const cleanedCPF = cpf.replace(/\D/g, '')
 
       const updatedUser: BaseUser = {
         ...user,
-        ...(email && { email: email }),          
-        ...(cpf && { cpf: cleanedCPF }),            
+        ...(email && { email: email }),
+        ...(cpf && { cpf: cleanedCPF }),
         ...(phone && { telefone: cleanedPhone }),
         ...(birth && { data_nascimento: birth }),
       }
 
       const url: string = 'v1/aquarela/user/' + updatedUser.id
-    
+
       const options = {
-          method: 'PUT',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              email: updatedUser.email,
-              ...(newPassword && { senha: newPassword }),
-              cpf: updatedUser.cpf,
-              data_nascimento: updatedUser.data_nascimento,
-              telefone: updatedUser.telefone,
-              disponibilidade: updatedUser.disponibilidade
-          })
-      }          
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: updatedUser.email,
+          ...(newPassword && { senha: newPassword }),
+          cpf: updatedUser.cpf,
+          data_nascimento: updatedUser.data_nascimento,
+          telefone: updatedUser.telefone,
+          disponibilidade: updatedUser.disponibilidade
+        })
+      }
 
       const resp = await fetchWrapper<respProps>(url, options)
-      
-      if(resp.status == true){
-        alert({icon:'success', title:'Perfil atualizado com sucesso'})
+
+      if (resp.status == true) {
+        alert({ icon: 'success', title: 'Perfil atualizado com sucesso' })
         dispatch(setUser(updatedUser))
-      }else{
-        alert({icon:'error', title:'Erro ao atualizar'})
+      } else {
+        alert({ icon: 'error', title: 'Erro ao atualizar' })
       }
 
     }
@@ -171,7 +171,7 @@ const validateCPF = (cpf: string): boolean => {
   }
 
   useEffect(() => {
-    
+
     const loadUserInfo = () => {
 
       const birthDate = user.data_nascimento
