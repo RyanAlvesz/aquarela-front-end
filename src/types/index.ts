@@ -2,16 +2,16 @@ import { Timestamp } from "firebase/firestore";
 
 export interface BaseUser {
     id?: number
-    nome: string;
-    nome_usuario: string;
-    foto_usuario?: string;
-    descricao?: string;
-    email: string;
-    senha?: string;
-    cpf: string;
-    data_nascimento: string;
-    telefone: string;
-    disponibilidade?: boolean;
+    nome: string
+    nome_usuario: string
+    foto_usuario?: string
+    descricao?: string
+    email: string
+    senha?: string
+    cpf: string
+    data_nascimento: string
+    telefone: string
+    disponibilidade?: boolean
     avaliacao?: number | null
 }
 
@@ -27,15 +27,16 @@ export interface DetailedUser extends BaseUser {
 export type ProfileUser = BaseUser & DetailedUser
 
 export interface Address {
-    id_endereco: number;
-    logradouro: string;
-    numero_casa: number;
-    complemento?: string;
-    bairro: string;
-    estado: string;
-    cidade: string;
-    cep?: string;
-    status: boolean;
+    id_endereco?: number
+    logradouro: string
+    numero_casa: number
+    complemento?: string
+    bairro: string
+    estado: string
+    cidade: string
+    cep: string
+    localidade?: string
+    id_usuario?: number
 }
 
 export interface Category {
@@ -111,7 +112,7 @@ export interface Comment {
 }
 
 export interface Chat {
-    id: string;
+    id: string
     user1: ChatProfile
     user2: ChatProfile
     lastMessage?: Message

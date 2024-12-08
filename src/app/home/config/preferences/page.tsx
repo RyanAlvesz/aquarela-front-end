@@ -31,7 +31,6 @@ const ConfigPreferences = () => {
   }, [darkMode])
 
   useEffect(() => {
-    console.log(user.disponibilidade);
     setAvailability(Boolean(Number(user.disponibilidade)))
   }, [user])
 
@@ -54,9 +53,7 @@ const ConfigPreferences = () => {
       })
     }
 
-    const resp = await fetchWrapper<respProps>(url, options)
-    console.log(resp);
-    
+    const resp = await fetchWrapper<respProps>(url, options)    
     
     if (resp.status == true) {      
       dispatch(setUser(updatedUser))

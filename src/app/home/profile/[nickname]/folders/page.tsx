@@ -97,7 +97,7 @@ const ProfileFolders = () => {
           >
             <h2 className="text-2xl md:text-3xl text-blue-1 font-bold mb-6">Criar pasta</h2>
             <ConfigInput label="Nome" onChange={setFolderName} type="text" value={folderName} className="md:[&>label]:text-2xl md:[&>input]:h-12" maxLength={100} required />
-            <GradientButton direction="bottom" label="Salvar" primaryColor={"blue-1"} secundaryColor={"blue-1"} className="w-full md:w-1/2 [&>p]:!text-lg md:[&>p]:!text-2xl p-2 mt-4" onClick={createFolder} />
+            <GradientButton direction="bottom" label="Criar" primaryColor={"blue-1"} secundaryColor={"blue-1"} className="w-full md:w-1/2 [&>p]:!text-lg md:[&>p]:!text-2xl p-2 mt-4" onClick={createFolder} />
           </form>
         </div>
       )}

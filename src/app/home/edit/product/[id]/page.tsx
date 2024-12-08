@@ -212,18 +212,6 @@ const EditProduct = () => {
 
       }
 
-      console.log({
-        nome: title,
-        descricao: description,
-        id_usuario: product?.id_dono_publicacao,
-        marca_dagua: watermark,
-        item_digital: digitalProduct,
-        preco: priceWithTax,
-        quantidade: quantity,
-        categorias: selectedCategories.map(category => category.id)
-      });
-
-
       try {
         const resp = await fetchWrapper<GetRespPost>(url, options)
         if (resp.status_code == 200) {

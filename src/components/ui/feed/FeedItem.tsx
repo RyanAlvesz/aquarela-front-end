@@ -39,8 +39,8 @@ const isDetailed = (item: Product | DetailedProduct | Publication | DetailedPubl
 
 const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFolder, deleteItem, refreshItems }) => {
 
-    const [isLiked, setIsLiked] = useState<boolean>(Number(item.curtida) === 1)
-    const [isFavorited, setIsFavorited] = useState<boolean>(Number(item.favorito) === 1)
+    const [isLiked, setIsLiked] = useState<boolean>(Boolean(Number(item.curtida)))
+    const [isFavorited, setIsFavorited] = useState<boolean>(Boolean(Number(item.favorito)))
     const [isOptionsOpen, setOptionsOpen] = useState(false)
     const [isHovered, setIsHovered] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
@@ -602,7 +602,7 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
                     >
                         <h2 className="text-2xl md:text-3xl text-blue-1 font-bold mb-6">Criar pasta</h2>
                         <ConfigInput label="Nome" onChange={setFolderName} type="text" value={folderName} className="md:[&>label]:text-2xl md:[&>input]:h-12" maxLength={100} required />
-                        <GradientButton direction="bottom" label="Salvar" primaryColor={"blue-1"} secundaryColor={"blue-1"} className="w-full md:w-1/2 [&>p]:!text-lg md:[&>p]:!text-2xl p-2 mt-4" onClick={createFolder} />
+                        <GradientButton direction="bottom" label="Criar" primaryColor={"blue-1"} secundaryColor={"blue-1"} className="w-full md:w-1/2 [&>p]:!text-lg md:[&>p]:!text-2xl p-2 mt-4" onClick={createFolder} />
                     </form>
                 </div>
             )}
