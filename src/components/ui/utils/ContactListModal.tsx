@@ -27,7 +27,7 @@ const ContactListModal: React.FC<ContactListModalProps> = ({ contactList, handle
             )
             setUsers(filteredUsers)
         }
-    }, [search])
+    }, [contactList, search])
 
     return (
         <div className="bg-blue-8 w-[25vw] z-40 relative h-fit py-6 px-4 flex flex-col gap-4 animate-fade-down animate-duration-1000 animate-ease-in-out rounded-xl shadow-[0_0_8px_0px_rgba(0,0,0,0.2)]">

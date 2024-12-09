@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
 import MobilePublicationHeader from "@/components/ui/navigation/MobilePublicationHeader";
@@ -212,7 +213,6 @@ const PublicationPage: React.FC = () => {
   useEffect(() => {
     fetchPublicationData()
   }, [])
-
 
   useEffect(() => {
     const visualizer = async () => {

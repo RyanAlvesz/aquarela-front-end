@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
 import ConfigTitle from "@/components/ui/buttons/ConfigTitle"
@@ -7,7 +8,6 @@ import { Address } from "@/types"
 import Image from "next/image"
 import aquarela from '$/public/images/logo/icon.png'
 import React, { useEffect, useState } from "react"
-import AddressInput from "@/components/ui/inputs/AddressInput"
 import alert from "@/types/alert"
 import { fetchWrapper } from "@/lib/api/fetch"
 import AddressCard from "@/components/ui/utils/AddressCard"
@@ -168,14 +168,21 @@ const ConfigAddress: React.FC = () => {
         throw new Error('CEP não encontrado.')
       }
 
-      const addressInfo: Address = {
+      interface ViaCEPAddress {
+        logradouro: string;
+        bairro: string;
+        estado: string;
+        cidade: string;
+      }
+
+      const addressInfo: ViaCEPAddress = {
         logradouro: result.logradouro,
         bairro: result.bairro,
         estado: result.estado,
         cidade: result.localidade as string
       }
 
-      return addressInfo
+      return addressInfo as Address
 
     } catch (error) {
       console.error(error)

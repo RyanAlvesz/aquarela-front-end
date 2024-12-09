@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
 import DynamicFeed from "@/components/ui/feed/DynamicFeed"

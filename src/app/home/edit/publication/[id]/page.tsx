@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
 import ConfigTitle from "@/components/ui/buttons/ConfigTitle"

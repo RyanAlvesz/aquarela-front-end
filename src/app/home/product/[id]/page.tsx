@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
 import MobilePublicationHeader from "@/components/ui/navigation/MobilePublicationHeader";

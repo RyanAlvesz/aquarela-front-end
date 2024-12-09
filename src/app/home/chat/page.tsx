@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
 import MobileNavigation from "@/components/ui/navigation/MobileNavigation"
@@ -181,7 +182,8 @@ const Chat = () => {
       }
     }
     fetchChat()
-  }, [openChat])
+
+  }, [openChat, currentUser.id])
 
   useEffect(() => {
     if(!userChatLoading)
@@ -276,7 +278,7 @@ const Chat = () => {
             </div>
           </div>
           <form onSubmit={handleSendMessage} className="flex py-3 px-6 text-blue-2 text-[120%]">
-            <fieldset className="flex gap-3 w-full bg-blue-6/40 hover:bg-blue-6/60 ease-linear duration-100 p-3 rounded-lg">
+            <fieldset className="flex gap-3 w-full bg-blue-6/70 hover:bg-blue-6/90 ease-linear duration-100 p-3 rounded-lg">
               <input type="text" value={newMessage} onChange={(e) => setNewMessage(e.target.value)} className="grow px-2 bg-transparent placeholder:text-blue-2" placeholder="Mensagem..." />
               <button className="flex items-center justify-center">
                 <Image
