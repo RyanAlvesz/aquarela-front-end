@@ -535,7 +535,7 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
                                     user={item.dono_publicacao}
                                     className="w-8 h-8"
                                 />
-                                <h2 className="font-medium text-secondary-mobile md:text-base text-blue-1">{`R$: ${item.preco}`}</h2>
+                                <h2 className="font-medium text-secondary-mobile md:text-base text-blue-1 dark:text-blue-6">{`R$: ${item.preco}`}</h2>
                                 {infoArea == "like" ? (
                                     <button className="h-8 w-8" onClick={handleProductLike}>
                                         <Image
@@ -564,7 +564,7 @@ const FeedItem: React.FC<FeedItemProps> = ({ item, infoArea, itemSize, deleteFol
                                         user={item.dono_publicacao}
                                         className="w-8 h-8"
                                     />
-                                    <h2 className="font-medium text-secondary-mobile md:text-[14px] text-blue-1">{`@${item.dono_publicacao.nome_usuario}`}</h2>
+                                    <h2 className="font-medium text-secondary-mobile md:text-[14px] text-blue-1 dark:text-blue-6">{`@${item.dono_publicacao.nome_usuario}`}</h2>
                                 </div>
                                 {infoArea == 'like' ? (
                                     <button className="h-8 w-8" onClick={handlePublicationLike}>

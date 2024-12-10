@@ -345,7 +345,7 @@ const CreateProduct = () => {
             className="md:[&>div]:h-14 md:[&>span]:text-xl"
           />
           <div className="flex flex-col w-full gap-1 my-2">
-            <p className="text-blue-2 text-lg md:text-xl text-center animate-fade duration-75 ease-linear"> Taxa: 10%. </p>
+            <p className="text-blue-2 text-lg md:text-xl text-center animate-fade duration-75 ease-linear"> Taxa de serviço: 10%. </p>
             {!isNaN(priceWithTax) && (
               <p className="text-blue-1 text-lg md:text-xl text-center animate-fade duration-75 ease-linear"> Preço final: R$:{priceWithTax.toFixed(2).replace('.', ',')} </p>
             )}

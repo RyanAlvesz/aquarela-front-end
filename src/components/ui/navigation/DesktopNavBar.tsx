@@ -2,10 +2,12 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import pallet from "$/public/images/logo/icon.png";
 import bagSVG from "$/public/images/svg/bag.svg";
+import darkBagSVG from "$/public/images/svg/white-bag.svg";
 import arrowSVG from "$/public/images/svg/arrow.svg";
+import darkArrowSVG from "$/public/images/svg/white-arrow.svg";
 import SearchBar from "../forms/SearchBar";
 import Avatar from "../buttons/Avatar";
 import { RootState, useAppSelector } from "@/store/store";
@@ -20,8 +22,15 @@ const DesktopNavBar: React.FC = () => {
 
     const user = useAppSelector((state: RootState) => state.user)
 
+    const [isDarkMode, setIsDarkMode] = useState<boolean>()
+    const darkMode = useAppSelector((state: RootState) => state.darkMode.darkMode)
+
+    useEffect(() => {
+        setIsDarkMode(darkMode)
+    }, [darkMode])
+
     return (
-        <nav className="hidden z-20 h-[10vh] md:flex items-center justify-between p-[2.5vh] gap-6 fixed top-0 left-0 right-0 bg-white">
+        <nav className="hidden z-20 h-[10vh] md:flex items-center justify-between p-[2.5vh] gap-6 fixed top-0 left-0 right-0 bg-white dark:bg-[#18191a]">
             <Link
                 href={'/home/feed'}
                 className="h-full shrink-0"
@@ -49,12 +58,12 @@ const DesktopNavBar: React.FC = () => {
             />
             <SearchBar />
             <Link
-                href={'/'}
+                href={''}
                 className="h-full w-fit shrink-0"
             >
                 <Image
                     alt="Sacola"
-                    src={bagSVG}
+                    src={!isDarkMode ? bagSVG : darkBagSVG}
                     className="h-full w-fit"
                     height={100}
                 />
@@ -75,7 +84,7 @@ const DesktopNavBar: React.FC = () => {
                                             alt="Seta de opções"
                                             width={100}
                                             height={100}
-                                            src={arrowSVG}
+                                            src={!isDarkMode ? arrowSVG : darkArrowSVG}
                                             className="-rotate-90 w-auto h-full ease-linear duration-500"
                                         />
                                 </ToolTip>

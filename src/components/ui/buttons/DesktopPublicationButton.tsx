@@ -27,7 +27,7 @@ const DesktopPublicationButton = () => {
     return (
         <div className="relative" ref={menuRef}>
             <button onClick={toggleMenu} className="relative">
-                <h2 className="font-medium text-base relative z-10 text-blue-1"> Postar </h2>
+                <h2 className="font-medium text-base relative z-10 text-blue-1 dark:text-blue-6"> Postar </h2>
             </button>
 
             {isMenuVisible && (

@@ -25,7 +25,7 @@ const PreferencesInput: React.FC<PreferencesInputProps> = ({ label, isChecked, o
                         }`}
                 ></span>
             </div>
-            <span className="text-blue-1 text-base md:text-2xl">{label}</span>
+            <span className="text-blue-1 text-base md:text-2xl dark:text-blue-6">{label}</span>
         </label>
     )
 }
