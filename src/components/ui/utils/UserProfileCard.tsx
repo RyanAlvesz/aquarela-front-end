@@ -121,7 +121,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({user, isCurrentUser, c
             />
             <div className="flex items-center gap-1 mb-[2px]">
                 <h1 className="font-bold text-body-mobile text-blue-1 md:text-2xl"> {user.nome} </h1>
-                {user.disponibilidade === true && (
+                {Boolean(Number(user.disponibilidade)) === true && (
                     <ToolTip message="Artista disponível">
                         <Image 
                             alt="Moeda"
